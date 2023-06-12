@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 export default function QueryTest() {
-  const { isLoading, data } = useQuery({
+  const { data } = useQuery({
     queryKey: ['todo'],
     queryFn: async () => {
       return await axios.get('https://jsonplaceholder.typicode.com/todos/1');
