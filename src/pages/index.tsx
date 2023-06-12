@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Counter from '../components/Counter.tsx';
+import * as style from '../styles/style-test.css.ts';
 
 export default function Home() {
   return (
@@ -6,7 +8,11 @@ export default function Home() {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <main>Home</main>
+      <main>
+        <div className={style.Main}>Home</div>
+        <Counter />
+        <br />
+      </main>
     </>
   );
 }
