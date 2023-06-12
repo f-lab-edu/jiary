@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import CounterInside from './CounterInside.tsx';
+import { decrement, increment } from '../store/slice/counterSlice.ts';
 
 export default function Counter() {
-  const [value, setValue] = useState(0);
-
+  const dispatch = useDispatch();
   return (
     <>
-      test {value}
       <br />
-      <button onClick={() => setValue(v => v + 1)}>click</button>
+      <button onClick={() => dispatch(increment())}>+ click</button>
+      <button onClick={() => dispatch(decrement())}>- click</button>
+      <CounterInside />
     </>
   );
 }
