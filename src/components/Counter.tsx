@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import CounterInside from './CounterInside.tsx';
-import { decrement, increment } from '../store/slice/counterSlice.ts';
+import CounterInside from '@/components/CounterInside.tsx';
+import { decrement, increment } from '@/store/slices/counterSlice.ts';
 
 export default function Counter() {
   const dispatch = useDispatch();

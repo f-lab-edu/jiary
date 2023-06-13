@@ -1,18 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { useQueryTodo } from '@/core/hooks/query/useQueryTodo.ts';
 
 export default function QueryTest() {
-  const { data } = useQuery({
-    queryKey: ['todo'],
-    queryFn: async () => {
-      return await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-    },
-  });
+  const { todo, isError } = useQueryTodo();
 
   return (
     <>
+      {isError && <p>error</p>}
       <div>QueryTest</div>
-      <span>{data?.data.title}</span>
+      <span>{todo?.title}</span>
     </>
   );
 }
