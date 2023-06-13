@@ -1,19 +1,6 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 2023,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "env": {
-    "browser": true,
-    "node": true,
-    "commonjs": true
-  },
   "extends": [
     "eslint:recommended",
     "next/core-web-vitals"
-  ],
-  "rules": {}
+  ]
 }
