@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import { useState } from 'react';
 
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import store from '../store/store.ts';
 
 import {
@@ -17,13 +17,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Provider store={store}>
+    <ReduxProvider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
           <Component {...pageProps} />
-        </Provider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </Hydrate>
-    </QueryClientProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Hydrate>
+      </QueryClientProvider>
+    </ReduxProvider>
   );
 }
