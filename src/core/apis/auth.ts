@@ -1,14 +1,14 @@
 import { AxiosResponse } from 'axios';
 import axios from 'axios';
 
-interface UserInfo {
+export interface UserInfo {
   email: string;
-  given_name: string;
   id: string;
-  locale: string;
-  name: string;
-  picture: string;
-  verified_email: boolean;
+  name?: string;
+  given_name?: string;
+  locale?: string;
+  picture?: string;
+  verified_email?: boolean;
 }
 
 const oauthApi = axios.create({
