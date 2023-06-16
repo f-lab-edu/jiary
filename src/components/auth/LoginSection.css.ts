@@ -43,7 +43,7 @@ export const buttonWrapper = style({
 export const loginButton = style({
   padding: '10px',
   backgroundColor: '#fff',
-  border: '1px solid hsl(230,25%,94%)',
+  border: '2px solid hsl(230,25%,94%)',
   borderRadius: 6,
   width: 220,
   height: 60,

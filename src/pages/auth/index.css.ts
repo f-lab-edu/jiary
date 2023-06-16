@@ -31,7 +31,7 @@ export const backgroundAfter = style({
     left: 0,
     width: '100%',
     height: '100%',
-    backdropFilter: 'blur(2px)',
+    backdropFilter: 'blur(3px)',
     background: 'transparent',
   },
 });
