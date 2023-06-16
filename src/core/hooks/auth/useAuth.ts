@@ -1,6 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { getUserInfo } from '@/core/apis/auth.ts';
-import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
+import {
+  removeAccessToken,
+  removeUser,
+  setAccessToken,
+  setUser,
+} from '@/store/slices/authSlice.ts';
 import { useState } from 'react';
 
 let popupWindow: Window | null = null;
@@ -58,7 +63,7 @@ export const useAuth = () => {
     setEndAuth(true);
   };
 
-  const openAuthPopup = () => {
+  const openLoginPopup: () => void = () => {
     if (popupWindow === null || popupWindow.closed) {
       openPopup();
     } else if (
@@ -73,5 +78,12 @@ export const useAuth = () => {
     window.addEventListener('message', messageCallback, false);
   };
 
-  return [isEndAuth, openAuthPopup] as const;
+  const logout: () => void = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
+    dispatch(removeUser());
+    dispatch(removeAccessToken());
+  };
+
+  return { isEndAuth, openLoginPopup, logout };
 };

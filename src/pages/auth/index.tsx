@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Head from 'next/head';
 
 export default function AuthPage() {
-  const [isEndAuth, openAuthPopup] = useAuth();
+  const { isEndAuth, openLoginPopup } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function AuthPage() {
         placeholder="blur"
       />
       <div className={style.backgroundAfter}></div>
-      <LoginSection openAuthPopup={openAuthPopup} />
+      <LoginSection openLoginPopup={openLoginPopup} />
     </div>
   );
 }

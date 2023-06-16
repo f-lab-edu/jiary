@@ -46,8 +46,23 @@ export const authSlice = createSlice({
         state.accessToken = accessToken;
       }
     },
+    removeUser: state => {
+      state.user = {
+        email: '',
+        given_name: '',
+        id: '',
+        locale: '',
+        name: '',
+        picture: '',
+        verified_email: false,
+      };
+    },
+    removeAccessToken: state => {
+      state.accessToken = undefined;
+    },
   },
 });
 
-export const { setUser, setAccessToken } = authSlice.actions;
+export const { setUser, setAccessToken, removeUser, removeAccessToken } =
+  authSlice.actions;
 export default authSlice.reducer;

@@ -4,9 +4,9 @@ import googleLogo from '@/static/auth/google_signin.png';
 import * as style from './LoginSection.css.ts';
 
 export default function LoginSection({
-  openAuthPopup,
+  openLoginPopup,
 }: {
-  openAuthPopup: () => void;
+  openLoginPopup: () => void;
 }) {
   return (
     <div className={style.container}>
@@ -41,7 +41,7 @@ export default function LoginSection({
       </p>
 
       <div className={style.buttonWrapper}>
-        <button onClick={openAuthPopup} className={style.loginButton}>
+        <button onClick={openLoginPopup} className={style.loginButton}>
           <Image
             src={googleLogo}
             alt="Google Logo"
