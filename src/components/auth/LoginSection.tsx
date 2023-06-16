@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import jiaryLogo from '@/static/jiary-logo.svg';
+import googleLogo from '@/static/auth/google_signin.png';
 import * as style from './LoginSection.css.ts';
 
 export default function LoginSection({
@@ -20,7 +21,8 @@ export default function LoginSection({
 
       <ul className={style.ul}>
         <p className={style.emphasis}>
-          Jiary 서비스를 사용하기 위해서 Google Login이 필요합니다.
+          Jiary 서비스를 사용하기 위해서 Google Login이 <br />
+          필요합니다.
         </p>
         <br />
         <p>아래와 같은 권한이 필요합니다.</p>
@@ -40,6 +42,11 @@ export default function LoginSection({
 
       <div className={style.buttonWrapper}>
         <button onClick={openAuthPopup} className={style.loginButton}>
+          <Image
+            src={googleLogo}
+            alt="Google Logo"
+            className={style.googleLogo}
+          />
           Sign in with Google
         </button>
       </div>

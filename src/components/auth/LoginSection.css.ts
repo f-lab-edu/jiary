@@ -1,5 +1,4 @@
 import { style } from '@vanilla-extract/css';
-import googleSignin from '@/static/auth/google_signin.png';
 
 export const container = style({
   position: 'relative',
@@ -47,23 +46,24 @@ export const loginButton = style({
   border: '1px solid hsl(230,25%,94%)',
   borderRadius: 6,
   width: 220,
+  height: 60,
   fontSize: 16,
   margin: '0 auto',
   display: 'block',
   transition: 'all 0.15s',
-  ':before': {
-    content: '',
-    display: 'inline-block',
-    background: `url(${googleSignin.src})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    width: 30,
-    height: 30,
-    marginRight: 10,
-    verticalAlign: 'middle',
-  },
   ':hover': {
     transform: 'translate3d(0,-2px,0)',
     boxShadow: '0 8px 18px 0 hsla(218,53%,10%,0.05)',
   },
+});
+
+export const googleLogo = style({
+  content: '',
+  display: 'inline-block',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'contain',
+  width: 30,
+  height: 30,
+  marginRight: 10,
+  verticalAlign: 'middle',
 });
