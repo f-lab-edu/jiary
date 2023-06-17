@@ -7,6 +7,7 @@ import {
   setUser,
 } from '@/store/slices/authSlice.ts';
 import { useState } from 'react';
+import { MESSAGE_TYPE } from '@/constant/auth.ts';
 
 let popupWindow: Window | null = null;
 
@@ -25,7 +26,7 @@ const oAuthURL = `${oauth2Endpoint}?client_id=${clientId}&response_type=token&re
 const openPopup = () => {
   popupWindow = window.open(
     oAuthURL,
-    'jiarySignin',
+    MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE,
     'toolbar=no, width=575, height=700, top=100, left=100'
   );
 };
@@ -41,7 +42,7 @@ export const useAuth = () => {
       return;
     }
     const receiveData = event.data;
-    if (receiveData.type !== 'jiarySignin') {
+    if (receiveData.type !== MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE) {
       return;
     }
 
