@@ -6,16 +6,20 @@ import LoginSection from '@/components/auth/LoginSection.tsx';
 import loginBackground from '@/static/auth/open-peeps.png';
 import Image from 'next/image';
 import Head from 'next/head';
+import { useSelector } from 'react-redux';
+import { isAuthSelector } from '@/store/slices/authSlice.ts';
 
 export default function AuthPage() {
-  const { isEndAuth, openLoginPopup } = useAuth();
+  const { openLoginPopup } = useAuth();
+  const isAuth = useSelector(isAuthSelector);
   const router = useRouter();
 
   useEffect(() => {
-    if (isEndAuth) {
+    console.log('effect');
+    if (isAuth) {
       router.push('/');
     }
-  }, [isEndAuth, router]);
+  }, [isAuth, router]);
 
   return (
     <div className={style.root}>

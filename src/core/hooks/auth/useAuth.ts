@@ -6,7 +6,6 @@ import {
   setAccessToken,
   setUser,
 } from '@/store/slices/authSlice.ts';
-import { useState } from 'react';
 import { MESSAGE_TYPE } from '@/constant/auth.ts';
 
 let popupWindow: Window | null = null;
@@ -33,7 +32,6 @@ const openPopup = () => {
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const [isEndAuth, setEndAuth] = useState(false);
 
   const messageCallback = async (event: MessageEvent) => {
     if (event.origin !== process.env.NEXT_PUBLIC_DOMAIN_URI) {
@@ -61,7 +59,6 @@ export const useAuth = () => {
 
     popupWindow?.close();
     window.removeEventListener('message', messageCallback, false);
-    setEndAuth(true);
   };
 
   const openLoginPopup: () => void = () => {
@@ -86,5 +83,5 @@ export const useAuth = () => {
     dispatch(removeAccessToken());
   };
 
-  return { isEndAuth, openLoginPopup, logout };
+  return { openLoginPopup, logout };
 };
