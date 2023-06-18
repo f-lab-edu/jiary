@@ -15,7 +15,6 @@ export default function AuthPage() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log('effect');
     if (isAuth) {
       router.push('/');
     }
