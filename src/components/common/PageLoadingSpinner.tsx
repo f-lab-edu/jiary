@@ -1,6 +1,6 @@
 import * as style from '@/components/common/PageLoadingSpinner.css.ts';
 
-export default function LoadingSpinner() {
+export default function PageLoadingSpinner() {
   return (
     <div className={style.loadingSpinnerContainer}>
       <div className={style.loadingSpinner}>
