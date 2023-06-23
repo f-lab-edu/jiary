@@ -2,12 +2,18 @@ import Image from 'next/image';
 import jiaryLogo from '@/static/jiary-logo.svg';
 import googleLogo from '@/static/auth/google_signin.png';
 import * as style from './LoginSection.css.ts';
+import { getAuthCode } from '@/core/apis/auth.ts';
 
 export default function LoginSection({
   openLoginPopup,
 }: {
-  openLoginPopup: () => void;
+  openLoginPopup: (url: string) => void;
 }) {
+  const handleLoginClick = async () => {
+    const response = await getAuthCode();
+    openLoginPopup(response.location);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.logo}>
@@ -41,7 +47,7 @@ export default function LoginSection({
       </p>
 
       <div className={style.buttonWrapper}>
-        <button onClick={openLoginPopup} className={style.loginButton}>
+        <button onClick={handleLoginClick} className={style.loginButton}>
           <Image
             src={googleLogo}
             alt="Google Logo"

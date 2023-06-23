@@ -1,5 +1,10 @@
 import { AxiosResponse } from 'axios';
 import axios from 'axios';
+import { REQUEST_BODY_TYPE } from '@/constant/auth.ts';
+import {
+  onErrorResponse,
+  onResponse,
+} from '@/core/apis/common/interceptors.ts';
 
 export interface UserInfo {
   email: string;
@@ -19,6 +24,38 @@ const oauthApi = axios.create({
   params: {},
   timeout: 15 * 1000,
 });
+
+oauthApi.interceptors.response.use(onResponse, onErrorResponse);
+
+export const getAuthCode = async () => {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`
+  );
+
+  return response.data;
+};
+
+export const getAccessToken = async (code: string) => {
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`,
+    {
+      type: REQUEST_BODY_TYPE.GET_TOKEN,
+      code,
+    }
+  );
+  return response.data;
+};
+
+export const getAccessTokenByRefreshToken = async () => {
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`,
+    {
+      type: REQUEST_BODY_TYPE.GET_TOKEN_BY_REFRESH_TOKEN,
+      accessToken: localStorage.getItem('accessToken'),
+    }
+  );
+  return response.data;
+};
 
 export const getUserInfo = async (
   accessToken: string
