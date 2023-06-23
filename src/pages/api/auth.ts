@@ -113,18 +113,15 @@ export default async function handler(
           });
           return;
         }
-        console.log(tokens[targetIndex]);
 
         const response = await oauth2Client.refreshToken(
           tokens[targetIndex].refresh_token
         );
-        console.log(response);
 
         tokens[targetIndex] = {
-          access_token: response.access_token,
-          refresh_token: response.refresh_token,
+          ...tokens[targetIndex],
+          access_token: response.tokens?.access_token,
         };
-        console.log(tokens);
 
         fs.writeFileSync(process.env.TOKEN_JSON_PATH, JSON.stringify(tokens));
         oauth2Client.setCredentials(response.tokens);
