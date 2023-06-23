@@ -16,12 +16,12 @@ interface JSONFile {
   refresh_token: string;
 }
 interface TokenInfo {
-  refresh_token?: string | null;
-  expiry_date?: number | null;
-  access_token?: string | null;
-  token_type?: string | null;
-  id_token?: string | null;
-  scope?: string;
+  refresh_token: string | null;
+  expiry_date: number | null;
+  access_token: string | null;
+  token_type: string | null;
+  id_token: string | null;
+  scope: string;
 }
 
 const oauth2Client = new google.auth.OAuth2(
@@ -45,19 +45,28 @@ const authorizationUrl: string = oauth2Client.generateAuthUrl({
 
 let hasGetTokenRequest = false;
 
+const writeFile = (tokens: JSONFile[]) => {
+  fs.writeFileSync(process.env.TOKEN_JSON_PATH, JSON.stringify(tokens));
+};
+
+const readJSONFile: () => JSONFile[] = () => {
+  const dataJSON =
+    fs.readFileSync(process.env.TOKEN_JSON_PATH).toString() || '[]';
+  return JSON.parse(dataJSON);
+};
+
 const checkSameToken = (tokens: TokenInfo) => {
-  const dataJSON = fs.readFileSync(process.env.TOKEN_JSON_PATH).toString();
-  const jsonTokens = JSON.parse(dataJSON);
+  const jsonTokens: JSONFile[] = readJSONFile();
   let index = jsonTokens.findIndex(
     (v: { access_token: string; refresh_token: string }) =>
       v.access_token === tokens.access_token
   );
   if (index > -1) {
-    jsonTokens[index].refresh_token = tokens.refresh_token;
+    jsonTokens[index].refresh_token = tokens.refresh_token as string;
   } else {
     jsonTokens.push({
-      access_token: tokens.access_token,
-      refresh_token: tokens.refresh_token,
+      access_token: tokens.access_token as string,
+      refresh_token: tokens.refresh_token as string,
     });
   }
   return jsonTokens;
@@ -78,15 +87,10 @@ export default async function handler(
           return;
         }
         hasGetTokenRequest = true;
-        const { code } = body;
-        let { tokens } = await oauth2Client.getToken(code);
-        oauth2Client.setCredentials(tokens);
 
-        const jsonTokens = checkSameToken(tokens);
-        fs.writeFileSync(
-          process.env.TOKEN_JSON_PATH,
-          JSON.stringify(jsonTokens)
-        );
+        let { tokens } = await oauth2Client.getToken(body.code);
+        oauth2Client.setCredentials(tokens);
+        writeFile(checkSameToken(tokens));
 
         res.status(200).json({ token: tokens.access_token });
         break;
@@ -95,14 +99,10 @@ export default async function handler(
       case REQUEST_BODY_TYPE.GET_TOKEN_BY_REFRESH_TOKEN: {
         const { accessToken } = body;
 
-        const dataJSON = fs
-          .readFileSync(process.env.TOKEN_JSON_PATH)
-          .toString();
-        const tokens: JSONFile[] = JSON.parse(dataJSON);
-        const targetIndex = tokens.findIndex(
+        const jsonTokens: JSONFile[] = readJSONFile();
+        const targetIndex = jsonTokens.findIndex(
           token => token.access_token === accessToken
         );
-        console.log(targetIndex);
 
         if (targetIndex < 0) {
           res.status(404).json({
@@ -114,18 +114,19 @@ export default async function handler(
           return;
         }
 
-        const response = await oauth2Client.refreshToken(
-          tokens[targetIndex].refresh_token
+        const { tokens } = await oauth2Client.refreshToken(
+          jsonTokens[targetIndex].refresh_token
         );
 
-        tokens[targetIndex] = {
-          ...tokens[targetIndex],
-          access_token: response.tokens?.access_token,
+        jsonTokens[targetIndex] = {
+          ...jsonTokens[targetIndex],
+          access_token: tokens?.access_token,
         };
 
-        fs.writeFileSync(process.env.TOKEN_JSON_PATH, JSON.stringify(tokens));
-        oauth2Client.setCredentials(response.tokens);
-        res.status(200).json({ token: response.tokens?.access_token });
+        writeFile(jsonTokens);
+
+        oauth2Client.setCredentials(tokens);
+        res.status(200).json({ token: tokens?.access_token });
         break;
       }
 

@@ -25,7 +25,9 @@ const oauthApi = axios.create({
   timeout: 15 * 1000,
 });
 
-oauthApi.interceptors.response.use(onResponse, onErrorResponse);
+setTimeout(() => {
+  oauthApi.interceptors.response.use(onResponse, onErrorResponse);
+});
 
 export const getAuthCode = async () => {
   const response = await axios.get(
