@@ -1,5 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { getAccessToken, getUserInfo } from '@/core/apis/auth.ts';
+import {
+  getAccessToken,
+  getUserInfo,
+  logoutToServer,
+} from '@/core/apis/auth.ts';
 import {
   removeAccessToken,
   removeUser,
@@ -59,12 +63,14 @@ export const useAuth = () => {
       popupWindow.focus();
     } else {
       popupWindow.focus();
+      return;
     }
 
     window.addEventListener('message', messageCallback, false);
   };
 
-  const logout: () => void = () => {
+  const logout: () => void = async () => {
+    await logoutToServer(localStorage.getItem('accessToken'));
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user');
     dispatch(removeUser());

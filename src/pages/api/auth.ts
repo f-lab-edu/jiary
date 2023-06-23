@@ -10,6 +10,9 @@ interface Redirect {
 interface Login {
   token: string;
 }
+interface Response {
+  message: string;
+}
 
 interface JSONFile {
   access_token: string;
@@ -74,7 +77,7 @@ const checkSameToken = (tokens: TokenInfo) => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Redirect | Login | AxiosError>
+  res: NextApiResponse<Redirect | Login | AxiosError | Response>
 ) {
   if (req.method === 'GET') {
     res.status(200).json({ location: authorizationUrl });
@@ -133,5 +136,16 @@ export default async function handler(
       default:
         break;
     }
+  } else if (req.method === 'DELETE') {
+    const { access_token } = req.query;
+
+    let jsonTokens = readJSONFile();
+    let index = jsonTokens.findIndex(v => v.access_token === access_token);
+    if (index > -1) {
+      jsonTokens.splice(index, 1);
+    }
+    writeFile(jsonTokens);
+
+    res.status(200).json({ message: 'success' });
   }
 }

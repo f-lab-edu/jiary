@@ -6,12 +6,18 @@ import PageLoadingSpinner from '@/components/common/PageLoadingSpinner.tsx';
 import { ReducerType } from '@/store/rootReducer.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store.ts';
+import { useAuth } from '../core/hooks/auth/useAuth.ts';
 
 export default function Home() {
   const isPageLoading = useSelector(
     (state: ReducerType) => state.ui.isPageLoading
   );
   const user = useSelector((state: RootState) => state.auth.user);
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <>
@@ -29,6 +35,7 @@ export default function Home() {
             return <li key={index}>{value}</li>;
           })}
         </ul>
+        <button onClick={handleLogout}>Logout</button>
         {isPageLoading ? <PageLoadingSpinner /> : null}
       </main>
     </>

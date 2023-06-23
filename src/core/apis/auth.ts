@@ -59,6 +59,13 @@ export const getAccessTokenByRefreshToken = async () => {
   return response.data;
 };
 
+export const logoutToServer = async (accessToken: string | null) => {
+  const response = await axios.delete(
+    `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth?access_token=${accessToken}`
+  );
+  return response.data;
+};
+
 export const getUserInfo = async (
   accessToken: string
 ): Promise<AxiosResponse<UserInfo>> => {

@@ -10,5 +10,5 @@ export default function EndPopup() {
       },
       process.env.NEXT_PUBLIC_DOMAIN_URI
     );
-  });
+  }, []);
 }
