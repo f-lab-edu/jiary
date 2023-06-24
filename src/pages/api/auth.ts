@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { REQUEST_BODY_TYPE } from '@/constant/auth.ts';
 import { AxiosError } from 'axios';
 
-interface Redirect {
+interface GoogleUrl {
   location: string;
 }
 interface Login {
@@ -80,7 +80,7 @@ const checkSameToken = (tokens: Credentials) => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Redirect | Login | AxiosError | Response>
+  res: NextApiResponse<GoogleUrl | Login | Response | AxiosError>
 ) {
   if (req.method === 'GET') {
     res.status(200).json({ location: authorizationUrl });

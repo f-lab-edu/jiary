@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { REQUEST_BODY_TYPE } from '@/constant/auth.ts';
 import {
@@ -29,49 +28,41 @@ setTimeout(() => {
   oauthApi.interceptors.response.use(onResponse, onErrorResponse);
 });
 
-export const getAuthCode = async () => {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`
-  );
+export const getAuthCode = async (): Promise<{ location: string }> =>
+  await axios
+    .get(`${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`)
+    .then(res => res.data);
 
-  return response.data;
-};
-
-export const getAccessToken = async (code: string) => {
-  const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`,
-    {
+export const getAccessToken = async (
+  code: string
+): Promise<{ token: string }> =>
+  await axios
+    .post(`${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`, {
       type: REQUEST_BODY_TYPE.GET_TOKEN,
       code,
-    }
-  );
-  return response.data;
-};
+    })
+    .then(res => res.data);
 
-export const getAccessTokenByRefreshToken = async () => {
-  const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`,
-    {
+export const getAccessTokenByRefreshToken = async (): Promise<{
+  token: string;
+}> =>
+  await axios
+    .post(`${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`, {
       type: REQUEST_BODY_TYPE.GET_TOKEN_BY_REFRESH_TOKEN,
       accessToken: localStorage.getItem('accessToken'),
-    }
-  );
-  return response.data;
-};
+    })
+    .then(res => res.data);
 
-export const logoutToServer = async (accessToken: string | null) => {
-  const response = await axios.delete(
-    `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth?access_token=${accessToken}`
-  );
-  return response.data;
-};
+export const logoutToServer = async (
+  accessToken: string | null
+): Promise<{ message: string }> =>
+  await axios
+    .delete(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth?access_token=${accessToken}`
+    )
+    .then(res => res.data);
 
-export const getUserInfo = async (
-  accessToken: string
-): Promise<AxiosResponse<UserInfo>> => {
-  const response = await oauthApi.get(
-    `oauth2/v2/userinfo?access_token=${accessToken}`
-  );
-
-  return response.data;
-};
+export const getUserInfo = async (accessToken: string): Promise<UserInfo> =>
+  await oauthApi
+    .get(`oauth2/v2/userinfo?access_token=${accessToken}`)
+    .then(res => res.data);

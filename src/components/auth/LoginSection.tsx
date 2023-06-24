@@ -10,8 +10,8 @@ export default function LoginSection({
   openLoginPopup: (url: string) => void;
 }) {
   const handleLoginClick = async () => {
-    const response = await getAuthCode();
-    openLoginPopup(response.location);
+    const { location } = await getAuthCode();
+    openLoginPopup(location);
   };
 
   return (

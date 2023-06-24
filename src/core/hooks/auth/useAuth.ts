@@ -27,7 +27,7 @@ export const useAuth = () => {
 
   const messageCallback = async (event: MessageEvent) => {
     if (event.origin !== process.env.NEXT_PUBLIC_DOMAIN_URI) {
-      // TODO: origin error
+      // eslint-disable-next-line no-console
       console.error('Cross-Origin Error');
       return;
     }
@@ -39,9 +39,9 @@ export const useAuth = () => {
 
     const url = new URL(receiveData.params);
     const searchParams = url.searchParams;
-    const response = await getAccessToken(searchParams.get('code') || '');
-
-    const accessToken = response.token;
+    const { token: accessToken } = await getAccessToken(
+      searchParams.get('code') || ''
+    );
     const userInfo = await getUserInfo(accessToken);
 
     localStorage.setItem('accessToken', accessToken);
