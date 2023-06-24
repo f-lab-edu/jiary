@@ -1,6 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/store/store.ts';
-import { isEmpty } from '@/core/utils/objectUtils.ts';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -66,10 +65,7 @@ export const authSlice = createSlice({
 });
 
 const tokenSelector = (state: RootState) => state.auth.accessToken;
-export const isAuthSelector = createSelector(
-  tokenSelector,
-  token => !isEmpty(token)
-);
+export const isAuthSelector = createSelector(tokenSelector, token => !token);
 
 export const { setUser, setAccessToken, removeUser, removeAccessToken } =
   authSlice.actions;
