@@ -28,16 +28,16 @@ setTimeout(() => {
   oauthApi.interceptors.response.use(onResponse, onErrorResponse);
 });
 
+const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
+
 export const getAuthCode = async (): Promise<{ location: string }> =>
-  await axios
-    .get(`${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`)
-    .then(res => res.data);
+  await axios.get(`${DOMAIN_URI}/api/auth`).then(res => res.data);
 
 export const getAccessToken = async (
   code: string
 ): Promise<{ token: string }> =>
   await axios
-    .post(`${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`, {
+    .post(`${DOMAIN_URI}/api/auth`, {
       type: REQUEST_BODY_TYPE.GET_TOKEN,
       code,
     })
@@ -47,7 +47,7 @@ export const getAccessTokenByRefreshToken = async (): Promise<{
   token: string;
 }> =>
   await axios
-    .post(`${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth`, {
+    .post(`${DOMAIN_URI}/api/auth`, {
       type: REQUEST_BODY_TYPE.GET_TOKEN_BY_REFRESH_TOKEN,
       accessToken: localStorage.getItem('accessToken'),
     })
@@ -57,9 +57,7 @@ export const logoutToServer = async (
   accessToken: string | null
 ): Promise<{ message: string }> =>
   await axios
-    .delete(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URI}/api/auth?access_token=${accessToken}`
-    )
+    .delete(`${DOMAIN_URI}/api/auth?access_token=${accessToken}`)
     .then(res => res.data);
 
 export const getUserInfo = async (accessToken: string): Promise<UserInfo> =>

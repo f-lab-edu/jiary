@@ -12,6 +12,7 @@ import {
 } from '@/store/slices/authSlice.ts';
 import { MESSAGE_TYPE } from '@/constant/auth.ts';
 
+const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
 let popupWindow: Window | null = null;
 
 const openPopup = (url: string) => {
@@ -26,7 +27,7 @@ export const useAuth = () => {
   const dispatch = useDispatch();
 
   const messageCallback = async (event: MessageEvent) => {
-    if (event.origin !== process.env.NEXT_PUBLIC_DOMAIN_URI) {
+    if (event.origin !== DOMAIN_URI) {
       // eslint-disable-next-line no-console
       console.error('Cross-Origin Error');
       return;
@@ -56,9 +57,7 @@ export const useAuth = () => {
   const openLoginPopup: (url: string) => void = (url: string) => {
     if (popupWindow === null || popupWindow.closed) {
       openPopup(url);
-    } else if (
-      window.location.href !== `${process.env.NEXT_PUBLIC_DOMAIN_URI}/auth`
-    ) {
+    } else if (window.location.href !== `${DOMAIN_URI}/auth`) {
       openPopup(url);
       popupWindow.focus();
     } else {
