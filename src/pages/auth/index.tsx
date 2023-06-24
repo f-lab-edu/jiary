@@ -7,18 +7,18 @@ import loginBackground from '@/static/auth/open-peeps.png';
 import Image from 'next/image';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
-import { isAuthSelector } from '@/store/slices/authSlice.ts';
+import { isLoggedInSelector } from '@/store/slices/authSlice.ts';
 
 export default function AuthPage() {
   const { openLoginPopup } = useAuth();
-  const isAuth = useSelector(isAuthSelector);
+  const isLoggedIn = useSelector(isLoggedInSelector);
   const router = useRouter();
 
   useEffect(() => {
-    if (isAuth) {
+    if (isLoggedIn) {
       router.push('/');
     }
-  }, [isAuth, router]);
+  }, [isLoggedIn, router]);
 
   return (
     <div className={style.root}>
