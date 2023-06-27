@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getAccessTokenByRefreshToken } from '@/features/auth/apis';
+import { getAccessTokenByRefreshToken } from '@/features/auth/apis/mutations.ts';
 import store from '@/store/store.ts';
 import { setAccessToken } from '@/store/slices/authSlice.ts';
 
