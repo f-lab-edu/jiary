@@ -10,5 +10,5 @@ export const useGetAuthCode = () =>
   useQuery<GoogleLoginUrl>({
     queryKey: [AUTH_KEY, 'code'],
     queryFn: getAuthCode,
-    // TODO: OPTIONS
+    staleTime: Infinity,
   });
