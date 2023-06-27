@@ -1,17 +1,16 @@
 import Head from 'next/head';
-import Counter from '../components/Counter.tsx';
 import * as style from '../styles/style-test.css.ts';
-import QueryTest from '../components/QueryTest.tsx';
-import PageLoadingSpinner from '@/components/common/PageLoadingSpinner.tsx';
-import { ReducerType } from '@/store/rootReducer.ts';
+import PageLoadingSpinner from '@/features/common/components/PageLoadingSpinner.tsx';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store.ts';
-import { useAuth } from '../core/hooks/auth/useAuth.ts';
+import { useAuth } from '../features/auth/hooks/useAuth.ts';
+import { useIsFetching } from '@tanstack/react-query';
 
 export default function Home() {
-  const isPageLoading = useSelector(
-    (state: ReducerType) => state.ui.isPageLoading
-  );
+  // const isPageLoading = useSelector(
+  //   (state: ReducerType) => state.ui.isPageLoading
+  // );
+  const isPageLoading = useIsFetching({ queryKey: ['auth'] });
   const user = useSelector((state: RootState) => state.auth.user);
   const { logout } = useAuth();
 
@@ -26,9 +25,6 @@ export default function Home() {
       </Head>
       <main>
         <div className={style.Main}>Home</div>
-        <Counter />
-        <br />
-        <QueryTest />
         <br />
         <ul>
           {Object.values(user).map((value, index) => {

@@ -2,16 +2,17 @@ import Image from 'next/image';
 import jiaryLogo from '@/static/jiary-logo.svg';
 import googleLogo from '@/static/auth/google_signin.png';
 import * as style from './LoginSection.css.ts';
-import { getAuthCode } from '@/core/apis/auth.ts';
+import { useGetAuthCode } from '@/features/auth/apis/queries.ts';
+import { OpenLoginPopup } from '@/features/auth/hooks/useAuth.ts';
 
 export default function LoginSection({
   openLoginPopup,
 }: {
-  openLoginPopup: (url: string) => void;
+  openLoginPopup: OpenLoginPopup;
 }) {
-  const handleLoginClick = async () => {
-    const { location } = await getAuthCode();
-    openLoginPopup(location);
+  const { data } = useGetAuthCode();
+  const handleLoginClick = () => {
+    openLoginPopup(data?.location);
   };
 
   return (

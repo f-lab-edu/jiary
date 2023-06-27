@@ -12,7 +12,7 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import bootApp from '@/core/config/boostApp.ts';
-import AppLayout from '@/components/common/AppLayout.tsx';
+import AppLayout from '@/features/common/components/AppLayout.tsx';
 
 import '@/styles/globals.css';
 

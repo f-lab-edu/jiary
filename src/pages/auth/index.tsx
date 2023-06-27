@@ -1,8 +1,8 @@
 import * as style from '@/pages/auth/index.css.ts';
-import { useAuth } from '@/core/hooks/auth/useAuth.ts';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import LoginSection from '@/components/auth/LoginSection.tsx';
+import LoginSection from '@/features/auth/components/LoginSection.tsx';
 import loginBackground from '@/static/auth/open-peeps.png';
 import Image from 'next/image';
 import Head from 'next/head';
