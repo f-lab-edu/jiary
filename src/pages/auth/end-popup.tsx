@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { MESSAGE_TYPE } from '@/constant/auth.ts';
 
 export default function EndPopup() {
@@ -12,3 +12,5 @@ export default function EndPopup() {
     );
   }, []);
 }
+
+EndPopup.getLayout = (page: ReactElement) => <>{page}</>;
