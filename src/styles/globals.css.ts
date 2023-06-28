@@ -35,6 +35,7 @@ globalStyle('*:before', {
 });
 
 globalStyle('img, video', {
+  display: 'block',
   height: 'auto',
   maxWidth: '100%',
 });
@@ -65,6 +66,10 @@ globalStyle('button', {
   padding: 0,
   overflow: 'visible',
   cursor: 'pointer',
+});
+
+globalStyle('a', {
+  textDecoration: 'none',
 });
 
 globalStyle('textarea', {
