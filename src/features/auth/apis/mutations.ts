@@ -16,7 +16,7 @@ const getAccessToken = async (code: string): Promise<AuthToken> =>
     })
     .then(res => res.data);
 
-const getAccessTokenByRefreshToken = async (): Promise<AuthToken> =>
+export const getAccessTokenByRefreshToken = async (): Promise<AuthToken> =>
   await axios
     .post(`${DOMAIN_URI}/api/auth`, {
       type: REQUEST_BODY_TYPE.GET_TOKEN_BY_REFRESH_TOKEN,
