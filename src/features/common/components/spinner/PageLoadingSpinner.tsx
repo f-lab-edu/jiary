@@ -1,4 +1,4 @@
-import * as style from '@/features/common/components/PageLoadingSpinner.css.ts';
+import * as style from '@/features/common/components/spinner/PageLoadingSpinner.css.tsx';
 
 export default function PageLoadingSpinner() {
   return (
