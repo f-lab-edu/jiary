@@ -6,6 +6,11 @@ import Image from 'next/image';
 export default function UserProfile() {
   const user = useSelector((state: RootState) => state.auth.user);
 
+  // const { logout } = useAuth();
+  // const handleLogout = () => {
+  //   logout();
+  // };
+
   return (
     <button>
       <Image
@@ -15,6 +20,7 @@ export default function UserProfile() {
         alt="user-image"
         className={style.userImage}
       />
+      {/* <button onClick={handleLogout}>Logout</button> */}
     </button>
   );
 }

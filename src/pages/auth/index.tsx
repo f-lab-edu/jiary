@@ -9,7 +9,7 @@ export default function AuthPage() {
   const { openLoginPopup } = useAuth();
 
   return (
-    <div className={style.root}>
+    <div className={style.container}>
       <Head>
         <title>Jiary 로그인 페이지</title>
       </Head>

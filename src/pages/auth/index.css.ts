@@ -1,8 +1,8 @@
 import { style } from '@vanilla-extract/css';
 
-export const root = style({
+export const container = style({
   position: 'relative',
-  height: '100vh',
+  height: 'calc(100vh - 56px)',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
