@@ -41,8 +41,8 @@ export default function PageHeader() {
               >
                 <Image
                   src={GithubLogo}
-                  width={24}
-                  height={24}
+                  width={30}
+                  height={30}
                   alt="github-logo"
                 />
               </Link>

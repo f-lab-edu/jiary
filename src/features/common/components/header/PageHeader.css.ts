@@ -38,6 +38,7 @@ export const li = style({
 });
 
 export const a = style({
+  boxSizing: 'content-box',
   display: 'flex',
   padding: 4,
   color: '#fff',

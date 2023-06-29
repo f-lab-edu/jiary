@@ -1,6 +1,10 @@
 import { globalStyle } from '@vanilla-extract/css';
 
 /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+globalStyle('*', {
+  boxSizing: 'border-box',
+});
+
 globalStyle(
   'blockquote,body,dd,dl,dt,fieldset,figure,h1,h2,h3,h4,h5,h6,hr,html,iframe,legend,li,ol,p,pre,textarea,ul',
   {
@@ -20,10 +24,6 @@ globalStyle('ul', {
 
 globalStyle('button,input, select', {
   margin: 0,
-});
-
-globalStyle('html', {
-  boxSizing: 'border-box',
 });
 
 globalStyle('*:after', {

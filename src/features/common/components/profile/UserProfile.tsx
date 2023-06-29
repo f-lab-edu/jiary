@@ -15,8 +15,8 @@ export default function UserProfile() {
     <button>
       <Image
         src={user.picture}
-        width={25}
-        height={25}
+        width={30}
+        height={30}
         alt="user-image"
         className={style.userImage}
       />
