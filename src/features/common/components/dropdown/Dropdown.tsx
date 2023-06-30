@@ -16,7 +16,7 @@ type Inputs = { inputValue: string; setInputValue: Dispatch<string> };
 
 type DropdownContext = {
   inputs: Inputs | undefined;
-  submitCallback?: Dispatch<SetStateAction<unknown>>;
+  submitCallback?: (args?: unknown) => unknown;
 };
 
 export const DropdownContext = createContext<DropdownContext>({
@@ -39,7 +39,7 @@ type DropdownProps = {
   };
   children: ReactNode[];
   inputs?: Inputs;
-  submitCallback?: (args: unknown) => unknown;
+  submitCallback?: (args?: unknown) => unknown;
 };
 
 export default function Dropdown({
@@ -63,7 +63,6 @@ export default function Dropdown({
       <div className={style.container} ref={containerRef}>
         {targetElement}
         {isDropdownOpen && (
-          // TODO: targetRef가 필요없음. 높이값은, children 으로 할 수 있는거 아님?
           <div className={style.wrapper} style={{ top: targetHieght + 10 }}>
             {children}
           </div>
