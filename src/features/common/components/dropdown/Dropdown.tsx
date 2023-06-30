@@ -41,7 +41,10 @@ export default function Dropdown({ target, children, control }: DropdownProps) {
   const { targetRef, targetElement } = target;
   const targetHieght = targetRef.current?.clientHeight || 0;
 
-  const ref = useClickOutSide(() => setIsDropdownOpen(false));
+  const ref = useClickOutSide(() => {
+    setIsDropdownOpen(false);
+    setInputValue('');
+  });
 
   return (
     <DropdownContext.Provider value={{ inputValue, setInputValue }}>
