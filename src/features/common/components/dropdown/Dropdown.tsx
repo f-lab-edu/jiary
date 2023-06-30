@@ -5,7 +5,6 @@ import {
   RefObject,
   SetStateAction,
   createContext,
-  useState,
 } from 'react';
 import Input from '@/features/common/components/dropdown/Input.tsx';
 import Title from '@/features/common/components/dropdown/Title.tsx';
@@ -13,14 +12,21 @@ import SubmitButton from '@/features/common/components/dropdown/SubmitButton.tsx
 import * as style from '@/features/common/components/dropdown/Dropdown.css.ts';
 import { useClickOutSide } from '@/features/common/hooks/useClickOutSide.ts';
 
-export type DropdownContext = {
-  inputValue: string;
-  setInputValue: Dispatch<SetStateAction<string>>;
+type Inputs = { inputValue: string; setInputValue: Dispatch<string> };
+
+type DropdownContext = {
+  inputs: Inputs | undefined;
+  submitCallback?: Dispatch<SetStateAction<unknown>>;
 };
 
 export const DropdownContext = createContext<DropdownContext>({
-  inputValue: '',
-  setInputValue: () => {
+  inputs: {
+    inputValue: '',
+    setInputValue: () => {
+      ('');
+    },
+  },
+  submitCallback: () => {
     ('');
   },
 });
@@ -32,25 +38,32 @@ type DropdownProps = {
     setIsDropdownOpen: Dispatch<SetStateAction<boolean>>;
   };
   children: ReactNode[];
-  className?: string;
+  inputs?: Inputs;
+  submitCallback?: (args: unknown) => unknown;
 };
 
-export default function Dropdown({ target, children, control }: DropdownProps) {
-  const [inputValue, setInputValue] = useState('');
+export default function Dropdown({
+  target,
+  children,
+  control,
+  inputs,
+  submitCallback,
+}: DropdownProps) {
   const { isDropdownOpen, setIsDropdownOpen } = control;
   const { targetRef, targetElement } = target;
   const targetHieght = targetRef.current?.clientHeight || 0;
 
-  const ref = useClickOutSide(() => {
+  const containerRef = useClickOutSide(() => {
     setIsDropdownOpen(false);
-    setInputValue('');
+    inputs?.setInputValue('');
   });
 
   return (
-    <DropdownContext.Provider value={{ inputValue, setInputValue }}>
-      <div className={style.container} ref={ref}>
+    <DropdownContext.Provider value={{ inputs, submitCallback }}>
+      <div className={style.container} ref={containerRef}>
         {targetElement}
         {isDropdownOpen && (
+          // TODO: targetRef가 필요없음. 높이값은, children 으로 할 수 있는거 아님?
           <div className={style.wrapper} style={{ top: targetHieght + 10 }}>
             {children}
           </div>

@@ -4,17 +4,23 @@ import { useRef, useState } from 'react';
 
 export default function DiaryListHeader({ count }: { count: number }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   const control = { isDropdownOpen, setIsDropdownOpen };
   const targetRef = useRef(null);
 
-  const handleCreateDoc = () => {
+  const handleOpenDropdown = () => {
     setIsDropdownOpen(isDropdownOpen => !isDropdownOpen);
     return;
   };
 
+  const handleCreateDoc = () => {
+    console.log('title!', inputValue);
+    setIsDropdownOpen(false);
+  };
+
   const targetElement = (
     <button
-      onClick={handleCreateDoc}
+      onClick={handleOpenDropdown}
       className={style.newButton}
       ref={targetRef}
     >
@@ -29,7 +35,12 @@ export default function DiaryListHeader({ count }: { count: number }) {
         <span className={style.countText}>{count}</span>
       </div>
 
-      <Dropdown target={{ targetElement, targetRef }} control={control}>
+      <Dropdown
+        target={{ targetElement, targetRef }}
+        control={control}
+        inputs={{ inputValue, setInputValue }}
+        submitCallback={handleCreateDoc}
+      >
         <Dropdown.Title title="제목을 입력해주세요" />
         <Dropdown.Input
           maxLength={30}

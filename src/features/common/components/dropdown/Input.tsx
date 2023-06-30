@@ -11,7 +11,7 @@ export default function Input({
   maxLength,
   requiredText = undefined,
 }: InputProps) {
-  const { inputValue, setInputValue } = useContext(DropdownContext);
+  const { inputs } = useContext(DropdownContext);
   const [isValid, setIsValid] = useState(true);
   const inputRef = useRef(null);
 
@@ -21,7 +21,7 @@ export default function Input({
   }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    inputs?.setInputValue(e.target.value);
     if (!requiredText) {
       return;
     }
@@ -35,7 +35,7 @@ export default function Input({
         className={style.input}
         type="text"
         maxLength={maxLength}
-        value={inputValue}
+        value={inputs?.inputValue || ''}
         onChange={handleChange}
         ref={inputRef}
       />

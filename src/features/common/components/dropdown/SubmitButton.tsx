@@ -3,10 +3,14 @@ import { useContext } from 'react';
 import { DropdownContext } from '@/features/common/components/dropdown/Dropdown.tsx';
 
 export default function SubmitButton({ text }: { text: string }) {
-  const { inputValue } = useContext(DropdownContext);
+  const { inputs, submitCallback } = useContext(DropdownContext);
 
   return (
-    <button disabled={!inputValue} className={style.submitButton}>
+    <button
+      onClick={submitCallback}
+      disabled={!inputs?.inputValue}
+      className={style.submitButton}
+    >
       {text}
     </button>
   );
