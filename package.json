@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-query": "^4.29.12",
     "@vanilla-extract/css": "^1.11.0",
+    "@vanilla-extract/dynamic": "^2.0.3",
     "axios": "^1.4.0",
     "googleapis": "^118.0.0",
     "next": "13.4.5",
