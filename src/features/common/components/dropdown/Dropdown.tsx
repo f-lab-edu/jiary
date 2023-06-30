@@ -11,6 +11,7 @@ import Title from '@/features/common/components/dropdown/Title.tsx';
 import SubmitButton from '@/features/common/components/dropdown/SubmitButton.tsx';
 import * as style from '@/features/common/components/dropdown/Dropdown.css.ts';
 import { useClickOutSide } from '@/features/common/hooks/useClickOutSide.ts';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 type Inputs = { inputValue: string; setInputValue: Dispatch<string> };
 
@@ -37,9 +38,10 @@ type DropdownProps = {
     isDropdownOpen: boolean;
     setIsDropdownOpen: Dispatch<SetStateAction<boolean>>;
   };
-  children: ReactNode[];
+  children: ReactNode[] | ReactNode;
   inputs?: Inputs;
   submitCallback?: (args?: unknown) => unknown;
+  width?: string;
 };
 
 export default function Dropdown({
@@ -48,10 +50,11 @@ export default function Dropdown({
   control,
   inputs,
   submitCallback,
+  width = 'fit-content',
 }: DropdownProps) {
   const { isDropdownOpen, setIsDropdownOpen } = control;
   const { targetRef, targetElement } = target;
-  const targetHieght = targetRef.current?.clientHeight || 0;
+  const targetHeight = targetRef.current?.clientHeight || 0;
 
   const containerRef = useClickOutSide(() => {
     setIsDropdownOpen(false);
@@ -63,7 +66,13 @@ export default function Dropdown({
       <div className={style.container} ref={containerRef}>
         {targetElement}
         {isDropdownOpen && (
-          <div className={style.wrapper} style={{ top: targetHieght + 10 }}>
+          <div
+            className={style.wrapper}
+            style={assignInlineVars({
+              [style.wrapperWidth]: width,
+              [style.wrapperTop]: `${(targetHeight + 10).toString()}px`,
+            })}
+          >
             {children}
           </div>
         )}
@@ -75,3 +84,4 @@ export default function Dropdown({
 Dropdown.Input = Input;
 Dropdown.Title = Title;
 Dropdown.SubmitButton = SubmitButton;
+// Dropdown.Button =
