@@ -1,25 +1,21 @@
 import { keyframes, style } from '@vanilla-extract/css';
 
-export const loadingSpinnerContainer = style({
+export const container = style({
   position: 'fixed',
   top: '50%',
   left: '50%',
   width: '100%',
   height: '100%',
   transform: 'translate(-50%, -50%)',
-  background: 'rgba(0, 0, 0, 0.1)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  pointerEvents: 'none',
+  // background: 'rgba(0, 0, 0, 0.1)',
+  // display: 'flex',
+  // alignItems: 'center',
+  // justifyContent: 'center',
+  // backdropFilter: 'blur(1px)',
 });
 
-export const loadingSpinner = style({
-  display: 'inline-block',
-  width: 80,
-  height: 80,
-});
-
-const rotate = keyframes({
+const load8 = keyframes({
   '0%': {
     transform: 'rotate(0deg)',
   },
@@ -28,35 +24,29 @@ const rotate = keyframes({
   },
 });
 
-export const loadingSpinnerDiv = style({
-  boxSizing: 'border-box',
-  display: 'block',
+export const loader = style({
+  margin: 4,
   position: 'absolute',
-  width: 64,
-  height: 64,
-  margin: 8,
-  border: '8px solid #000',
+  top: 80,
+  right: 40,
+  textIndent: '-9999em',
+  // outer
+  borderTop: '3px solid hsla(230, 4%, 10%, 0.8)',
+  borderRight: '3px solid hsla(230, 4%, 10%, 0.8)',
+  borderBottom: '3px solid hsla(230, 4%, 10%, 0.8)',
+  // inner
+  borderLeft: '3px solid hsla(230, 4%, 10%, 0.2)',
+  WebkitTransform: 'translateZ(0)',
+  transform: 'translateZ(0)',
+  WebkitAnimation: `${load8} 1.1s infinite linear`,
+  animation: `${load8} 1.1s infinite linear`,
+  width: 24,
+  height: 24,
   borderRadius: '50%',
-  animation: `${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite`,
-  borderColor: '#000 transparent transparent transparent',
+  ':after': {
+    content: '',
+    borderRadius: '50%',
+    width: 24,
+    height: 24,
+  },
 });
-
-export const div1 = style([
-  loadingSpinnerDiv,
-  {
-    animationDelay: '-0.45s',
-  },
-]);
-
-export const div2 = style([
-  loadingSpinnerDiv,
-  {
-    animationDelay: '-0.3s',
-  },
-]);
-export const div3 = style([
-  loadingSpinnerDiv,
-  {
-    animationDelay: '-0.15s',
-  },
-]);
