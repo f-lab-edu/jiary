@@ -3,7 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { Doc, DriveFile } from '@/features/diary/apis/interfaces.ts';
 
 const getDocList = async (): Promise<DriveFile> =>
-  await driveApi.get('/files?q=trashed = false').then(res => res.data);
+  await driveApi
+    .get("/files?q=trashed=false and name contains 'jiary-'")
+    .then(res => res.data);
 
 export const useGetDocList = () =>
   useQuery<DriveFile>({

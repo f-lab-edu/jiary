@@ -29,4 +29,5 @@ export const docsApi = axios.create({
 docsApi.interceptors.request.use(onRequest);
 docsApi.interceptors.response.use(onResponse, onErrorResponse);
 
+export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
 export const DIARY_KEY = 'DIARY' as const;
