@@ -1,17 +1,10 @@
 import { style } from '@vanilla-extract/css';
-import {
-  SECOND_TEXT_COLOR,
-  BORDER_COLOR,
-  TAG_BACKGROUND,
-  BUTTON_COLOR,
-  BUTTON_HOVER_COLOR,
-} from '@/features/diary/components/Colors';
-SECOND_TEXT_COLOR;
+import { COLORS } from '@/constant/colors.ts';
 
 export const listHeader = style({
   display: 'flex',
   justifyContent: 'space-between',
-
+  position: 'relative',
   marginTop: 30,
   height: 50,
 });
@@ -27,17 +20,16 @@ export const countText = style({
   marginLeft: 8,
   fontSize: 18,
   padding: '2px 8px',
-  // fontWeight: 600,
   color: '#000',
-  border: `1px solid ${BORDER_COLOR}`,
+  border: `1px solid ${COLORS.BORDER_COLOR}`,
   borderRadius: 9,
-  background: TAG_BACKGROUND,
+  background: COLORS.TAG_BACKGROUND,
   verticalAlign: 'bottom',
   fontWeight: 500,
 });
 
 export const newButton = style({
-  background: BUTTON_COLOR,
+  background: COLORS.BLUE_COLOR,
   width: 60,
   height: 30,
   borderRadius: 6,
@@ -47,6 +39,6 @@ export const newButton = style({
   lineHeight: '150%',
   transition: 'all 0.15s ease',
   ':hover': {
-    background: BUTTON_HOVER_COLOR,
+    background: COLORS.BLUE_LIGHT_COLOR,
   },
 });
