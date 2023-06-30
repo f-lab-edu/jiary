@@ -11,6 +11,7 @@ import {
   useLogout,
   useGetUserInfo,
 } from '@/features/auth/apis/mutations.ts';
+import { useRouter } from 'next/router';
 
 const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
 let popupWindow: Window | null = null;
@@ -32,6 +33,7 @@ export const useAuth = () => {
   const getUserInfoMutation = useGetUserInfo();
   const logoutMutation = useLogout();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const messageCallback = async (event: MessageEvent) => {
     if (event.origin !== DOMAIN_URI) {
@@ -59,6 +61,7 @@ export const useAuth = () => {
 
     popupWindow?.close();
     window.removeEventListener('message', messageCallback, false);
+    router.push('/diary');
   };
 
   const openLoginPopup: OpenLoginPopup = (url: string | undefined) => {
