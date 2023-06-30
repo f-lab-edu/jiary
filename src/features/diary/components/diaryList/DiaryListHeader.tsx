@@ -48,6 +48,7 @@ export default function DiaryListHeader({ count }: { count: number }) {
         control={control}
         inputs={{ inputValue, setInputValue }}
         submitCallback={handleCreateDoc}
+        width="200px"
       >
         <Dropdown.Title title="제목을 입력해주세요" />
         <Dropdown.Input
