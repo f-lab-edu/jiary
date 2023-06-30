@@ -28,7 +28,7 @@ export const loader = style({
   margin: 4,
   position: 'absolute',
   top: 80,
-  right: 40,
+  right: '50%',
   textIndent: '-9999em',
   // outer
   borderTop: '3px solid hsla(230, 4%, 10%, 0.8)',
