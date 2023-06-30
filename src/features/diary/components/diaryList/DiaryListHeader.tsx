@@ -1,12 +1,16 @@
 import * as style from '@/features/diary/components/diaryList/DiaryListHeader.css.ts';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
 import { useRef, useState } from 'react';
+import { useCreateDoc } from '@/features/diary/apis/mutations.ts';
+import { useRouter } from 'next/router';
 
 export default function DiaryListHeader({ count }: { count: number }) {
+  const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const control = { isDropdownOpen, setIsDropdownOpen };
   const targetRef = useRef(null);
+  const createDocMutation = useCreateDoc();
 
   const handleOpenDropdown = () => {
     setIsDropdownOpen(isDropdownOpen => !isDropdownOpen);
@@ -14,8 +18,12 @@ export default function DiaryListHeader({ count }: { count: number }) {
   };
 
   const handleCreateDoc = () => {
-    console.log('title!', inputValue);
     setIsDropdownOpen(false);
+    createDocMutation.mutate(inputValue, {
+      onSuccess({ documentId }) {
+        router.push(`/diary/${documentId}`);
+      },
+    });
   };
 
   const targetElement = (

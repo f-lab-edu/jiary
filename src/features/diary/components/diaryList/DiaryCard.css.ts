@@ -1,8 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import {
-  SECOND_TEXT_COLOR,
-  BORDER_COLOR,
-} from '@/features/diary/components/Colors';
+import { COLORS } from '@/constant/colors.ts';
 
 export const li = style({
   width: '100%',
@@ -31,7 +28,7 @@ export const header = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  borderBottom: `1px solid ${BORDER_COLOR}`,
+  borderBottom: `1px solid ${COLORS.BORDER_COLOR}`,
   paddingBottom: 10,
 });
 
@@ -41,7 +38,7 @@ export const location = style({
 });
 
 export const locationText = style({
-  color: SECOND_TEXT_COLOR,
+  color: COLORS.SECOND_TEXT_COLOR,
   fontSize: 12,
   marginLeft: 10,
   textOverflow: 'ellipsis',
@@ -55,7 +52,7 @@ export const tag = style({});
 export const contentWrapper = style({
   marginTop: 14,
   height: '60%',
-  borderBottom: `1px solid ${BORDER_COLOR}`,
+  borderBottom: `1px solid ${COLORS.BORDER_COLOR}`,
 });
 
 export const title = style({
@@ -76,6 +73,6 @@ export const footer = style({
   display: 'flex',
   alignItems: 'center',
   gap: 13,
-  color: SECOND_TEXT_COLOR,
+  color: COLORS.SECOND_TEXT_COLOR,
   fontSize: 14,
 });
