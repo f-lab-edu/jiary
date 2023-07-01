@@ -9,14 +9,17 @@ import { MouseEvent } from 'react';
 
 export default function DiaryCard({ file }: { file: File }) {
   const title = file.name.includes('jiary-') ? file.name.slice(6) : file.name;
+
   const handleLinkClick = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (target.className.includes('menuIcon')) {
+    if (
+      target.className.includes('menuIcon') ||
+      target.className.includes('deleteButton')
+    ) {
       e.preventDefault();
     }
   };
 
-  //
   return (
     <li key={file.id} className={style.li}>
       <Link

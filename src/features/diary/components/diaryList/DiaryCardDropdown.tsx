@@ -10,6 +10,11 @@ export default function DiaryCardDropdown({ id }: { id: string }) {
   const targetRef = useRef(null);
   const deleteMutation = useDeleteDoc();
 
+  const handleDeleteButton = () => {
+    deleteMutation.mutate(id);
+    setIsDropdownOpen(false);
+  };
+
   const targetElement = (
     <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} ref={targetRef}>
       <Image
@@ -27,10 +32,7 @@ export default function DiaryCardDropdown({ id }: { id: string }) {
       target={{ targetElement, targetRef }}
       control={{ isDropdownOpen, setIsDropdownOpen }}
     >
-      <button
-        onClick={() => deleteMutation.mutate(id)}
-        className={style.deleteButton}
-      >
+      <button onClick={handleDeleteButton} className={style.deleteButton}>
         삭제
       </button>
     </Dropdown>
