@@ -21,6 +21,6 @@ export default async function handler(
       res.status(404).json({ message: 'error' });
     }
 
-    res.status(204).json({ message: 'success' });
+    res.status(204).end();
   }
 }
