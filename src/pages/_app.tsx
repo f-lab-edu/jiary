@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect } from 'react';
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
 
@@ -24,11 +24,10 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export const queryClient = new QueryClient();
-
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout =
     Component.getLayout ?? (page => <PageLayout>{page}</PageLayout>);
+  const [queryClient] = useState(new QueryClient());
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
