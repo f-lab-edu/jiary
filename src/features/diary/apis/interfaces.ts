@@ -12,6 +12,6 @@ export interface File {
 
 export interface DriveFile {
   files: File[];
-  incompleteSearch: boolean;
-  kind: string;
+  incompleteSearch?: boolean;
+  kind?: string;
 }
