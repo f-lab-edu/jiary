@@ -1,13 +1,12 @@
-import { File } from '@/features/diary/apis/interfaces.ts';
-import * as style from '@/features/diary/components/diaryList/DiaryList.css.ts';
-import DiaryCard from '@/features/diary/components/diaryList/DiaryCard';
-import DiaryListHeader from '@/features/diary/components/diaryList/DiaryListHeader.tsx';
+import { File } from '@/features/diary/diaryList/apis/interfaces.tsx';
+import * as style from '@/features/diary/diaryList/components/DiaryList.css.ts';
+import DiaryCard from '@/features/diary/diaryList/components/DiaryCard.tsx';
+import DiaryListHeader from '@/features/diary/diaryList/components/DiaryListHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { changeLoading } from '@/store/slices/uiSlice.ts';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
-import { DIARY_KEY } from '@/features/diary/apis/index.ts';
+import { DIARY_KEY } from '@/features/diary/diaryList/apis';
 import { useCallback, useEffect } from 'react';
-// import { useEffect } from 'react';
 /**
  * card list data
  * 1. 제목

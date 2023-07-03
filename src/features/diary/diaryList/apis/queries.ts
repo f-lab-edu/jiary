@@ -1,6 +1,6 @@
-import { DIARY_KEY, docsApi, driveApi } from '@/features/diary/apis/index.ts';
+import { DIARY_KEY, docsApi, driveApi } from '@/features/diary/diaryList/apis';
 import { useQuery } from '@tanstack/react-query';
-import { Doc, DriveFile } from '@/features/diary/apis/interfaces.ts';
+import { Doc, DriveFile } from '@/features/diary/diaryList/apis/interfaces';
 
 const getDocList = async (): Promise<DriveFile> =>
   await driveApi

@@ -1,8 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { DIARY_KEY, docsApi } from '@/features/diary/apis/index.ts';
-import { Doc, DriveFile, File } from '@/features/diary/apis/interfaces.ts';
+import { DIARY_KEY, docsApi } from '@/features/diary/diaryList/apis';
+import {
+  Doc,
+  DriveFile,
+  File,
+} from '@/features/diary/diaryList/apis/interfaces';
 import axios, { AxiosError } from 'axios';
-import { DOMAIN_URI } from '@/features/diary/apis/index.ts';
+import { DOMAIN_URI } from '@/features/diary/diaryList/apis';
 
 const createDoc = async (title: string): Promise<Doc> =>
   await docsApi.post('', { title: `jiary-${title}` }).then(res => res.data);
