@@ -1,9 +1,9 @@
 import menu from '@/static/diary/menu.svg';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { useDeleteDoc } from '@/features/diary/diaryList/apis/mutations';
+import { useDeleteDoc } from '@/features/diaryList/apis/mutations.ts';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
-import * as style from '@/features/diary/diaryList/components/DiaryCard.css.ts';
+import * as style from '@/features/diaryList/components/DiaryCard.css';
 
 export default function DiaryCardDropdown({ id }: { id: string }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

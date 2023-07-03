@@ -1,11 +1,11 @@
-import { File } from '@/features/diary/diaryList/apis/interfaces.tsx';
-import * as style from '@/features/diary/diaryList/components/DiaryList.css.ts';
-import DiaryCard from '@/features/diary/diaryList/components/DiaryCard.tsx';
-import DiaryListHeader from '@/features/diary/diaryList/components/DiaryListHeader.tsx';
+import { File } from '@/features/diaryList/apis/interfaces.ts';
+import * as style from '@/features/diaryList/components/DiaryList.css';
+import DiaryCard from '@/features/diaryList/components/DiaryCard.tsx';
+import DiaryListHeader from '@/features/diaryList/components/DiaryListHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { changeLoading } from '@/store/slices/uiSlice.ts';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
-import { DIARY_KEY } from '@/features/diary/diaryList/apis';
+import { DIARY_KEY } from '@/features/diaryList/apis/index.ts';
 import { useCallback, useEffect } from 'react';
 /**
  * card list data
