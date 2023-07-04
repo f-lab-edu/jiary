@@ -2,11 +2,6 @@ import { File } from '@/features/diaryList/apis/interfaces.ts';
 import * as style from '@/features/diaryList/pages/root/DiaryPage.css.ts';
 import DiaryCard from '@/features/diaryList/components/DiaryCard/DiaryCard';
 import DiaryListHeader from '@/features/diaryList/components/DiaryListHeader/DiaryListHeader';
-import { useDispatch } from 'react-redux';
-import { changeLoading } from '@/store/slices/uiSlice.ts';
-import { useIsFetching, useIsMutating } from '@tanstack/react-query';
-import { DIARY_KEY } from '@/features/diaryList/apis/index.ts';
-import { useCallback, useEffect } from 'react';
 /**
  * card list data
  * 1. 제목
@@ -18,19 +13,6 @@ import { useCallback, useEffect } from 'react';
  * https://www.eleken.co/cases/tendrx
  */
 export default function DiaryPage({ files }: { files: File[] | undefined }) {
-  const dispatch = useDispatch();
-
-  const isFetching = useIsFetching({ queryKey: [DIARY_KEY] });
-  const isMuatating = useIsMutating({ mutationKey: [DIARY_KEY] });
-
-  const dispatchLoading = useCallback(() => {
-    dispatch(changeLoading(isFetching || isMuatating));
-  }, [isFetching, isMuatating, dispatch]);
-
-  useEffect(() => {
-    dispatchLoading();
-  }, [dispatchLoading]);
-
   return (
     <>
       <div className={style.container}>
