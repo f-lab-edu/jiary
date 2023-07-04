@@ -5,6 +5,7 @@ import {
   onResponse,
 } from '@/features/common/apis/interceptors.ts';
 import { Doc, DriveFile } from '@/features/diaryList/apis/interfaces.ts';
+import { jiaryApi } from '@/features/common/apis/jiaryInstance.ts';
 
 export const driveApi = axios.create({
   baseURL: 'https://www.googleapis.com/drive/v3',
@@ -39,7 +40,7 @@ export const createDoc = async (title: string): Promise<Doc> =>
 export const deleteDoc = async (
   fileId: string
 ): Promise<{ message: string } | AxiosError> =>
-  await axios
+  await jiaryApi
     .delete(
       `${DOMAIN_URI}/api/diary?file_id=${fileId}&access_token=${localStorage.getItem(
         'accessToken'
