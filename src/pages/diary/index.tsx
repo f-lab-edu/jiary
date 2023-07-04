@@ -1,4 +1,4 @@
-import { useGetDocList } from '@/features/diaryList/apis/queries.ts';
+import useGetDocList from '@/features/diaryList/apis/queries/useGetDocList.ts';
 import DiaryList from '@/features/diaryList/components/DiaryList.tsx';
 
 export default function DiaryPage() {

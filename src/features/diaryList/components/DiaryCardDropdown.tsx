@@ -1,7 +1,7 @@
 import menu from '@/static/diary/menu.svg';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { useDeleteDoc } from '@/features/diaryList/apis/mutations.ts';
+import useDeleteDoc from '@/features/diaryList/apis/mutations/useDeleteDoc.ts';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
 import * as style from '@/features/diaryList/components/DiaryCard.css';
 

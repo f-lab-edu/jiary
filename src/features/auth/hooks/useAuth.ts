@@ -6,11 +6,9 @@ import {
   setUser,
 } from '@/store/slices/authSlice.ts';
 import { MESSAGE_TYPE } from '@/constants/auth';
-import {
-  useGetAccessToken,
-  useLogout,
-  useGetUserInfo,
-} from '@/features/auth/apis/mutations.ts';
+import useGetAccessToken from '@/features/auth/apis/mutations/useGetAccessToken.ts';
+import useLogout from '@/features/auth/apis/mutations/useLogout.ts';
+import useGetUserInfo from '@/features/auth/apis/mutations/useGetUserInfo.ts';
 import { useRouter } from 'next/router';
 
 const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;

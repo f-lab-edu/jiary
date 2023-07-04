@@ -4,7 +4,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-import { getAccessTokenByRefreshToken } from '@/features/auth/apis/mutations.ts';
+import { getAccessTokenByRefreshToken } from '@/features/auth/apis/index.ts';
 import store from '@/store/store.ts';
 import { setAccessToken } from '@/store/slices/authSlice.ts';
 

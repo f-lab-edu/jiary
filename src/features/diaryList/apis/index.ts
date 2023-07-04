@@ -1,9 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
   onErrorResponse,
   onRequest,
   onResponse,
 } from '@/features/common/apis/interceptors.ts';
+import { Doc, DriveFile } from '@/features/diaryList/apis/interfaces.ts';
 
 export const driveApi = axios.create({
   baseURL: 'https://www.googleapis.com/drive/v3',
@@ -31,3 +32,26 @@ docsApi.interceptors.response.use(onResponse, onErrorResponse);
 
 export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
 export const DIARY_KEY = 'DIARY' as const;
+
+export const createDoc = async (title: string): Promise<Doc> =>
+  await docsApi.post('', { title: `jiary-${title}` }).then(res => res.data);
+
+export const deleteDoc = async (
+  fileId: string
+): Promise<{ message: string } | AxiosError> =>
+  await axios
+    .delete(
+      `${DOMAIN_URI}/api/diary?file_id=${fileId}&access_token=${localStorage.getItem(
+        'accessToken'
+      )}`
+    )
+    .then(res => res.data);
+
+export const getDocList = async (): Promise<DriveFile> =>
+  await driveApi
+    .get("/files?q=trashed=false and name contains 'jiary-'")
+    .then(res => res.data);
+
+export const getDoc = async (id: string): Promise<Doc> => {
+  return await docsApi.get(`/${id}`).then(res => res.data);
+};
