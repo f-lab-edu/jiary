@@ -1,7 +1,7 @@
 import { File } from '@/features/diaryList/apis/interfaces.ts';
-import * as style from '@/features/diaryList/components/DiaryList/DiaryList.css.ts';
+import * as style from '@/features/diaryList/pages/root/DiaryPage.css.ts';
 import DiaryCard from '@/features/diaryList/components/DiaryCard/DiaryCard';
-import DiaryListHeader from '@/features/diaryList/components/DiaryList/DiaryListHeader/DiaryListHeader';
+import DiaryListHeader from '@/features/diaryList/components/DiaryListHeader/DiaryListHeader';
 import { useDispatch } from 'react-redux';
 import { changeLoading } from '@/store/slices/uiSlice.ts';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
@@ -17,7 +17,7 @@ import { useCallback, useEffect } from 'react';
  * 6. label 색상 선택기
  * https://www.eleken.co/cases/tendrx
  */
-export default function DiaryList({ files }: { files: File[] | undefined }) {
+export default function DiaryPage({ files }: { files: File[] | undefined }) {
   const dispatch = useDispatch();
 
   const isFetching = useIsFetching({ queryKey: [DIARY_KEY] });
