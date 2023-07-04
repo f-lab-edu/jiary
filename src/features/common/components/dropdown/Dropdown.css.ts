@@ -1,5 +1,5 @@
 import { createVar, style } from '@vanilla-extract/css';
-import { COLORS } from '@/constant/colors.ts';
+import { COLORS } from '@/constants/colors';
 
 export const wrapperWidth = createVar();
 export const wrapperTop = createVar();

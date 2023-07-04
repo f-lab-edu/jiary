@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from 'react';
-import { MESSAGE_TYPE } from '@/constant/auth.ts';
+import { MESSAGE_TYPE } from '@/constants/auth';
 
 export default function EndPopup() {
   useEffect(() => {

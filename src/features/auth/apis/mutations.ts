@@ -1,6 +1,6 @@
 import { DOMAIN_URI, oauthApi } from '@/features/auth/apis/index.ts';
 import axios from 'axios';
-import { REQUEST_BODY_TYPE } from '@/constant/auth.ts';
+import { REQUEST_BODY_TYPE } from '@/constants/auth';
 import {
   AuthToken,
   LogoutResponse,

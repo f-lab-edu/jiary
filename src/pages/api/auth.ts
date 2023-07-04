@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { google } from 'googleapis';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { REQUEST_BODY_TYPE } from '@/constant/auth.ts';
 import { AxiosError } from 'axios';
 
 interface GoogleUrl {
@@ -89,8 +88,10 @@ export default async function handler(
     const body = req.body;
 
     switch (body.type) {
-      case REQUEST_BODY_TYPE.GET_TOKEN: {
+      case 'GET_TOKEN': {
         if (hasGetTokenRequest) {
+          res.status(429).end();
+          hasGetTokenRequest = false;
           return;
         }
         hasGetTokenRequest = true;
@@ -103,7 +104,7 @@ export default async function handler(
         break;
       }
 
-      case REQUEST_BODY_TYPE.GET_TOKEN_BY_REFRESH_TOKEN: {
+      case 'GET_TOKEN_BY_REFRESH_TOKEN': {
         const { accessToken } = body;
 
         const jsonTokens: JSONFile[] = readJSONFile();
@@ -138,6 +139,7 @@ export default async function handler(
       }
 
       default:
+        res.status(404).end();
         break;
     }
   } else if (req.method === 'DELETE') {

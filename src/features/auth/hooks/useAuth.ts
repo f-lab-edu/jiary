@@ -5,7 +5,7 @@ import {
   setAccessToken,
   setUser,
 } from '@/store/slices/authSlice.ts';
-import { MESSAGE_TYPE } from '@/constant/auth.ts';
+import { MESSAGE_TYPE } from '@/constants/auth';
 import {
   useGetAccessToken,
   useLogout,
@@ -52,6 +52,7 @@ export const useAuth = () => {
     const { token: accessToken } = await getAccessTokenMutation.mutateAsync(
       searchParams.get('code') || ''
     );
+    if (!accessToken) throw new Error('엑세스 토큰이 없습니다.');
     const userInfo = await getUserInfoMutation.mutateAsync(accessToken);
 
     localStorage.setItem('accessToken', accessToken);
