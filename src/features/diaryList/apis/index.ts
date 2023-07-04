@@ -53,6 +53,5 @@ export const getDocList = async (): Promise<DriveFile> =>
     .get("/files?q=trashed=false and name contains 'jiary-'")
     .then(res => res.data);
 
-export const getDoc = async (id: string): Promise<Doc> => {
-  return await docsApi.get(`/${id}`).then(res => res.data);
-};
+export const getDoc = async (id: string): Promise<Doc> =>
+  await docsApi.get(`/${id}`).then(res => res.data);

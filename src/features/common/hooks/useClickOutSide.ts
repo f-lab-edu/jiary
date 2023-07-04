@@ -18,8 +18,6 @@ export const useClickOutSide = (
 
   useEffect(() => {
     window.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      window.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => window.removeEventListener('mousedown', handleClickOutside);
   }, [handleClickOutside]);
 };

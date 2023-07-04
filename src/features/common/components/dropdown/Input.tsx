@@ -36,9 +36,8 @@ export default function Input({
     setIsValid(!!input?.value);
   };
 
-  const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) =>
     e.key === 'Enter' && submitCallback && submitCallback();
-  };
 
   return (
     <>

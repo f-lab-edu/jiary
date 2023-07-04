@@ -11,9 +11,7 @@ export default function LoginSection({
   openLoginPopup: OpenLoginPopup;
 }) {
   const { data } = useGetAuthCode();
-  const handleLoginClick = () => {
-    openLoginPopup(data?.location);
-  };
+  const handleLoginClick = () => openLoginPopup(data?.location);
 
   return (
     <div className={style.container}>
