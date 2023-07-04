@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { RefObject, useCallback, useEffect } from 'react';
 
-export const useClickOutSide = (callback: () => void) => {
-  const containerRef = useRef(null);
-
+export const useClickOutSide = (
+  ref: RefObject<HTMLElement>,
+  callback: () => void
+) => {
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      const containerElement =
-        containerRef.current as unknown as HTMLButtonElement;
+      const containerElement = ref.current as unknown as HTMLButtonElement;
 
-      if (containerRef && !containerElement?.contains(target)) {
+      if (ref && !containerElement?.contains(target)) {
         callback();
       }
     },
-    [containerRef, callback]
+    [ref, callback]
   );
 
   useEffect(() => {
@@ -22,6 +22,4 @@ export const useClickOutSide = (callback: () => void) => {
       window.removeEventListener('mousedown', handleClickOutside);
     };
   }, [handleClickOutside]);
-
-  return containerRef;
 };

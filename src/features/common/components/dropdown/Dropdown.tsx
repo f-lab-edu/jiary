@@ -5,6 +5,7 @@ import {
   RefObject,
   SetStateAction,
   createContext,
+  useRef,
 } from 'react';
 import Input from '@/features/common/components/dropdown/Input.tsx';
 import Title from '@/features/common/components/dropdown/Title.tsx';
@@ -55,8 +56,9 @@ export default function Dropdown({
   const { isDropdownOpen, setIsDropdownOpen } = control;
   const { targetRef, targetElement } = target;
   const targetHeight = targetRef.current?.clientHeight || 0;
+  const containerRef = useRef(null);
 
-  const containerRef = useClickOutSide(() => {
+  useClickOutSide(containerRef, () => {
     setIsDropdownOpen(false);
     inputs?.setInputValue('');
   });
