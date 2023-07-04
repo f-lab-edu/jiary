@@ -1,4 +1,4 @@
-import * as style from '@/features/diaryList/components/DiaryListHeader.css';
+import * as style from '@/features/diaryList/components/DiaryList/DiaryListHeader/DiaryListHeader.css.ts';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
 import { useRef, useState } from 'react';
 import useCreateDoc from '@/features/diaryList/apis/mutations/useCreateDoc.ts';

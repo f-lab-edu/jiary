@@ -1,6 +1,6 @@
 import * as style from '@/pages/auth/index.css.ts';
-import { useAuth } from '@/features/auth/hooks/useAuth';
-import LoginSection from '@/features/auth/components/LoginSection.tsx';
+import { useAuth } from '@/features/auth/hooks/useAuth.ts';
+import LoginSection from '@/features/auth/components/LoginSection/LoginSection.tsx';
 import loginBackground from '@/static/auth/open-peeps.png';
 import Image from 'next/image';
 import Head from 'next/head';

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { File } from '@/features/diaryList/apis/interfaces.ts';
-import * as style from '@/features/diaryList/components/DiaryCard.css';
+import * as style from '@/features/diaryList/components/DiaryCard/DiaryCard.css.ts';
 import earth from '@/static/diary/earth2.svg';
 import calendar from '@/static/diary/calendar.svg';
-import DiaryCardDropdown from '@/features/diaryList/components/DiaryCardDropdown.tsx';
+import DiaryCardDropdown from '@/features/diaryList/components/DiaryCardDropdown/DiaryCardDropdown';
 import { MouseEvent } from 'react';
 
 export default function DiaryCard({ file }: { file: File }) {

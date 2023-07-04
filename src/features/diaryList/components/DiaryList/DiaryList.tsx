@@ -1,7 +1,7 @@
 import { File } from '@/features/diaryList/apis/interfaces.ts';
-import * as style from '@/features/diaryList/components/DiaryList.css';
-import DiaryCard from '@/features/diaryList/components/DiaryCard.tsx';
-import DiaryListHeader from '@/features/diaryList/components/DiaryListHeader.tsx';
+import * as style from '@/features/diaryList/components/DiaryList/DiaryList.css.ts';
+import DiaryCard from '@/features/diaryList/components/DiaryCard/DiaryCard';
+import DiaryListHeader from '@/features/diaryList/components/DiaryList/DiaryListHeader/DiaryListHeader';
 import { useDispatch } from 'react-redux';
 import { changeLoading } from '@/store/slices/uiSlice.ts';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';

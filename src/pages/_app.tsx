@@ -14,7 +14,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import bootApp from '@/core/config/boostApp.ts';
 import PageLayout from '@/features/common/components/PageLayout.tsx';
 
-import '@/styles/globals.css';
+import '@/styles/globals.css.ts';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

@@ -1,5 +1,5 @@
 import useGetDocList from '@/features/diaryList/apis/queries/useGetDocList.ts';
-import DiaryList from '@/features/diaryList/components/DiaryList.tsx';
+import DiaryList from '@/features/diaryList/components/DiaryList/DiaryList.tsx';
 
 export default function DiaryPage() {
   const { data } = useGetDocList();
