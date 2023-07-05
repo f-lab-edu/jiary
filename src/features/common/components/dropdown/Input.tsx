@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { DropdownContext } from '@/features/common/components/dropdown/Dropdown.tsx';
+import { DropdownContext } from '@/features/common/hooks/useDropdown.ts';
 
 type InputProps = {
   maxLength?: number;

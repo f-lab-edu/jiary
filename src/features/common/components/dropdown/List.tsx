@@ -1,5 +1,5 @@
 import { ReactNode, useContext } from 'react';
-import { DropdownContext } from './Dropdown.tsx';
+import { DropdownContext } from '@/features/common/hooks/useDropdown.ts';
 import * as style from '@/features/common/components/dropdown/Dropdown.css.ts';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 
