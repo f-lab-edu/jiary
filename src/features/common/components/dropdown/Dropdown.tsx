@@ -1,83 +1,78 @@
 import {
   Dispatch,
-  ReactElement,
+  JSXElementConstructor,
+  MutableRefObject,
   ReactNode,
-  RefObject,
   SetStateAction,
   createContext,
   useRef,
+  useState,
 } from 'react';
 import Input from '@/features/common/components/dropdown/Input.tsx';
 import Title from '@/features/common/components/dropdown/Title.tsx';
 import SubmitButton from '@/features/common/components/dropdown/SubmitButton.tsx';
+import List from '@/features/common/components/dropdown/List.tsx';
+import Trigger from '@/features/common/components/dropdown/Trigger.tsx';
 import * as style from '@/features/common/components/dropdown/Dropdown.css.ts';
 import { useClickOutSide } from '@/features/common/hooks/useClickOutSide.ts';
-import { assignInlineVars } from '@vanilla-extract/dynamic';
-
-type Inputs = { inputValue: string; setInputValue: Dispatch<string> };
 
 type DropdownContext = {
-  inputs: Inputs | undefined;
-  submitCallback?: (args?: unknown) => unknown;
+  isShow: boolean;
+  setIsShow: Dispatch<SetStateAction<boolean>>;
+  triggerRef: MutableRefObject<HTMLButtonElement | null> | null;
+  setTriggerRef: Dispatch<
+    SetStateAction<MutableRefObject<HTMLButtonElement | null> | null>
+  >;
 };
 
 export const DropdownContext = createContext<DropdownContext>({
-  inputs: {
-    inputValue: '',
-    setInputValue: () => {
-      ('');
-    },
+  isShow: false,
+  triggerRef: null,
+  setIsShow: () => {
+    ('');
   },
-  submitCallback: () => {
+  setTriggerRef: () => {
     ('');
   },
 });
 
-type DropdownProps = {
-  target: { targetElement: ReactElement; targetRef: RefObject<HTMLElement> };
-  control: {
-    isDropdownOpen: boolean;
-    setIsDropdownOpen: Dispatch<SetStateAction<boolean>>;
-  };
-  children: ReactNode[] | ReactNode;
-  inputs?: Inputs;
-  submitCallback?: (args?: unknown) => unknown;
-  width?: string;
-};
-
-export default function Dropdown({
-  target,
-  children,
-  control,
-  inputs,
-  submitCallback,
-  width = 'fit-content',
-}: DropdownProps) {
-  const { isDropdownOpen, setIsDropdownOpen } = control;
-  const { targetRef, targetElement } = target;
-  const targetHeight = targetRef.current?.clientHeight || 0;
+export default function Dropdown({ children }: { children: ReactNode[] }) {
+  // TODO: context 관련 value 모두 커스텀 훅으로 분리
+  const [isShow, setIsShow] = useState(false);
+  const [triggerRef, setTriggerRef] =
+    useState<MutableRefObject<HTMLButtonElement | null> | null>(null);
   const containerRef = useRef(null);
 
   useClickOutSide(containerRef, () => {
-    setIsDropdownOpen(false);
-    inputs?.setInputValue('');
+    setIsShow(false);
+  });
+
+  const contextValue = {
+    isShow,
+    setIsShow,
+    triggerRef,
+    setTriggerRef,
+  };
+  const trigger = children?.find(child => {
+    if (typeof child === 'object' && child !== null && 'type' in child) {
+      return (
+        (child?.type as JSXElementConstructor<unknown>)?.name === 'Trigger'
+      );
+    }
+  });
+  children = children.filter(child => {
+    if (typeof child === 'object' && child !== null && 'type' in child) {
+      return (
+        (child?.type as JSXElementConstructor<unknown>)?.name !== 'Trigger'
+      );
+    }
   });
 
   return (
-    <DropdownContext.Provider value={{ inputs, submitCallback }}>
+    <DropdownContext.Provider value={contextValue}>
       <div className={style.container} ref={containerRef}>
-        {targetElement}
-        {isDropdownOpen && (
-          <div
-            className={style.wrapper}
-            style={assignInlineVars({
-              [style.wrapperWidth]: width,
-              [style.wrapperTop]: `${(targetHeight + 10).toString()}px`,
-            })}
-          >
-            {children}
-          </div>
-        )}
+        {trigger}
+        {children}
       </div>
     </DropdownContext.Provider>
   );
@@ -86,4 +81,5 @@ export default function Dropdown({
 Dropdown.Input = Input;
 Dropdown.Title = Title;
 Dropdown.SubmitButton = SubmitButton;
-// Dropdown.Button =
+Dropdown.List = List;
+Dropdown.Trigger = Trigger;

@@ -1,17 +1,28 @@
 import * as style from '@/features/common/components/dropdown/Dropdown.css.ts';
-import { useContext } from 'react';
+import { MouseEvent, MouseEventHandler, ReactNode, useContext } from 'react';
 import { DropdownContext } from '@/features/common/components/dropdown/Dropdown.tsx';
 
-export default function SubmitButton({ text }: { text: string }) {
-  const { inputs, submitCallback } = useContext(DropdownContext);
+type Props = {
+  children?: ReactNode;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
+};
+
+export default function SubmitButton({ children, onClick, disabled }: Props) {
+  const { setIsShow } = useContext(DropdownContext);
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    setIsShow(false);
+    onClick(e);
+  };
 
   return (
     <button
-      onClick={submitCallback}
-      disabled={!inputs?.inputValue}
+      onClick={handleClick}
+      disabled={disabled}
       className={style.submitButton}
     >
-      {text}
+      {children}
     </button>
   );
 }
