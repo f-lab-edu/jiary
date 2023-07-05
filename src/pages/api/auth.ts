@@ -2,6 +2,7 @@ import fs from 'fs';
 import { google } from 'googleapis';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { AxiosError } from 'axios';
+import jwtDecode from 'jwt-decode';
 
 interface GoogleUrl {
   location: string;
@@ -16,6 +17,7 @@ interface Response {
 interface JSONFile {
   access_token: string;
   refresh_token: string;
+  user_email: string;
 }
 interface Credentials {
   refresh_token?: string | null;
@@ -24,6 +26,7 @@ interface Credentials {
   token_type?: string | null;
   id_token?: string | null;
   scope?: string;
+  user_email?: string | null;
 }
 
 export const oauth2Client = new google.auth.OAuth2(
@@ -63,14 +66,20 @@ const readJSONFile: () => JSONFile[] = () => {
 
 const checkSameToken = (tokens: Credentials) => {
   const jsonTokens: JSONFile[] = readJSONFile();
+  const userEmail = jwtDecode<{ email: string }>(
+    tokens.id_token as string
+  )?.email;
+
   const index = jsonTokens.findIndex(
-    (v: { access_token: string; refresh_token: string }) =>
-      v.access_token === tokens.access_token
+    (v: { access_token: string; refresh_token: string; user_email: string }) =>
+      v.user_email === userEmail
   );
+
   if (index > -1) {
-    jsonTokens[index].refresh_token = tokens.refresh_token as string;
+    jsonTokens[index].access_token = tokens.access_token as string;
   } else {
     jsonTokens.push({
+      user_email: userEmail,
       access_token: tokens.access_token as string,
       refresh_token: tokens.refresh_token as string,
     });
@@ -97,6 +106,7 @@ export default async function handler(
         hasGetTokenRequest = true;
 
         const { tokens } = await oauth2Client.getToken(body.code);
+
         oauth2Client.setCredentials(tokens);
         writeFile(checkSameToken(tokens));
 
