@@ -7,6 +7,10 @@ import {
 import { Doc, DriveFile } from '@/features/diaryList/apis/interfaces.ts';
 import { jiaryApi } from '@/features/common/apis/jiaryInstance.ts';
 
+export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
+export const DIARY_KEY = 'DIARY' as const;
+export const DIARY_CONTENT_KEY = 'DIARY_CONTENT_KEY' as const;
+
 export const driveApi = axios.create({
   baseURL: 'https://www.googleapis.com/drive/v3',
   headers: {
@@ -30,9 +34,6 @@ export const docsApi = axios.create({
 
 docsApi.interceptors.request.use(onRequest);
 docsApi.interceptors.response.use(onResponse, onErrorResponse);
-
-export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
-export const DIARY_KEY = 'DIARY' as const;
 
 export const createDoc = async (title: string): Promise<Doc> =>
   await docsApi.post('', { title: `jiary-${title}` }).then(res => res.data);
