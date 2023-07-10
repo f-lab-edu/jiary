@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useRef } from 'react';
+import { ReactNode, useContext, useEffect, useRef } from 'react';
 import { DropdownContext } from '@/features/common/hooks/useDropdown.ts';
 
 type Props = {
@@ -9,9 +9,10 @@ type Props = {
 export default function Trigger({ children, className }: Props) {
   const { isShow, setIsShow, setTriggerRef } = useContext(DropdownContext);
   const triggerRef = useRef(null);
-  if (triggerRef) {
+
+  useEffect(() => {
     setTriggerRef(triggerRef);
-  }
+  }, [setTriggerRef, triggerRef]);
 
   return (
     <button
