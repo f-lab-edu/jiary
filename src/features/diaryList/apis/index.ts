@@ -4,7 +4,13 @@ import {
   onRequest,
   onResponse,
 } from '@/features/common/apis/interceptors.ts';
-import { Doc, DriveFile } from '@/features/diaryList/apis/interfaces.ts';
+import {
+  Doc,
+  DriveFile,
+  MutationDocApi,
+  RequestInsertText,
+  RequestRemoveText,
+} from '@/features/diaryList/apis/interfaces.ts';
 import { jiaryApi } from '@/features/common/apis/jiaryInstance.ts';
 
 export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
@@ -56,3 +62,19 @@ export const getDocList = async (): Promise<DriveFile> =>
 
 export const getDoc = async (id: string): Promise<Doc> =>
   await docsApi.get(`/${id}`).then(res => res.data);
+
+export const insertText = async ({
+  docId,
+  insertText,
+}: RequestInsertText): Promise<MutationDocApi> =>
+  await docsApi.post(`/${docId}:batchUpdate`, {
+    requests: [{ insertText }],
+  });
+
+export const removeText = async ({
+  docId,
+  deleteContentRange,
+}: RequestRemoveText): Promise<MutationDocApi> =>
+  await docsApi.post(`/${docId}:batchUpdate`, {
+    requests: [{ deleteContentRange }],
+  });

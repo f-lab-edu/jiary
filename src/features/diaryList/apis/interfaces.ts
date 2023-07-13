@@ -36,7 +36,7 @@ interface Content {
   startIndex: number;
   endIndex: number;
   paragraph: {
-    elements: Elements[];
+    elements?: Elements[];
   };
 }
 
@@ -55,5 +55,36 @@ export interface Elements {
   };
   inlineObjectElement?: {
     inlineObjectId: string;
+  };
+}
+
+export interface MutationDocApi {
+  replies: unknown;
+  writeControl: {
+    requiredRevisionId: string;
+  };
+  documentId: string;
+}
+
+export interface RequestInsertText {
+  docId: string;
+  insertText: InsertText;
+}
+
+export interface InsertText {
+  text: string;
+  location: {
+    index: number;
+  };
+}
+
+export interface RequestRemoveText {
+  docId: string;
+  deleteContentRange: DeleteContentRange;
+}
+export interface DeleteContentRange {
+  range: {
+    startIndex: number;
+    endIndex: number;
   };
 }

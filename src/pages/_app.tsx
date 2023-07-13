@@ -15,7 +15,7 @@ import bootApp from '@/core/config/boostApp.ts';
 import PageLayout from '@/features/common/components/PageLayout.tsx';
 
 import '@/styles/globals.css.ts';
-import '@/features/diaryList/components/DiaryEditor/snow.css';
+import '@/features/diaryList/components/DiaryEditor/lexical.css';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
