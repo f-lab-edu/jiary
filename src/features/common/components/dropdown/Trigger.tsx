@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useContext } from 'react';
-import { DropdownContext } from '@/features/common/hooks/useDropdown.ts';
+import DropdownContext from '@/features/common/components/dropdown/contexts/DropdownContext.ts';
 
 type Props = {
   children: ReactNode;
