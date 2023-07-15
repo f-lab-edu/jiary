@@ -10,7 +10,7 @@ type Props = {
 
 export default function List({ children, width = 'fit-content' }: Props) {
   const { isShow, triggerRef } = useContext(DropdownContext);
-  const targetHeight = triggerRef?.current?.clientHeight || 0;
+  const targetHeight = triggerRef?.clientHeight || 0;
 
   return (
     <>

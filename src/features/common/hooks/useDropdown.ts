@@ -11,10 +11,8 @@ import { useClickOutSide } from '@/features/common/hooks/useClickOutSide.ts';
 type DropdownContext = {
   isShow: boolean;
   setIsShow: Dispatch<SetStateAction<boolean>>;
-  triggerRef: MutableRefObject<HTMLButtonElement | null> | null;
-  setTriggerRef: Dispatch<
-    SetStateAction<MutableRefObject<HTMLButtonElement | null> | null>
-  >;
+  triggerRef: HTMLButtonElement | null;
+  setTriggerRef: Dispatch<SetStateAction<HTMLButtonElement | null>>;
 };
 
 export const DropdownContext = createContext<DropdownContext>({
