@@ -20,9 +20,7 @@ export default function Dropdown({ children }: { children: ReactNode[] }) {
     setTriggerRef,
   };
 
-  useClickOutSide(containerRef, () => {
-    setIsShow(false);
-  });
+  useClickOutSide(containerRef, () => setIsShow(false));
 
   return (
     <DropdownContext.Provider value={contextValue}>
