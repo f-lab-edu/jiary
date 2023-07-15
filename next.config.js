@@ -7,6 +7,11 @@ const nextConfig = {
   experimental: {
     appDir: false,
   },
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
+    ],
+  },
 };
 
 module.exports = withVanillaExtract(nextConfig);

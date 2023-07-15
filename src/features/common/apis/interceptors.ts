@@ -1,5 +1,10 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getAccessTokenByRefreshToken } from '@/features/auth/apis/mutations.ts';
+import axios, {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
+import { getAccessTokenByRefreshToken } from '@/features/auth/apis/index.ts';
 import store from '@/store/store.ts';
 import { setAccessToken } from '@/store/slices/authSlice.ts';
 
@@ -29,6 +34,15 @@ const changeConfigNewToken: ChangeConfigNewToken = (config, token) => {
   }
 
   return config;
+};
+
+export const onRequest = (request: InternalAxiosRequestConfig) => {
+  if (request.headers) {
+    request.headers['Authorization'] = `Bearer ${localStorage.getItem(
+      'accessToken'
+    )}`;
+  }
+  return request;
 };
 
 export const onResponse = (response: AxiosResponse) => {

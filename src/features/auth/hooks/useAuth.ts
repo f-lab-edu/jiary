@@ -5,12 +5,11 @@ import {
   setAccessToken,
   setUser,
 } from '@/store/slices/authSlice.ts';
-import { MESSAGE_TYPE } from '@/constant/auth.ts';
-import {
-  useGetAccessToken,
-  useLogout,
-  useGetUserInfo,
-} from '@/features/auth/apis/mutations.ts';
+import { MESSAGE_TYPE } from '@/constants/auth';
+import useGetAccessToken from '@/features/auth/apis/mutations/useGetAccessToken.ts';
+import useLogout from '@/features/auth/apis/mutations/useLogout.ts';
+import useGetUserInfo from '@/features/auth/apis/mutations/useGetUserInfo.ts';
+import { useRouter } from 'next/router';
 
 const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
 let popupWindow: Window | null = null;
@@ -32,6 +31,7 @@ export const useAuth = () => {
   const getUserInfoMutation = useGetUserInfo();
   const logoutMutation = useLogout();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const messageCallback = async (event: MessageEvent) => {
     if (event.origin !== DOMAIN_URI) {
@@ -50,6 +50,7 @@ export const useAuth = () => {
     const { token: accessToken } = await getAccessTokenMutation.mutateAsync(
       searchParams.get('code') || ''
     );
+    if (!accessToken) throw new Error('엑세스 토큰이 없습니다.');
     const userInfo = await getUserInfoMutation.mutateAsync(accessToken);
 
     localStorage.setItem('accessToken', accessToken);
@@ -59,6 +60,7 @@ export const useAuth = () => {
 
     popupWindow?.close();
     window.removeEventListener('message', messageCallback, false);
+    router.push('/diary');
   };
 
   const openLoginPopup: OpenLoginPopup = (url: string | undefined) => {

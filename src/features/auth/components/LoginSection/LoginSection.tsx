@@ -2,7 +2,7 @@ import Image from 'next/image';
 import jiaryLogo from '@/static/jiary-logo.svg';
 import googleLogo from '@/static/auth/google_signin.png';
 import * as style from './LoginSection.css.ts';
-import { useGetAuthCode } from '@/features/auth/apis/queries.ts';
+import useGetAuthCode from '@/features/auth/apis/queries/useGetAuthCode.ts';
 import { OpenLoginPopup } from '@/features/auth/hooks/useAuth.ts';
 
 export default function LoginSection({
@@ -11,9 +11,7 @@ export default function LoginSection({
   openLoginPopup: OpenLoginPopup;
 }) {
   const { data } = useGetAuthCode();
-  const handleLoginClick = () => {
-    openLoginPopup(data?.location);
-  };
+  const handleLoginClick = () => openLoginPopup(data?.location);
 
   return (
     <div className={style.container}>

@@ -10,6 +10,7 @@ export const container = style({
   marginBottom: 20,
   padding: '30px 50px',
   lineHeight: 1.5,
+  boxSizing: 'content-box',
   zIndex: 1,
 });
 

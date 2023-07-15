@@ -12,9 +12,9 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import bootApp from '@/core/config/boostApp.ts';
-import AppLayout from '@/features/common/components/AppLayout.tsx';
+import PageLayout from '@/features/common/components/PageLayout.tsx';
 
-import '@/styles/globals.css';
+import '@/styles/globals.css.ts';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -25,8 +25,9 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? (page => page);
-  const [queryClient] = useState(() => new QueryClient());
+  const getLayout =
+    Component.getLayout ?? (page => <PageLayout>{page}</PageLayout>);
+  const [queryClient] = useState(new QueryClient());
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -38,7 +39,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <ReduxProvider store={store}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
+          {getLayout(<Component {...pageProps} />)}
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
       </QueryClientProvider>

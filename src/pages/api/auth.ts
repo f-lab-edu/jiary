@@ -1,8 +1,8 @@
 import fs from 'fs';
 import { google } from 'googleapis';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { REQUEST_BODY_TYPE } from '@/constant/auth.ts';
 import { AxiosError } from 'axios';
+import jwtDecode from 'jwt-decode';
 
 interface GoogleUrl {
   location: string;
@@ -17,6 +17,7 @@ interface Response {
 interface JSONFile {
   access_token: string;
   refresh_token: string;
+  user_email: string;
 }
 interface Credentials {
   refresh_token?: string | null;
@@ -25,9 +26,10 @@ interface Credentials {
   token_type?: string | null;
   id_token?: string | null;
   scope?: string;
+  user_email?: string | null;
 }
 
-const oauth2Client = new google.auth.OAuth2(
+export const oauth2Client = new google.auth.OAuth2(
   process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
   `${process.env.NEXT_PUBLIC_DOMAIN_URI}/auth/end-popup`
@@ -39,6 +41,7 @@ const scopes = [
   'openid',
   'https://www.googleapis.com/auth/documents',
   'https://www.googleapis.com/auth/drive.file',
+  'https://www.googleapis.com/auth/drive',
 ];
 
 const authorizationUrl: string = oauth2Client.generateAuthUrl({
@@ -63,14 +66,20 @@ const readJSONFile: () => JSONFile[] = () => {
 
 const checkSameToken = (tokens: Credentials) => {
   const jsonTokens: JSONFile[] = readJSONFile();
+  const userEmail = jwtDecode<{ email: string }>(
+    tokens.id_token as string
+  )?.email;
+
   const index = jsonTokens.findIndex(
-    (v: { access_token: string; refresh_token: string }) =>
-      v.access_token === tokens.access_token
+    (v: { access_token: string; refresh_token: string; user_email: string }) =>
+      v.user_email === userEmail
   );
+
   if (index > -1) {
-    jsonTokens[index].refresh_token = tokens.refresh_token as string;
+    jsonTokens[index].access_token = tokens.access_token as string;
   } else {
     jsonTokens.push({
+      user_email: userEmail,
       access_token: tokens.access_token as string,
       refresh_token: tokens.refresh_token as string,
     });
@@ -88,13 +97,16 @@ export default async function handler(
     const body = req.body;
 
     switch (body.type) {
-      case REQUEST_BODY_TYPE.GET_TOKEN: {
+      case 'GET_TOKEN': {
         if (hasGetTokenRequest) {
+          res.status(429).end();
+          hasGetTokenRequest = false;
           return;
         }
         hasGetTokenRequest = true;
 
         const { tokens } = await oauth2Client.getToken(body.code);
+
         oauth2Client.setCredentials(tokens);
         writeFile(checkSameToken(tokens));
 
@@ -102,7 +114,7 @@ export default async function handler(
         break;
       }
 
-      case REQUEST_BODY_TYPE.GET_TOKEN_BY_REFRESH_TOKEN: {
+      case 'GET_TOKEN_BY_REFRESH_TOKEN': {
         const { accessToken } = body;
 
         const jsonTokens: JSONFile[] = readJSONFile();
@@ -137,6 +149,7 @@ export default async function handler(
       }
 
       default:
+        res.status(404).end();
         break;
     }
   } else if (req.method === 'DELETE') {
