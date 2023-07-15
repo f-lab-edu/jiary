@@ -1,8 +1,13 @@
-import fs from 'fs';
 import { google } from 'googleapis';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { AxiosError } from 'axios';
-import jwtDecode from 'jwt-decode';
+import {
+  JSONFile,
+  checkSameToken,
+  readJSONFile,
+  writeFile,
+} from '@/serverUtils/authUtils.ts';
+import { setCookie } from '@/serverUtils/cookieUtils.ts';
 
 interface GoogleUrl {
   location: string;
@@ -12,21 +17,6 @@ interface Login {
 }
 interface Response {
   message: string;
-}
-
-interface JSONFile {
-  access_token: string;
-  refresh_token: string;
-  user_email: string;
-}
-interface Credentials {
-  refresh_token?: string | null;
-  expiry_date?: number | null;
-  access_token?: string | null;
-  token_type?: string | null;
-  id_token?: string | null;
-  scope?: string;
-  user_email?: string | null;
 }
 
 export const oauth2Client = new google.auth.OAuth2(
@@ -51,42 +41,6 @@ const authorizationUrl: string = oauth2Client.generateAuthUrl({
 
 let hasGetTokenRequest = false;
 
-const writeFile = (tokens: JSONFile[]) => {
-  fs.writeFileSync(
-    process.env.TOKEN_JSON_PATH as string,
-    JSON.stringify(tokens)
-  );
-};
-
-const readJSONFile: () => JSONFile[] = () => {
-  const dataJSON =
-    fs.readFileSync(process.env.TOKEN_JSON_PATH as string).toString() || '[]';
-  return JSON.parse(dataJSON);
-};
-
-const checkSameToken = (tokens: Credentials) => {
-  const jsonTokens: JSONFile[] = readJSONFile();
-  const userEmail = jwtDecode<{ email: string }>(
-    tokens.id_token as string
-  )?.email;
-
-  const index = jsonTokens.findIndex(
-    (v: { access_token: string; refresh_token: string; user_email: string }) =>
-      v.user_email === userEmail
-  );
-
-  if (index > -1) {
-    jsonTokens[index].access_token = tokens.access_token as string;
-  } else {
-    jsonTokens.push({
-      user_email: userEmail,
-      access_token: tokens.access_token as string,
-      refresh_token: tokens.refresh_token as string,
-    });
-  }
-  return jsonTokens;
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GoogleUrl | Login | Response | AxiosError>
@@ -110,13 +64,28 @@ export default async function handler(
         oauth2Client.setCredentials(tokens);
         writeFile(checkSameToken(tokens));
 
+        setCookie(res, 'authorization', tokens.access_token, {
+          httpOnly: true,
+          sameSite: process.env.NEXT_PUBLIC_MODE !== 'development',
+          domain: process.env.NEXT_PUBLIC_DOMAIN_URI,
+          path: '/',
+          maxAge: 60 * 60 * 24 * 20, // 20일
+        });
         res.status(200).json({ token: tokens.access_token || '' });
         break;
       }
 
       case 'GET_TOKEN_BY_REFRESH_TOKEN': {
-        const { accessToken } = body;
+        if (!Object.hasOwn(req.cookies, 'authorization')) {
+          res.status(404).json({
+            message: 'not found',
+            isAxiosError: true,
+            location: 'server',
+            name: 'AxiosError',
+          });
+        }
 
+        const accessToken = req.cookies.authorization;
         const jsonTokens: JSONFile[] = readJSONFile();
         const targetIndex = jsonTokens.findIndex(
           token => token.access_token === accessToken
