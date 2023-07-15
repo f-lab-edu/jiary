@@ -12,16 +12,17 @@ import {
 import { DropdownContext } from '@/features/common/hooks/useDropdown.ts';
 
 type InputProps = {
-  maxLength?: number;
-  requiredText?: string;
+  validation?: {
+    required?: string | boolean;
+    maxLength?: number;
+  };
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   onKeyUp: KeyboardEventHandler<HTMLInputElement>;
 };
 
 export default function Input({
-  maxLength,
-  requiredText = undefined,
+  validation,
   value,
   onChange,
   onKeyUp,
@@ -36,11 +37,10 @@ export default function Input({
   }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!requiredText) {
-      return;
-    }
     const input = inputRef.current as HTMLInputElement | null;
-    setIsValid(!!input?.value);
+    if (validation?.required) {
+      setIsValid(!!input?.value);
+    }
     onChange(e);
   };
 
@@ -56,13 +56,15 @@ export default function Input({
       <input
         className={style.input}
         type="text"
-        maxLength={maxLength}
+        maxLength={validation?.maxLength}
         value={value}
         ref={inputRef}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
       />
-      {!isValid && <span className={style.requiredText}>{requiredText}</span>}
+      {!isValid && (
+        <span className={style.requiredText}>{validation?.required}</span>
+      )}
     </>
   );
 }

@@ -43,8 +43,10 @@ export default function DiaryListHeader({ count }: { count: number }) {
         <Dropdown.List width="200px">
           <Dropdown.Title title="제목을 입력해주세요" />
           <Dropdown.Input
-            maxLength={30}
-            requiredText="👋 제목 입력은 필수 입니다."
+            validation={{
+              required: '👋 제목 입력은 필수 입니다.',
+              maxLength: 30,
+            }}
             value={inputValue}
             onChange={handleOnChange}
             onKeyUp={handleKeyUp}
