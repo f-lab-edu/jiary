@@ -1,5 +1,4 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getRoot, $createTextNode, LexicalNode } from 'lexical';
 import { MutableRefObject, useEffect } from 'react';
 
 type Props = {
@@ -7,7 +6,7 @@ type Props = {
   editorRef: MutableRefObject<HTMLElement | null>;
 };
 
-function InitalPlugin({ initValue, editorRef }: Props) {
+function InitalPlugin({ editorRef }: Props) {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -15,19 +14,6 @@ function InitalPlugin({ initValue, editorRef }: Props) {
       editorRef.current = editor._rootElement;
     }
   }, [editor, editorRef]);
-
-  useEffect(() => {
-    editor.update(() => {
-      if (!initValue) return;
-
-      const root = $getRoot();
-      const paragraphNode = root.getFirstChild() as LexicalNode;
-      const textNode = $createTextNode(initValue);
-      paragraphNode.append(textNode);
-      root.append(paragraphNode);
-    });
-    editor.focus();
-  }, [editor, initValue]);
 
   return null;
 }

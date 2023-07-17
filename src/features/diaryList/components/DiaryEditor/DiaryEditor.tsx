@@ -14,30 +14,45 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import AutoLinkPlugin from './plugins/AutoLinkPlugin.tsx';
 import InitalPlugin from '@/features/diaryList/components/DiaryEditor/plugins/InitialPlugin.tsx';
 import { EditorState } from 'lexical/LexicalEditorState';
-import { $getRoot } from 'lexical';
 import * as style from '@/features/diaryList/components/DiaryEditor/DiaryEditor.css.ts';
-import { KeyboardEvent, useRef } from 'react';
+import { useRef } from 'react';
 import { debounce } from '@/core/utils/eventUtils.ts';
-import { PREVENT_KEYS } from '@/constants/keyboard.ts';
+import usePatchFile from '@/features/diaryList/apis/mutations/usePatchFile.ts';
 import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
 
 type Props = {
   document: string;
   metaData: MetaData;
-  saveData: (value: string, metaData?: MetaData) => void;
+  diaryId: string;
 };
 
-export default function DiaryEditor2({ document, metaData, saveData }: Props) {
+export default function DiaryEditor({ document, metaData, diaryId }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
-  const value = useRef<string>('');
   const debounceId = useRef<number | null>(null);
+  const value = useRef<string>(document);
+  const patchMutation = usePatchFile();
+
+  const saveData = () => {
+    const formData = new FormData();
+    formData.append(
+      'metadata',
+      new Blob([JSON.stringify({ name: metaData.name })], {
+        type: 'application/json',
+      })
+    );
+    formData.append('media', new Blob([value.current], { type: 'text/plain' }));
+
+    patchMutation.mutate({
+      fileId: diaryId,
+      multipartData: formData,
+    });
+  };
 
   const handleDebounceChange = debounce(saveData, 2000);
   const handleChange = (editorState: EditorState) => {
-    // console.log('handleChange!!');
     editorState.read(() => {
-      value.current = $getRoot().getTextContent() || '';
-      debounceId.current = handleDebounceChange(value.current);
+      value.current = JSON.stringify(editorState.toJSON());
+      debounceId.current = handleDebounceChange();
     });
   };
 
@@ -45,27 +60,19 @@ export default function DiaryEditor2({ document, metaData, saveData }: Props) {
     if (!debounceId.current) return;
     clearTimeout(debounceId.current);
     debounceId.current = null;
-    saveData(value.current);
-  };
-
-  const handleClick = () => {
-    // preventDebounce()
-  };
-  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    // if (PREVENT_KEYS.indexOf(e.key) > -1) {
-    //   preventDebounce();
-    // }
+    saveData();
   };
 
   return (
     <>
-      <button onClick={() => saveData(value.current)}>click</button>
+      <button onClick={preventDebounce}>save!</button>
       <LexicalComposer
         initialConfig={{
           namespace: 'MyEditor',
           onError(error: Error) {
             throw error;
           },
+          editorState: JSON.stringify(document),
           theme: ExampleTheme,
           nodes: [
             HeadingNode,
@@ -82,13 +89,7 @@ export default function DiaryEditor2({ document, metaData, saveData }: Props) {
           <ToolbarPlugin />
           <div className="editor-inner">
             <RichTextPlugin
-              contentEditable={
-                <ContentEditable
-                  onClick={handleClick}
-                  onKeyDown={handleKeyDown}
-                  className="editor-input"
-                />
-              }
+              contentEditable={<ContentEditable className="editor-input" />}
               placeholder={null}
               ErrorBoundary={LexicalErrorBoundary}
             />

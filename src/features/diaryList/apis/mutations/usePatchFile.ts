@@ -4,7 +4,7 @@ import { PatchFileArgs } from '@/features/diaryList/apis/interfaces.ts';
 
 const usePatchFile = () =>
   useMutation({
-    mutationKey: [DIARY_KEY],
+    mutationKey: [DIARY_KEY, 'save-diary'],
     mutationFn: (patchRequest: PatchFileArgs) => patchFile(patchRequest),
   });
 
