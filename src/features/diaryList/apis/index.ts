@@ -55,10 +55,21 @@ export const createFile = async (title: string): Promise<File> =>
     )
     .then(res => res.data);
 
-export const getFileList = async (): Promise<DriveFile> =>
-  await driveApi
-    .get(`?q=trashed=false&spaces=appDataFolder&fields=*`)
+export const getFileList = async (
+  accessToken: string | undefined
+): Promise<DriveFile> => {
+  let config = {};
+  if (accessToken) {
+    config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+  }
+  return await driveApi
+    .get(`?q=trashed=false&spaces=appDataFolder&fields=*`, config)
     .then(res => res.data);
+};
 
 export const getFile = async (
   id: string,
