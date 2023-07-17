@@ -6,6 +6,9 @@ export const isArrayEmpty = (value: unknown): boolean => {
 };
 
 export const isObjectEmpty = (value: unknown): boolean => {
+  if (value === undefined || value === null) {
+    return true;
+  }
   if (
     typeof value === 'object' &&
     value?.constructor.name === 'Object' &&
