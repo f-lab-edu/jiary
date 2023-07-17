@@ -1,11 +1,11 @@
-import { DIARY_KEY, getDocList } from '@/features/diaryList/apis/index.ts';
+import { DIARY_KEY, getFileList } from '@/features/diaryList/apis/index.ts';
 import { useQuery } from '@tanstack/react-query';
 import { DriveFile } from '@/features/diaryList/apis/interfaces.ts';
 
-const useGetDocList = () =>
+const useGetFileList = () =>
   useQuery<DriveFile>({
     queryKey: [DIARY_KEY, 'docList'],
-    queryFn: getDocList,
+    queryFn: getFileList,
   });
 
-export default useGetDocList;
+export default useGetFileList;

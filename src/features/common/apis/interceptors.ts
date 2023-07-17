@@ -37,7 +37,7 @@ const changeConfigNewToken: ChangeConfigNewToken = (config, token) => {
 };
 
 export const onRequest = (request: InternalAxiosRequestConfig) => {
-  if (request.headers) {
+  if (typeof window !== 'undefined') {
     request.headers['Authorization'] = `Bearer ${localStorage.getItem(
       'accessToken'
     )}`;

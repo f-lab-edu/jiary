@@ -1,24 +1,24 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import {
   onErrorResponse,
   onRequest,
   onResponse,
-} from '@/features/common/apis/interceptors.ts';
+} from '@/features/common/apis/interceptors';
 import {
-  Doc,
   DriveFile,
-  MutationDocApi,
-  RequestInsertText,
-  RequestRemoveText,
+  File,
+  MetaData,
+  PatchFileArgs,
 } from '@/features/diaryList/apis/interfaces.ts';
-import { jiaryApi } from '@/features/common/apis/jiaryInstance.ts';
+import { REQUEST_METADATAS } from '@/constants/metaData.ts';
 
 export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
+export const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 export const DIARY_KEY = 'DIARY' as const;
 export const DIARY_CONTENT_KEY = 'DIARY_CONTENT_KEY' as const;
 
 export const driveApi = axios.create({
-  baseURL: 'https://www.googleapis.com/drive/v3',
+  baseURL: 'https://www.googleapis.com/drive/v3/files',
   headers: {
     'Content-type': 'application/json',
   },
@@ -29,52 +29,86 @@ export const driveApi = axios.create({
 driveApi.interceptors.request.use(onRequest);
 driveApi.interceptors.response.use(onResponse, onErrorResponse);
 
-export const docsApi = axios.create({
-  baseURL: 'https://content-docs.googleapis.com/v1/documents',
+export const driveUploadApi = axios.create({
+  baseURL: 'https://www.googleapis.com/upload/drive/v3/files',
   headers: {
-    'Content-type': 'application/json',
+    'Content-Type': 'multipart/related',
   },
   params: {},
   timeout: 15 * 1000,
 });
 
-docsApi.interceptors.request.use(onRequest);
-docsApi.interceptors.response.use(onResponse, onErrorResponse);
+driveUploadApi.interceptors.request.use(onRequest);
+driveUploadApi.interceptors.response.use(onResponse, onErrorResponse);
 
-export const createDoc = async (title: string): Promise<Doc> =>
-  await docsApi.post('', { title: `jiary-${title}` }).then(res => res.data);
-
-export const deleteDoc = async (
-  fileId: string
-): Promise<{ message: string } | AxiosError> =>
-  await jiaryApi
-    .delete(
-      `${DOMAIN_URI}/api/diary?file_id=${fileId}&access_token=${localStorage.getItem(
-        'accessToken'
-      )}`
+export const createFile = async (title: string): Promise<File> =>
+  await driveApi
+    .post(
+      `?supportsAllDrives=true&keepRevisionForever=false&includePermissionsForView=published&uploadType=multipart&prettyPrint=true&alt=json&key=${GOOGLE_API_KEY}`,
+      {
+        createdTime: new Date().toISOString(),
+        mimeType: 'text/plain',
+        name: title,
+        parents: ['appDataFolder'],
+        description: 'test!!!',
+      }
     )
     .then(res => res.data);
 
-export const getDocList = async (): Promise<DriveFile> =>
+export const getFileList = async (): Promise<DriveFile> =>
   await driveApi
-    .get("/files?q=trashed=false and name contains 'jiary-'")
+    .get(`?q=trashed=false&spaces=appDataFolder&fields=*`)
     .then(res => res.data);
 
-export const getDoc = async (id: string): Promise<Doc> =>
-  await docsApi.get(`/${id}`).then(res => res.data);
+export const getFile = async (
+  id: string,
+  accessToken: string | undefined
+): Promise<string> => {
+  let config = {};
+  if (accessToken) {
+    config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+  }
+  return await driveApi.get(`/${id}?alt=media`, config).then(res => res.data);
+};
 
-export const insertText = async ({
-  docId,
-  insertText,
-}: RequestInsertText): Promise<MutationDocApi> =>
-  await docsApi.post(`/${docId}:batchUpdate`, {
-    requests: [{ insertText }],
-  });
+export const getFileMetaData = async (
+  id: string,
+  accessToken: string | undefined
+): Promise<MetaData> => {
+  let config = {};
+  if (accessToken) {
+    config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+  }
+  return await driveApi
+    .get(`/${id}?fields=${REQUEST_METADATAS}`, config)
+    .then(res => res.data);
+};
 
-export const removeText = async ({
-  docId,
-  deleteContentRange,
-}: RequestRemoveText): Promise<MutationDocApi> =>
-  await docsApi.post(`/${docId}:batchUpdate`, {
-    requests: [{ deleteContentRange }],
-  });
+export const patchFile = async ({
+  fileId,
+  multipartData,
+}: PatchFileArgs): Promise<File> => {
+  return await driveUploadApi.patch(
+    `/${fileId}?uploadType=multipart`,
+    multipartData
+  );
+};
+
+// export const deleteDoc = async (
+//   fileId: string
+// ): Promise<{ message: string } | AxiosError> =>
+//   await jiaryApi
+//     .delete(
+//       `${DOMAIN_URI}/api/diary?file_id=${fileId}&access_token=${localStorage.getItem(
+//         'accessToken'
+//       )}`
+//     )
+//     .then(res => res.data);

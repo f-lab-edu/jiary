@@ -3,7 +3,7 @@ import {
   onErrorResponse,
   onRequest,
   onResponse,
-} from '@/features/common/apis/interceptors.ts';
+} from '@/features/common/apis/interceptors';
 
 export const jiaryApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_DOMAIN_URI,
