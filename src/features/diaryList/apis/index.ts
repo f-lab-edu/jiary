@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
   onErrorResponse,
   onRequest,
@@ -50,7 +50,6 @@ export const createFile = async (title: string): Promise<File> =>
         mimeType: 'text/plain',
         name: title,
         parents: ['appDataFolder'],
-        description: 'test!!!',
       }
     )
     .then(res => res.data);
@@ -113,13 +112,7 @@ export const patchFile = async ({
   );
 };
 
-// export const deleteDoc = async (
-//   fileId: string
-// ): Promise<{ message: string } | AxiosError> =>
-//   await jiaryApi
-//     .delete(
-//       `${DOMAIN_URI}/api/diary?file_id=${fileId}&access_token=${localStorage.getItem(
-//         'accessToken'
-//       )}`
-//     )
-//     .then(res => res.data);
+export const deleteFile = async (
+  fileId: string
+): Promise<{ message: string } | AxiosError> =>
+  await driveApi.delete(`${fileId}`).then(res => res.data);
