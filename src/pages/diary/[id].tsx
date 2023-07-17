@@ -1,16 +1,46 @@
 import { GetServerSideProps } from 'next';
-import useGetDoc from '@/features/diaryList/apis/queries/useGetDoc.ts';
+import useGetFile from '@/features/diaryList/apis/queries/useGetFile';
 import DiaryContentPage from '@/features/diaryList/pages/content/DiaryContentPage';
+import useGetFileMetaData from '@/features/diaryList/apis/queries/useGetFileMetaData.ts';
+import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import {
+  DIARY_KEY,
+  getFile,
+  getFileMetaData,
+} from '@/features/diaryList/apis/index.ts';
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const id = context.query?.id;
+  const queryClient = new QueryClient();
+  const id = context.query?.id as string;
+
+  await queryClient.prefetchQuery<string>({
+    queryKey: [DIARY_KEY, id],
+    queryFn: () => getFile(id, context.req.cookies.Authorization),
+  });
+
+  await queryClient.prefetchQuery<MetaData>({
+    queryKey: [DIARY_KEY, 'metadata', id],
+    queryFn: () => getFileMetaData(id, context.req.cookies.Authorization),
+  });
+
   return {
-    props: { id },
+    props: {
+      id,
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 };
 
 export default function Index({ id }: { id: string }) {
-  const { data } = useGetDoc(id);
+  const { data: document } = useGetFile(id, undefined);
+  const { data: metaData } = useGetFileMetaData(id, undefined);
 
-  return <DiaryContentPage doc={data} />;
+  return (
+    <DiaryContentPage
+      document={document || ''}
+      metaData={metaData || { createdTime: '' }}
+      diaryId={id}
+    />
+  );
 }

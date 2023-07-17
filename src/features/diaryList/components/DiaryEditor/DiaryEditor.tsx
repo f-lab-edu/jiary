@@ -3,7 +3,6 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import ToolbarPlugin from './plugins/ToolbarPlugin.tsx';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
@@ -15,56 +14,30 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import AutoLinkPlugin from './plugins/AutoLinkPlugin.tsx';
 import InitalPlugin from '@/features/diaryList/components/DiaryEditor/plugins/InitialPlugin.tsx';
 import { EditorState } from 'lexical/LexicalEditorState';
-import { $getRoot, $getSelection, RangeSelection } from 'lexical';
+import { $getRoot } from 'lexical';
 import * as style from '@/features/diaryList/components/DiaryEditor/DiaryEditor.css.ts';
-import { KeyboardEvent, useEffect, useRef } from 'react';
-import useCaret from '@/features/diaryList/components/DiaryEditor/hooks/useCaret.tsx';
-import { callDiffApi } from '@/core/utils/docUtils.ts';
+import { KeyboardEvent, useRef } from 'react';
 import { debounce } from '@/core/utils/eventUtils.ts';
 import { PREVENT_KEYS } from '@/constants/keyboard.ts';
+import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
 
 type Props = {
-  docId: string;
-  content: string;
+  document: string;
+  metaData: MetaData;
+  saveData: (value: string, metaData?: MetaData) => void;
 };
-export default function DiaryEditor2({ docId, content }: Props) {
+
+export default function DiaryEditor2({ document, metaData, saveData }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const value = useRef<string>('');
-  const oldValue = useRef<string>('');
   const debounceId = useRef<number | null>(null);
-  const caretLocation = useRef<number | null>(null);
-  const { getSelectedParagraphNode, getCaretIndex } = useCaret();
 
-  useEffect(() => {
-    oldValue.current = content;
-  }, [content]);
-
-  const callApi = () => {
-    if (!caretLocation.current || !value.current) return;
-    callDiffApi({
-      oldValue: oldValue.current,
-      newValue: value.current,
-      caretLocation: caretLocation.current,
-      docId,
-    });
-
-    oldValue.current = value.current;
-  };
-
-  // const handleDebounceChange = debounce(callApi, 2000);
-  const handleDebounceChange = debounce(callApi, 2000);
+  const handleDebounceChange = debounce(saveData, 2000);
   const handleChange = (editorState: EditorState) => {
-    const caretLoction = getCaretIndex(editorRef.current);
-
+    // console.log('handleChange!!');
     editorState.read(() => {
-      const allContent = $getRoot().getTextContent() || '';
-      const selection = $getSelection() as RangeSelection;
-      const paragraphNode = getSelectedParagraphNode(selection);
-      const previous = paragraphNode.getPreviousSiblings();
-
-      value.current = allContent;
-      caretLocation.current = caretLoction + previous.length + 1;
-      debounceId.current = handleDebounceChange();
+      value.current = $getRoot().getTextContent() || '';
+      debounceId.current = handleDebounceChange(value.current);
     });
   };
 
@@ -72,18 +45,21 @@ export default function DiaryEditor2({ docId, content }: Props) {
     if (!debounceId.current) return;
     clearTimeout(debounceId.current);
     debounceId.current = null;
-    callApi();
+    saveData(value.current);
   };
 
-  const handleClick = () => preventDebounce();
+  const handleClick = () => {
+    // preventDebounce()
+  };
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (PREVENT_KEYS.indexOf(e.key) > -1) {
-      preventDebounce();
-    }
+    // if (PREVENT_KEYS.indexOf(e.key) > -1) {
+    //   preventDebounce();
+    // }
   };
 
   return (
     <>
+      <button onClick={() => saveData(value.current)}>click</button>
       <LexicalComposer
         initialConfig={{
           namespace: 'MyEditor',
@@ -116,12 +92,11 @@ export default function DiaryEditor2({ docId, content }: Props) {
               placeholder={null}
               ErrorBoundary={LexicalErrorBoundary}
             />
-            <OnChangePlugin onChange={handleChange} />
+            <OnChangePlugin onChange={handleChange} ignoreSelectionChange />
             <HistoryPlugin />
-            <AutoFocusPlugin />
             <LinkPlugin />
             <AutoLinkPlugin />
-            <InitalPlugin initValue={content} editorRef={editorRef} />
+            <InitalPlugin initValue={document} editorRef={editorRef} />
           </div>
         </div>
       </LexicalComposer>

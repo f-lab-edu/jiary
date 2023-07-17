@@ -10,7 +10,7 @@ import {
   GoogleLoginUrl,
 } from '@/features/auth/apis/interfaces.ts';
 import { REQUEST_BODY_TYPE } from '@/constants/auth';
-import { jiaryApi } from '@/features/common/apis/jiaryInstance.ts';
+import { jiaryApi } from '@/features/common/apis/jiaryInstance';
 
 export const oauthApi = axios.create({
   baseURL: 'https://www.googleapis.com',

@@ -1,11 +1,11 @@
 import menu from '@/static/diary/menu.svg';
 import Image from 'next/image';
-import useDeleteDoc from '@/features/diaryList/apis/mutations/useDeleteDoc.ts';
+import useDeleteFile from '@/features/diaryList/apis/mutations/useDeleteFile';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
 import * as style from '@/features/diaryList/components/DiaryCard/DiaryCardDropdown/DiaryCardDropdown.css';
 
 export default function DiaryCardDropdown({ id }: { id: string }) {
-  const deleteMutation = useDeleteDoc();
+  const deleteMutation = useDeleteFile();
 
   return (
     <Dropdown>
