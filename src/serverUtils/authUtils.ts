@@ -7,7 +7,7 @@ export interface JSONFile {
   user_email: string;
 }
 
-interface Credentials {
+export interface Credentials {
   refresh_token?: string | null;
   expiry_date?: number | null;
   access_token?: string | null;
@@ -36,6 +36,9 @@ export const checkSameToken = (tokens: Credentials) => {
 
   if (index > -1) {
     jsonTokens[index].access_token = tokens.access_token as string;
+    if (tokens.refresh_token) {
+      jsonTokens[index].refresh_token = tokens.refresh_token as string;
+    }
   } else {
     jsonTokens.push({
       user_email: userEmail,

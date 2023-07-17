@@ -8,6 +8,7 @@ import {
   writeFile,
 } from '@/serverUtils/authUtils.ts';
 import { setCookie } from '@/serverUtils/cookieUtils.ts';
+import { GOOGLE_INFO } from '@/serverUtils/constants.ts';
 
 interface GoogleUrl {
   location: string;
@@ -20,23 +21,14 @@ interface Response {
 }
 
 export const oauth2Client = new google.auth.OAuth2(
-  process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  `${process.env.NEXT_PUBLIC_DOMAIN_URI}/auth/end-popup`
+  GOOGLE_INFO.GOOGLE_ID,
+  GOOGLE_INFO.GOOGLE_SECRET,
+  GOOGLE_INFO.REDIRECT_URI
 );
-
-const scopes = [
-  'https://www.googleapis.com/auth/userinfo.profile',
-  'https://www.googleapis.com/auth/userinfo.email',
-  'openid',
-  'https://www.googleapis.com/auth/documents',
-  'https://www.googleapis.com/auth/drive.file',
-  'https://www.googleapis.com/auth/drive',
-];
 
 const authorizationUrl: string = oauth2Client.generateAuthUrl({
   access_type: 'offline',
-  scope: scopes,
+  scope: GOOGLE_INFO.SCOPE,
 });
 
 let hasGetTokenRequest = false;
@@ -64,10 +56,13 @@ export default async function handler(
         oauth2Client.setCredentials(tokens);
         writeFile(checkSameToken(tokens));
 
-        setCookie(res, 'authorization', tokens.access_token, {
+        setCookie(res, 'Authorization', tokens.access_token, {
           httpOnly: true,
           sameSite: process.env.NEXT_PUBLIC_MODE !== 'development',
-          domain: process.env.NEXT_PUBLIC_DOMAIN_URI,
+          domain:
+            process.env.NEXT_PUBLIC_MODE !== 'development'
+              ? process.env.NEXT_PUBLIC_DOMAIN_URI
+              : '',
           path: '/',
           maxAge: 60 * 60 * 24 * 20, // 20일
         });
@@ -76,16 +71,17 @@ export default async function handler(
       }
 
       case 'GET_TOKEN_BY_REFRESH_TOKEN': {
-        if (!Object.hasOwn(req.cookies, 'authorization')) {
+        if (!Object.hasOwn(req.cookies, 'Authorization')) {
           res.status(404).json({
             message: 'not found',
             isAxiosError: true,
             location: 'server',
             name: 'AxiosError',
           });
+          return;
         }
 
-        const accessToken = req.cookies.authorization;
+        const accessToken = req.cookies.Authorization;
         const jsonTokens: JSONFile[] = readJSONFile();
         const targetIndex = jsonTokens.findIndex(
           token => token.access_token === accessToken
@@ -111,6 +107,17 @@ export default async function handler(
         };
 
         writeFile(jsonTokens);
+
+        setCookie(res, 'Authorization', tokens.access_token, {
+          httpOnly: true,
+          sameSite: process.env.NEXT_PUBLIC_MODE !== 'development',
+          domain:
+            process.env.NEXT_PUBLIC_MODE !== 'development'
+              ? process.env.NEXT_PUBLIC_DOMAIN_URI
+              : '',
+          path: '/',
+          maxAge: 60 * 60 * 24 * 20, // 20일
+        });
 
         oauth2Client.setCredentials(tokens);
         res.status(200).json({ token: tokens.access_token || '' });
