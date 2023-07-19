@@ -24,3 +24,5 @@ export const isObjectEmpty = (value: unknown): boolean => {
     return true;
   return false;
 };
+
+export const isSSR = typeof window === 'undefined';

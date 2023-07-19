@@ -16,6 +16,7 @@ import PageLayout from '@/features/common/components/PageLayout.tsx';
 
 import '@/styles/globals.css.ts';
 import '@/features/diaryList/components/DiaryEditor/lexical.css';
+import { isSSR } from '@/core/utils/objectUtils.ts';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -31,9 +32,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(new QueryClient());
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      bootApp();
-    }
+    !isSSR && bootApp();
   }, []);
 
   return (

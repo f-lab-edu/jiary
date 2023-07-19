@@ -7,6 +7,7 @@ import axios, {
 import { getAccessTokenByRefreshToken } from '@/features/auth/apis/index.ts';
 import store from '@/store/store.ts';
 import { setAccessToken } from '@/store/slices/authSlice.ts';
+import { isSSR } from '@/core/utils/objectUtils.ts';
 
 type ChangeConfigNewToken = (
   config: AxiosRequestConfig,
@@ -37,7 +38,7 @@ const changeConfigNewToken: ChangeConfigNewToken = (config, token) => {
 };
 
 export const onRequest = (request: InternalAxiosRequestConfig) => {
-  if (typeof window !== 'undefined') {
+  if (!isSSR) {
     request.headers['Authorization'] = `Bearer ${localStorage.getItem(
       'accessToken'
     )}`;
