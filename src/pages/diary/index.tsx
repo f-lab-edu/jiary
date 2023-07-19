@@ -1,4 +1,5 @@
-import { DIARY_KEY, getFileList } from '@/features/diaryList/apis/index.ts';
+import { DIARY_KEY } from '@/constants/queryKey.ts';
+import { getFileList } from '@/features/diaryList/apis/index.ts';
 import { DriveFile } from '@/features/diaryList/apis/interfaces.ts';
 import useGetFileList from '@/features/diaryList/apis/queries/useGetFileList.ts';
 import DiaryPage from '@/features/diaryList/pages/root/DiaryPage.tsx';

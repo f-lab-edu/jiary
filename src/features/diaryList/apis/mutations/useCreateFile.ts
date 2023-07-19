@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { DIARY_KEY, createFile } from '@/features/diaryList/apis/index.ts';
+import { createFile } from '@/features/diaryList/apis/index.ts';
+import { DIARY_KEY } from '@/constants/queryKey.ts';
 
 const useCreateFile = () =>
   useMutation({

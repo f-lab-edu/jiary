@@ -4,11 +4,8 @@ import DiaryContentPage from '@/features/diaryList/pages/content/DiaryContentPag
 import useGetFileMetaData from '@/features/diaryList/apis/queries/useGetFileMetaData.ts';
 import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import {
-  DIARY_KEY,
-  getFile,
-  getFileMetaData,
-} from '@/features/diaryList/apis/index.ts';
+import { getFile, getFileMetaData } from '@/features/diaryList/apis/index.ts';
+import { DIARY_KEY } from '@/constants/queryKey.ts';
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const queryClient = new QueryClient();
