@@ -14,9 +14,7 @@ import { jiaryApi } from '@/features/common/apis/jiaryInstance.ts';
 
 export const oauthApi = axios.create({
   baseURL: 'https://www.googleapis.com',
-  headers: {
-    'Content-type': 'application/json',
-  },
+  headers: { 'Content-type': 'application/json' },
   params: {},
   timeout: 15 * 1000,
 });
@@ -51,10 +49,10 @@ export const logout = async (
   accessToken: string | null
 ): Promise<LogoutResponse> =>
   await jiaryApi
-    .delete(`${DOMAIN_URI}/api/auth?access_token=${accessToken}`)
+    .delete(`${DOMAIN_URI}/api/auth`, { params: { access_token: accessToken } })
     .then(res => res.data);
 
 export const getUserInfo = async (accessToken: string): Promise<UserInfo> =>
   await oauthApi
-    .get(`oauth2/v2/userinfo?access_token=${accessToken}`)
+    .get(`oauth2/v2/userinfo`, { params: { access_token: accessToken } })
     .then(res => res.data);

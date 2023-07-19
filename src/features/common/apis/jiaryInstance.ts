@@ -7,9 +7,7 @@ import {
 
 export const jiaryApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_DOMAIN_URI,
-  headers: {
-    'Content-type': 'application/json',
-  },
+  headers: { 'Content-type': 'application/json' },
   params: {},
   timeout: 15 * 1000,
 });
