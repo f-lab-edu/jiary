@@ -14,8 +14,8 @@ import { REQUEST_METADATAS } from '@/constants/metaData.ts';
 
 export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
 export const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-export const DIARY_KEY = 'DIARY' as const;
-export const DIARY_CONTENT_KEY = 'DIARY_CONTENT_KEY' as const;
+export const DIARY_KEY = 'DIARY';
+export const DIARY_CONTENT_KEY = 'DIARY_CONTENT_KEY';
 
 export const driveApi = axios.create({
   baseURL: 'https://www.googleapis.com/drive/v3/files',

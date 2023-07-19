@@ -26,7 +26,7 @@ setTimeout(() => {
 });
 
 export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
-export const AUTH_KEY = 'AUTH' as const;
+export const AUTH_KEY = 'AUTH';
 
 export const getAuthCode = async (): Promise<GoogleLoginUrl> =>
   await jiaryApi.get(`${DOMAIN_URI}/api/auth`).then(res => res.data);
