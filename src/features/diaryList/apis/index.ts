@@ -1,38 +1,12 @@
-import axios, { AxiosError } from 'axios';
-import {
-  onErrorResponse,
-  onRequest,
-  onResponse,
-} from '@/features/common/apis/interceptors.ts';
+import { AxiosError } from 'axios';
 import {
   DriveFile,
   File,
   MetaData,
   PatchFileArgs,
 } from '@/features/diaryList/apis/interfaces.ts';
-
-export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
-export const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-
-export const driveApi = axios.create({
-  baseURL: 'https://www.googleapis.com/drive/v3/files',
-  headers: { 'Content-type': 'application/json' },
-  params: {},
-  timeout: 15 * 1000,
-});
-
-driveApi.interceptors.request.use(onRequest);
-driveApi.interceptors.response.use(onResponse, onErrorResponse);
-
-export const driveUploadApi = axios.create({
-  baseURL: 'https://www.googleapis.com/upload/drive/v3/files',
-  headers: { 'Content-Type': 'multipart/related' },
-  params: {},
-  timeout: 15 * 1000,
-});
-
-driveUploadApi.interceptors.request.use(onRequest);
-driveUploadApi.interceptors.response.use(onResponse, onErrorResponse);
+import driveApi from '@/features/common/apis/driveInstance.ts';
+import driveUploadApi from '@/features/common/apis/driveUploadInstance.ts';
 
 export const createFile = async (title: string): Promise<File> =>
   await driveApi

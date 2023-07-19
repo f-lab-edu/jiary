@@ -1,5 +1,6 @@
 import { ReactElement, useEffect } from 'react';
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
+import { JIARY_DOMAIN } from '@/constants/domain.ts';
 
 export default function EndPopup() {
   useEffect(() => {
@@ -8,7 +9,7 @@ export default function EndPopup() {
         type: MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE,
         params: window.location.href,
       },
-      process.env.NEXT_PUBLIC_DOMAIN_URI
+      JIARY_DOMAIN
     );
   }, []);
 }

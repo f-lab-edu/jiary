@@ -10,8 +10,8 @@ import useGetAccessToken from '@/features/auth/apis/mutations/useGetAccessToken.
 import useLogout from '@/features/auth/apis/mutations/useLogout.ts';
 import useGetUserInfo from '@/features/auth/apis/mutations/useGetUserInfo.ts';
 import { useRouter } from 'next/router';
+import { JIARY_DOMAIN } from '@/constants/domain.ts';
 
-const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
 let popupWindow: Window | null = null;
 
 export type OpenLoginPopup = {
@@ -34,7 +34,7 @@ export const useAuth = () => {
   const router = useRouter();
 
   const messageCallback = async (event: MessageEvent) => {
-    if (event.origin !== DOMAIN_URI) {
+    if (event.origin !== JIARY_DOMAIN) {
       // eslint-disable-next-line no-console
       console.error('Cross-Origin Error');
       return;
@@ -66,7 +66,7 @@ export const useAuth = () => {
   const openLoginPopup: OpenLoginPopup = (url: string | undefined) => {
     if (popupWindow === null || popupWindow.closed) {
       openPopup(url);
-    } else if (window.location.href !== `${DOMAIN_URI}/auth`) {
+    } else if (window.location.href !== `${JIARY_DOMAIN}/auth`) {
       openPopup(url);
       popupWindow.focus();
     } else {
