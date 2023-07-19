@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
 
 import { Provider as ReduxProvider } from 'react-redux';
-import store from '../store/store.ts';
+import store from '@/store/store.ts';
 
 import {
   Hydrate,

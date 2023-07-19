@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
-import useGetFile from '@/features/diaryList/apis/queries/useGetFile';
-import DiaryContentPage from '@/features/diaryList/pages/content/DiaryContentPage';
+import useGetFile from '@/features/diaryList/apis/queries/useGetFile.ts';
+import DiaryContentPage from '@/features/diaryList/pages/content/DiaryContentPage.tsx';
 import useGetFileMetaData from '@/features/diaryList/apis/queries/useGetFileMetaData.ts';
 import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
 import { QueryClient, dehydrate } from '@tanstack/react-query';

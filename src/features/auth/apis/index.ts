@@ -2,15 +2,15 @@ import axios from 'axios';
 import {
   onErrorResponse,
   onResponse,
-} from '@/features/common/apis/interceptors';
+} from '@/features/common/apis/interceptors.ts';
 import {
   AuthToken,
   LogoutResponse,
   UserInfo,
   GoogleLoginUrl,
 } from '@/features/auth/apis/interfaces.ts';
-import { REQUEST_BODY_TYPE } from '@/constants/auth';
-import { jiaryApi } from '@/features/common/apis/jiaryInstance';
+import { REQUEST_BODY_TYPE } from '@/constants/auth.ts';
+import { jiaryApi } from '@/features/common/apis/jiaryInstance.ts';
 
 export const oauthApi = axios.create({
   baseURL: 'https://www.googleapis.com',

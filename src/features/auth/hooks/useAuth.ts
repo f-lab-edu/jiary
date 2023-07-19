@@ -5,7 +5,7 @@ import {
   setAccessToken,
   setUser,
 } from '@/store/slices/authSlice.ts';
-import { MESSAGE_TYPE } from '@/constants/auth';
+import { MESSAGE_TYPE } from '@/constants/auth.ts';
 import useGetAccessToken from '@/features/auth/apis/mutations/useGetAccessToken.ts';
 import useLogout from '@/features/auth/apis/mutations/useLogout.ts';
 import useGetUserInfo from '@/features/auth/apis/mutations/useGetUserInfo.ts';

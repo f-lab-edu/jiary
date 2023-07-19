@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { COLORS } from '@/constants/colors';
+import { COLORS } from '@/constants/colors.ts';
 
 export const li = style({
   width: '100%',

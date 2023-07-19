@@ -1,5 +1,5 @@
 import * as style from '@/features/diaryList/pages/content/DiaryContentPage.css.ts';
-import DiaryEditor from '@/features/diaryList/components/DiaryEditor/DiaryEditor';
+import DiaryEditor from '@/features/diaryList/components/DiaryEditor/DiaryEditor.tsx';
 import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
 
 type Props = {

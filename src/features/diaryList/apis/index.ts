@@ -3,7 +3,7 @@ import {
   onErrorResponse,
   onRequest,
   onResponse,
-} from '@/features/common/apis/interceptors';
+} from '@/features/common/apis/interceptors.ts';
 import {
   DriveFile,
   File,
