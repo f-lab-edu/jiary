@@ -1,4 +1,3 @@
-import ExampleTheme from './themes/ExampleTheme.ts';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -10,15 +9,17 @@ import { ListItemNode, ListNode } from '@lexical/list';
 import { AutoLinkNode, LinkNode } from '@lexical/link';
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { EditorState } from 'lexical/LexicalEditorState';
 
+import * as style from '@/features/diaryList/components/DiaryEditor/DiaryEditor.css.ts';
 import AutoLinkPlugin from './plugins/AutoLinkPlugin.tsx';
 import InitalPlugin from '@/features/diaryList/components/DiaryEditor/plugins/InitialPlugin.tsx';
-import { EditorState } from 'lexical/LexicalEditorState';
-import * as style from '@/features/diaryList/components/DiaryEditor/DiaryEditor.css.ts';
-import { useRef } from 'react';
-import { debounce } from '@/core/utils/eventUtils.ts';
 import usePatchFile from '@/features/diaryList/apis/mutations/usePatchFile.ts';
+import { debounce } from '@/core/utils/eventUtils.ts';
 import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
+import editorTheme from '@/features/diaryList/components/DiaryEditor/themes/editorTheme.ts';
+
+import { useRef } from 'react';
 
 type Props = {
   document: string;
@@ -72,8 +73,8 @@ export default function DiaryEditor({ document, metaData, diaryId }: Props) {
           onError(error: Error) {
             throw error;
           },
-          editorState: JSON.stringify(document),
-          theme: ExampleTheme,
+          editorState: document ? JSON.stringify(document) : null,
+          theme: editorTheme,
           nodes: [
             HeadingNode,
             ListNode,
