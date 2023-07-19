@@ -27,9 +27,7 @@ export const getAccessTokenByRefreshToken = async (): Promise<AuthToken> =>
     })
     .then(res => res.data);
 
-export const logout = async (
-  accessToken: string | null
-): Promise<LogoutResponse> =>
+export const logout = async (accessToken: string): Promise<LogoutResponse> =>
   await jiaryApi
     .delete('', { params: { access_token: accessToken } })
     .then(res => res.data);

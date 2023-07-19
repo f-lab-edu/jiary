@@ -22,9 +22,7 @@ export const createFile = async (title: string): Promise<File> =>
     )
     .then(res => res.data);
 
-export const getFileList = async (
-  accessToken: string | undefined
-): Promise<DriveFile> => {
+export const getFileList = async (accessToken?: string): Promise<DriveFile> => {
   let headers = {};
   if (accessToken) {
     headers = { Authorization: `Bearer ${accessToken}` };
@@ -43,7 +41,7 @@ export const getFileList = async (
 
 export const getFile = async (
   id: string,
-  accessToken: string | undefined
+  accessToken?: string
 ): Promise<string> => {
   let headers = {};
   if (accessToken) {
@@ -59,7 +57,7 @@ export const getFile = async (
 
 export const getFileMetaData = async (
   id: string,
-  accessToken: string | undefined
+  accessToken?: string
 ): Promise<MetaData> => {
   let headers = {};
   if (accessToken) {

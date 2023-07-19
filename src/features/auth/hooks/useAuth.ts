@@ -78,7 +78,14 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    logoutMutation.mutate(localStorage.getItem('accessToken'));
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      // eslint-disable-next-line no-console
+      console.error('로그아웃 에러');
+      alert('로그아웃을 다시 시도해주십시요.');
+      return;
+    }
+    logoutMutation.mutate(accessToken);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user');
     dispatch(removeUser());

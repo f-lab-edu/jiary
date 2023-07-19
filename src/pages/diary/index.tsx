@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 };
 
 export default function Index() {
-  const { data } = useGetFileList(undefined);
+  const { data } = useGetFileList();
 
   return <DiaryPage files={data?.files} />;
 }

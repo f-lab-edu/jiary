@@ -30,8 +30,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
 };
 
 export default function Index({ id }: { id: string }) {
-  const { data: document } = useGetFile(id, undefined);
-  const { data: metaData } = useGetFileMetaData(id, undefined);
+  const { data: document } = useGetFile(id);
+  const { data: metaData } = useGetFileMetaData(id);
 
   return (
     <DiaryContentPage
