@@ -137,6 +137,7 @@ export default async function handler(
       jsonTokens.splice(index, 1);
     }
     writeFile(jsonTokens);
+    setCookie(res, 'Authorization', 'deleted', { maxAge: -1, path: '/' });
 
     res.status(200).json({ message: 'success' });
   }

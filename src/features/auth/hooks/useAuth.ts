@@ -11,6 +11,7 @@ import useLogout from '@/features/auth/apis/mutations/useLogout.ts';
 import useGetUserInfo from '@/features/auth/apis/mutations/useGetUserInfo.ts';
 import { useRouter } from 'next/router';
 import { JIARY_DOMAIN } from '@/constants/domain.ts';
+import { useQueryClient } from '@tanstack/react-query';
 
 let popupWindow: Window | null = null;
 
@@ -32,6 +33,7 @@ export const useAuth = () => {
   const logoutMutation = useLogout();
   const dispatch = useDispatch();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const messageCallback = async (event: MessageEvent) => {
     if (event.origin !== JIARY_DOMAIN) {
@@ -93,6 +95,7 @@ export const useAuth = () => {
     localStorage.removeItem('user');
     dispatch(removeUser());
     dispatch(removeAccessToken());
+    queryClient.clear();
     router.push('/');
   };
 
