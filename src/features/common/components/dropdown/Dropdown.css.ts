@@ -15,6 +15,7 @@ export const wrapper = style({
   top: wrapperTop,
   background: '#fff',
   padding: '8px',
+  borderRadius: 6,
   boxShadow:
     'rgba(9, 30, 66, 0.15) 0px 8px 12px 0px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px',
 });
