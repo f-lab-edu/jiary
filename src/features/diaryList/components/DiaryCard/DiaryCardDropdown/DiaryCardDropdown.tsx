@@ -18,13 +18,10 @@ export default function DiaryCardDropdown({ id }: { id: string }) {
           className={style.menuIcon}
         />
       </Dropdown.Trigger>
-      <Dropdown.List>
-        <button
-          onClick={() => deleteMutation.mutate(id)}
-          className={style.deleteButton}
-        >
+      <Dropdown.List width="100px">
+        <Dropdown.SubmitButton onClick={() => deleteMutation.mutate(id)}>
           삭제
-        </button>
+        </Dropdown.SubmitButton>
       </Dropdown.List>
     </Dropdown>
   );

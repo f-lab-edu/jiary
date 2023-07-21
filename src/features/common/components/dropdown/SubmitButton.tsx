@@ -6,9 +6,15 @@ type Props = {
   children?: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
+  className?: string;
 };
 
-export default function SubmitButton({ children, onClick, disabled }: Props) {
+export default function SubmitButton({
+  children,
+  onClick,
+  disabled,
+  className,
+}: Props) {
   const { setIsShow } = useContext(DropdownContext);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -20,7 +26,7 @@ export default function SubmitButton({ children, onClick, disabled }: Props) {
     <button
       onClick={handleClick}
       disabled={disabled}
-      className={style.submitButton}
+      className={className ? className : style.submitButton}
     >
       {children}
     </button>

@@ -6,9 +6,14 @@ import { assignInlineVars } from '@vanilla-extract/dynamic';
 type Props = {
   children: ReactNode;
   width?: string;
+  offset?: number;
 };
 
-export default function List({ children, width = 'fit-content' }: Props) {
+export default function List({
+  children,
+  width = '200px',
+  offset = 10,
+}: Props) {
   const { isShow, triggerRef } = useContext(DropdownContext);
   const targetHeight = triggerRef?.clientHeight || 0;
 
@@ -19,7 +24,7 @@ export default function List({ children, width = 'fit-content' }: Props) {
           className={style.wrapper}
           style={assignInlineVars({
             [style.wrapperWidth]: width,
-            [style.wrapperTop]: `${(targetHeight + 10).toString()}px`,
+            [style.wrapperTop]: `${(targetHeight + offset).toString()}px`,
           })}
         >
           {children}
