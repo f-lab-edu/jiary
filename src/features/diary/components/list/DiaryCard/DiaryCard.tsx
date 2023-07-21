@@ -14,7 +14,8 @@ export default function DiaryCard({ file }: { file: File }) {
     const target = e.target as HTMLElement;
     if (
       target.className.includes('menuIcon') ||
-      target.className.includes('deleteButton')
+      target.className.includes('submitButton') ||
+      target.className.includes('Dropdown_wrapper')
     ) {
       e.preventDefault();
     }
