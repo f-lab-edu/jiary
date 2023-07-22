@@ -1,7 +1,7 @@
-import * as style from '@/features/diaryList/components/DiaryListHeader/DiaryListHeader.css.ts';
+import * as style from '@/features/diary/components/list/DiaryListHeader/DiaryListHeader.css.ts';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import useCreateFile from '@/features/diaryList/apis/mutations/useCreateFile';
+import useCreateFile from '@/features/diary/apis/mutations/useCreateFile.ts';
 import { useRouter } from 'next/router';
 
 export default function DiaryListHeader({ count }: { count: number }) {

@@ -1,8 +1,8 @@
-import * as style from '@/features/diaryList/pages/content/DiaryContentPage.css.ts';
-import DiaryEditor from '@/features/diaryList/components/DiaryEditor/DiaryEditor.tsx';
-import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
-import useGetFile from '@/features/diaryList/apis/queries/useGetFile.ts';
-import useGetFileMetaData from '@/features/diaryList/apis/queries/useGetFileMetaData.ts';
+import * as style from '@/features/diary/pages/content/DiaryContentPage.css.ts';
+import DiaryEditor from '@/features/diary/components/content/DiaryEditor/DiaryEditor.tsx';
+import { MetaData } from '@/features/diary/apis/interfaces.ts';
+import useGetFile from '@/features/diary/apis/queries/useGetFile.ts';
+import useGetFileMetaData from '@/features/diary/apis/queries/useGetFileMetaData.ts';
 
 type Props = {
   document: string;

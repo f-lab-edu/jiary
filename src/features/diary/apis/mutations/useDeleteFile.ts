@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteFile } from '@/features/diaryList/apis/index.ts';
-import { DriveFile, File } from '@/features/diaryList/apis/interfaces.ts';
+import { deleteFile } from '@/features/diary/apis/index.ts';
+import { DriveFile, File } from '@/features/diary/apis/interfaces.ts';
 import { AxiosError } from 'axios';
 import { DIARY_KEY } from '@/constants/queryKey.ts';
 

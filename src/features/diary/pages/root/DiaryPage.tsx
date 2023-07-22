@@ -1,7 +1,7 @@
-import * as style from '@/features/diaryList/pages/root/DiaryPage.css.ts';
-import DiaryCard from '@/features/diaryList/components/DiaryCard/DiaryCard.tsx';
-import DiaryListHeader from '@/features/diaryList/components/DiaryListHeader/DiaryListHeader';
-import useGetFileList from '@/features/diaryList/apis/queries/useGetFileList.ts';
+import * as style from '@/features/diary/pages/root/DiaryPage.css.ts';
+import DiaryCard from '@/features/diary/components/list/DiaryCard/DiaryCard.tsx';
+import DiaryListHeader from '@/features/diary/components/list/DiaryListHeader/DiaryListHeader.tsx';
+import useGetFileList from '@/features/diary/apis/queries/useGetFileList.ts';
 
 /**
  * card list data

@@ -3,7 +3,6 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
-import ToolbarPlugin from './plugins/ToolbarPlugin.tsx';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { AutoLinkNode, LinkNode } from '@lexical/link';
@@ -11,13 +10,14 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { EditorState } from 'lexical/LexicalEditorState';
 
-import * as style from '@/features/diaryList/components/DiaryEditor/DiaryEditor.css.ts';
+import ToolbarPlugin from './plugins/ToolbarPlugin.tsx';
+import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 import AutoLinkPlugin from './plugins/AutoLinkPlugin.tsx';
-import InitalPlugin from '@/features/diaryList/components/DiaryEditor/plugins/InitialPlugin.tsx';
-import usePatchFile from '@/features/diaryList/apis/mutations/usePatchFile.ts';
+import InitalPlugin from '@/features/diary/components/content/DiaryEditor/plugins/InitialPlugin.tsx';
+import usePatchFile from '@/features/diary/apis/mutations/usePatchFile.ts';
 import { debounce } from '@/core/utils/eventUtils.ts';
-import { MetaData } from '@/features/diaryList/apis/interfaces.ts';
-import editorTheme from '@/features/diaryList/components/DiaryEditor/themes/editorTheme.ts';
+import { MetaData } from '@/features/diary/apis/interfaces.ts';
+import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/editorTheme.ts';
 
 import { useRef } from 'react';
 
