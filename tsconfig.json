@@ -33,6 +33,7 @@
   ],
   "exclude": [
     "node_modules",
-    "src/pages/api/auth.ts"
+    ".next",
+    "./src/pages/api/auth.ts"
   ],
 }

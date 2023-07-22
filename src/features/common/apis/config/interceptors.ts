@@ -7,6 +7,8 @@ import axios, {
 import { getAccessTokenByRefreshToken } from '@/features/auth/apis/index.ts';
 import store from '@/store/store.ts';
 import { setAccessToken } from '@/store/slices/authSlice.ts';
+import { isSSR } from '@/core/utils/objectUtils.ts';
+import { JIARY_DOMAIN } from '@/constants/domain.ts';
 
 type ChangeConfigNewToken = (
   config: AxiosRequestConfig,
@@ -37,7 +39,7 @@ const changeConfigNewToken: ChangeConfigNewToken = (config, token) => {
 };
 
 export const onRequest = (request: InternalAxiosRequestConfig) => {
-  if (request.headers) {
+  if (!isSSR) {
     request.headers['Authorization'] = `Bearer ${localStorage.getItem(
       'accessToken'
     )}`;
@@ -68,7 +70,7 @@ export const onErrorResponse = async (
       return await axios.request(config);
     } catch (error) {
       alert('로그인이 필요합니다.');
-      window.location.href = `${process.env.NEXT_PUBLIC_DOMAIN_URI}/auth`;
+      window.location.href = `${JIARY_DOMAIN}/auth`;
     }
   }
   return Promise.reject(error);

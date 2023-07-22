@@ -1,11 +1,11 @@
 import menu from '@/static/diary/menu.svg';
 import Image from 'next/image';
-import useDeleteDoc from '@/features/diaryList/apis/mutations/useDeleteDoc.ts';
+import useDeleteFile from '@/features/diaryList/apis/mutations/useDeleteFile.ts';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
-import * as style from '@/features/diaryList/components/DiaryCard/DiaryCardDropdown/DiaryCardDropdown.css';
+import * as style from '@/features/diaryList/components/DiaryCard/DiaryCardDropdown/DiaryCardDropdown.css.ts';
 
 export default function DiaryCardDropdown({ id }: { id: string }) {
-  const deleteMutation = useDeleteDoc();
+  const deleteMutation = useDeleteFile();
 
   return (
     <Dropdown>
@@ -18,13 +18,10 @@ export default function DiaryCardDropdown({ id }: { id: string }) {
           className={style.menuIcon}
         />
       </Dropdown.Trigger>
-      <Dropdown.List>
-        <button
-          onClick={() => deleteMutation.mutate(id)}
-          className={style.deleteButton}
-        >
+      <Dropdown.List width="100px">
+        <Dropdown.SubmitButton onClick={() => deleteMutation.mutate(id)}>
           삭제
-        </button>
+        </Dropdown.SubmitButton>
       </Dropdown.List>
     </Dropdown>
   );

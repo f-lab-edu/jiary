@@ -1,57 +1,90 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import {
-  onErrorResponse,
-  onRequest,
-  onResponse,
-} from '@/features/common/apis/interceptors.ts';
-import { Doc, DriveFile } from '@/features/diaryList/apis/interfaces.ts';
-import { jiaryApi } from '@/features/common/apis/jiaryInstance.ts';
+  DriveFile,
+  File,
+  MetaData,
+  PatchFileArgs,
+} from '@/features/diaryList/apis/interfaces.ts';
+import driveApi from '@/features/common/apis/driveInstance.ts';
+import driveUploadApi from '@/features/common/apis/driveUploadInstance.ts';
 
-export const driveApi = axios.create({
-  baseURL: 'https://www.googleapis.com/drive/v3',
-  headers: {
-    'Content-type': 'application/json',
-  },
-  params: {},
-  timeout: 15 * 1000,
-});
-
-driveApi.interceptors.request.use(onRequest);
-driveApi.interceptors.response.use(onResponse, onErrorResponse);
-
-export const docsApi = axios.create({
-  baseURL: 'https://content-docs.googleapis.com/v1/documents',
-  headers: {
-    'Content-type': 'application/json',
-  },
-  params: {},
-  timeout: 15 * 1000,
-});
-
-docsApi.interceptors.request.use(onRequest);
-docsApi.interceptors.response.use(onResponse, onErrorResponse);
-
-export const DOMAIN_URI = process.env.NEXT_PUBLIC_DOMAIN_URI;
-export const DIARY_KEY = 'DIARY' as const;
-
-export const createDoc = async (title: string): Promise<Doc> =>
-  await docsApi.post('', { title: `jiary-${title}` }).then(res => res.data);
-
-export const deleteDoc = async (
-  fileId: string
-): Promise<{ message: string } | AxiosError> =>
-  await jiaryApi
-    .delete(
-      `${DOMAIN_URI}/api/diary?file_id=${fileId}&access_token=${localStorage.getItem(
-        'accessToken'
-      )}`
+export const createFile = async (title: string): Promise<File> =>
+  await driveApi
+    .post(
+      '',
+      {
+        createdTime: new Date().toISOString(),
+        mimeType: 'text/plain',
+        name: title,
+        parents: ['appDataFolder'],
+      },
+      { params: { uploadType: 'multipart' } }
     )
     .then(res => res.data);
 
-export const getDocList = async (): Promise<DriveFile> =>
-  await driveApi
-    .get("/files?q=trashed=false and name contains 'jiary-'")
+export const getFileList = async (accessToken?: string): Promise<DriveFile> => {
+  let headers = {};
+  if (accessToken) {
+    headers = { Authorization: `Bearer ${accessToken}` };
+  }
+  return await driveApi
+    .get('', {
+      params: {
+        q: 'trashed=false',
+        spaces: 'appDataFolder',
+        fields:
+          'files(id,name,createdTime,modifiedTime,hasThumbnail,thumbnailLink,contentHints)',
+      },
+      headers,
+    })
     .then(res => res.data);
+};
 
-export const getDoc = async (id: string): Promise<Doc> =>
-  await docsApi.get(`/${id}`).then(res => res.data);
+export const getFile = async (
+  id: string,
+  accessToken?: string
+): Promise<string> => {
+  let headers = {};
+  if (accessToken) {
+    headers = { Authorization: `Bearer ${accessToken}` };
+  }
+  return await driveApi
+    .get(`/${id}`, {
+      params: { alt: 'media' },
+      headers,
+    })
+    .then(res => res.data);
+};
+
+export const getFileMetaData = async (
+  id: string,
+  accessToken?: string
+): Promise<MetaData> => {
+  let headers = {};
+  if (accessToken) {
+    headers = { Authorization: `Bearer ${accessToken}` };
+  }
+  return await driveApi
+    .get(`/${id}`, {
+      params: {
+        fields:
+          'name,createdTime,modifiedTime,description,hasThumbnail,thumbnailLink,contentHints',
+      },
+      headers,
+    })
+    .then(res => res.data);
+};
+
+export const patchFile = async ({
+  fileId,
+  multipartData,
+}: PatchFileArgs): Promise<File> => {
+  return await driveUploadApi.patch(`/${fileId}`, multipartData, {
+    params: { uploadType: 'multipart' },
+  });
+};
+
+export const deleteFile = async (
+  fileId: string
+): Promise<{ message: string } | AxiosError> =>
+  await driveApi.delete(`/${fileId}`).then(res => res.data);

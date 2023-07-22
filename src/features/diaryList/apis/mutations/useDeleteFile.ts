@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { DIARY_KEY, deleteDoc } from '@/features/diaryList/apis/index.ts';
+import { deleteFile } from '@/features/diaryList/apis/index.ts';
 import { DriveFile, File } from '@/features/diaryList/apis/interfaces.ts';
 import { AxiosError } from 'axios';
+import { DIARY_KEY } from '@/constants/queryKey.ts';
 
-const useDeleteDoc = () => {
+const useDeleteFile = () => {
   const queryClient = useQueryClient();
   return useMutation<{ message: string } | string, AxiosError, string>({
     mutationKey: [DIARY_KEY],
-    mutationFn: (fileId: string) => deleteDoc(fileId),
+    mutationFn: (fileId: string) => deleteFile(fileId),
     onSuccess(_, variables) {
       queryClient.setQueryData<DriveFile>(
         [DIARY_KEY, 'docList'],
@@ -20,4 +21,4 @@ const useDeleteDoc = () => {
   });
 };
 
-export default useDeleteDoc;
+export default useDeleteFile;

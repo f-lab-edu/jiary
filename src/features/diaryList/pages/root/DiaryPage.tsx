@@ -1,6 +1,6 @@
 import { File } from '@/features/diaryList/apis/interfaces.ts';
 import * as style from '@/features/diaryList/pages/root/DiaryPage.css.ts';
-import DiaryCard from '@/features/diaryList/components/DiaryCard/DiaryCard';
+import DiaryCard from '@/features/diaryList/components/DiaryCard/DiaryCard.tsx';
 import DiaryListHeader from '@/features/diaryList/components/DiaryListHeader/DiaryListHeader';
 /**
  * card list data

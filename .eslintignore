@@ -1,0 +1,9 @@
+/.next/
+/out/
+/node_modules
+.eslintcache
+/src/pages/api/refresh-token.json
+.env*
+/.github
+/.husky
+/public

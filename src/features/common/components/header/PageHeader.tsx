@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import JiaryLogo from '@/static/jiary-logo.svg';
 import GithubLogo from '@/static/github-logo.svg';
-import UserProfile from '@/features/common/components/profile/UserProfile';
+import UserProfile from '@/features/common/components/profile/UserProfile.tsx';
 import * as style from '@/features/common/components/header/PageHeader.css.ts';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';

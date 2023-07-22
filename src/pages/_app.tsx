@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
 
 import { Provider as ReduxProvider } from 'react-redux';
-import store from '../store/store.ts';
+import store from '@/store/store.ts';
 
 import {
   Hydrate,
@@ -15,6 +15,8 @@ import bootApp from '@/core/config/boostApp.ts';
 import PageLayout from '@/features/common/components/PageLayout.tsx';
 
 import '@/styles/globals.css.ts';
+import '@/features/diaryList/components/DiaryEditor/lexical.css';
+import { isSSR } from '@/core/utils/objectUtils.ts';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -30,9 +32,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(new QueryClient());
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      bootApp();
-    }
+    !isSSR && bootApp();
   }, []);
 
   return (

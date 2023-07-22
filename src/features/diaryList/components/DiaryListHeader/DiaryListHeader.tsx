@@ -1,13 +1,13 @@
 import * as style from '@/features/diaryList/components/DiaryListHeader/DiaryListHeader.css.ts';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import useCreateDoc from '@/features/diaryList/apis/mutations/useCreateDoc.ts';
+import useCreateFile from '@/features/diaryList/apis/mutations/useCreateFile';
 import { useRouter } from 'next/router';
 
 export default function DiaryListHeader({ count }: { count: number }) {
   const [inputValue, setInputValue] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
-  const createDocMutation = useCreateDoc();
+  const createDocMutation = useCreateFile();
   const router = useRouter();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +25,8 @@ export default function DiaryListHeader({ count }: { count: number }) {
 
   const handleCreateDoc = () => {
     createDocMutation.mutate(inputValue, {
-      onSuccess({ documentId }) {
-        router.push(`/diary/${documentId}`);
+      onSuccess({ id }) {
+        router.push(`/diary/${id}`);
       },
     });
   };
