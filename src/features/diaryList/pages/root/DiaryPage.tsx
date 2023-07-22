@@ -1,7 +1,8 @@
-import { File } from '@/features/diaryList/apis/interfaces.ts';
 import * as style from '@/features/diaryList/pages/root/DiaryPage.css.ts';
 import DiaryCard from '@/features/diaryList/components/DiaryCard/DiaryCard.tsx';
 import DiaryListHeader from '@/features/diaryList/components/DiaryListHeader/DiaryListHeader';
+import useGetFileList from '@/features/diaryList/apis/queries/useGetFileList.ts';
+
 /**
  * card list data
  * 1. 제목
@@ -12,7 +13,10 @@ import DiaryListHeader from '@/features/diaryList/components/DiaryListHeader/Dia
  * 6. label 색상 선택기
  * https://www.eleken.co/cases/tendrx
  */
-export default function DiaryPage({ files }: { files: File[] | undefined }) {
+export default function DiaryPage() {
+  const { data } = useGetFileList();
+  const files = data?.files;
+
   return (
     <>
       <div className={style.container}>
