@@ -1,5 +1,5 @@
 import { DIARY_KEY } from '@/constants/queryKey.ts';
-import { getFile } from '@/features/diaryList/apis/index.ts';
+import { getFile } from '@/features/diary/apis/index.ts';
 import { useQuery } from '@tanstack/react-query';
 
 const useGetFile = (id: string, accessToken?: string) =>
