@@ -1,11 +1,11 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
-  ChangeEvent,
-  ChangeEventHandler,
+  // ChangeEvent,
+  // ChangeEventHandler,
   RefObject,
   useCallback,
   useEffect,
-  useMemo,
+  // useMemo,
   useRef,
   useState,
 } from 'react';
@@ -20,7 +20,6 @@ import {
   $getSelection,
   $isRangeSelection,
   $createParagraphNode,
-  $getNodeByKey,
   LexicalEditor,
   RangeSelection,
   NodeSelection,
@@ -42,19 +41,13 @@ import {
   $createQuoteNode,
   $isHeadingNode,
 } from '@lexical/rich-text';
-import {
-  $createCodeNode,
-  $isCodeNode,
-  getDefaultCodeLanguage,
-  getCodeLanguages,
-} from '@lexical/code';
 
 const LowPriority = 1;
 
 const supportedBlockTypes = new Set([
   'paragraph',
   'quote',
-  'code',
+  'map',
   'h1',
   'h2',
   'ul',
@@ -66,7 +59,6 @@ type Block = {
 };
 
 const blockTypeToBlockName: Block = {
-  code: 'Code Block',
   h1: 'Large Heading',
   h2: 'Small Heading',
   h3: 'Heading',
@@ -246,28 +238,28 @@ function FloatingLinkEditor({ editor }: { editor: LexicalEditor }) {
   );
 }
 
-function Select({
-  onChange,
-  className,
-  options,
-  value,
-}: {
-  onChange: ChangeEventHandler<HTMLSelectElement>;
-  className: string;
-  options: string[];
-  value: string | number | readonly string[] | undefined;
-}) {
-  return (
-    <select className={className} onChange={onChange} value={value}>
-      <option hidden={true} value="" />
-      {options.map(option => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  );
-}
+// function Select({
+//   onChange,
+//   className,
+//   options,
+//   value,
+// }: {
+//   onChange: ChangeEventHandler<HTMLSelectElement>;
+//   className: string;
+//   options: string[];
+//   value: string | number | readonly string[] | undefined;
+// }) {
+//   return (
+//     <select className={className} onChange={onChange} value={value}>
+//       <option hidden={true} value="" />
+//       {options.map(option => (
+//         <option key={option} value={option}>
+//           {option}
+//         </option>
+//       ))}
+//     </select>
+//   );
+// }
 
 function getSelectedNode(selection: RangeSelection) {
   const anchor = selection.anchor;
@@ -399,19 +391,6 @@ function BlockOptionsDropdownList({
     setShowBlockOptionsDropDown(false);
   };
 
-  const formatCode = () => {
-    if (blockType !== 'code') {
-      editor.update(() => {
-        const selection = $getSelection();
-
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createCodeNode());
-        }
-      });
-    }
-    setShowBlockOptionsDropDown(false);
-  };
-
   return (
     <div className="dropdown" ref={dropDownRef}>
       <button className="item" onClick={formatParagraph}>
@@ -444,10 +423,10 @@ function BlockOptionsDropdownList({
         <span className="text">Quote</span>
         {blockType === 'quote' && <span className="active" />}
       </button>
-      <button className="item" onClick={formatCode}>
-        <span className="icon code" />
+      {/* TODO: 여기 map 클릭시 넣어야 함. */}
+      <button className="item" onClick={() => {}}>
+        <span className="icon map" />
         <span className="text">Code Block</span>
-        {blockType === 'code' && <span className="active" />}
       </button>
     </div>
   );
@@ -459,19 +438,15 @@ export default function ToolbarPlugin() {
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
   const [blockType, setBlockType] = useState('paragraph');
-  const [selectedElementKey, setSelectedElementKey] = useState<string | null>(
-    null
-  );
+
   const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
     useState(false);
-  const [codeLanguage, setCodeLanguage] = useState('');
   // const [isRTL, setIsRTL] = useState(false);
   const [isLink, setIsLink] = useState(false);
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
-  const [isCode, setIsCode] = useState(false);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -484,7 +459,6 @@ export default function ToolbarPlugin() {
       const elementKey = element.getKey();
       const elementDOM = editor.getElementByKey(elementKey);
       if (elementDOM !== null) {
-        setSelectedElementKey(elementKey);
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType(anchorNode, ListNode);
           const type = parentList ? parentList.getTag() : element.getTag();
@@ -494,9 +468,6 @@ export default function ToolbarPlugin() {
             ? element.getTag()
             : element.getType();
           setBlockType(type);
-          if ($isCodeNode(element)) {
-            setCodeLanguage(element.getLanguage() || getDefaultCodeLanguage());
-          }
         }
       }
       // Update text format
@@ -504,7 +475,6 @@ export default function ToolbarPlugin() {
       setIsItalic(selection.hasFormat('italic'));
       setIsUnderline(selection.hasFormat('underline'));
       setIsStrikethrough(selection.hasFormat('strikethrough'));
-      setIsCode(selection.hasFormat('code'));
       // setIsRTL($isParentElementRTL(selection));
 
       // Update links
@@ -551,23 +521,6 @@ export default function ToolbarPlugin() {
       )
     );
   }, [editor, updateToolbar]);
-
-  const codeLanguges = useMemo(() => getCodeLanguages(), []);
-  const onCodeLanguageSelect: ChangeEventHandler<HTMLSelectElement> =
-    useCallback(
-      (e: ChangeEvent) => {
-        editor.update(() => {
-          if (selectedElementKey !== null) {
-            const node = $getNodeByKey(selectedElementKey);
-            if ($isCodeNode(node)) {
-              const target = e.target as HTMLInputElement;
-              node.setLanguage(target.value);
-            }
-          }
-        });
-      },
-      [editor, selectedElementKey]
-    );
 
   const insertLink = useCallback(() => {
     if (!isLink) {
@@ -626,17 +579,7 @@ export default function ToolbarPlugin() {
           <Divider />
         </>
       )}
-      {blockType === 'code' ? (
-        <>
-          <Select
-            className="toolbar-item code-language"
-            onChange={onCodeLanguageSelect}
-            options={codeLanguges}
-            value={codeLanguage}
-          />
-          <i className="chevron-down inside" />
-        </>
-      ) : (
+      {
         <>
           <button
             onClick={() => {
@@ -680,10 +623,10 @@ export default function ToolbarPlugin() {
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
             }}
-            className={'toolbar-item spaced ' + (isCode ? 'active' : '')}
-            aria-label="Insert Code"
+            className={'toolbar-item spaced'}
+            aria-label="Insert Map"
           >
-            <i className="format code" />
+            <i className="format map" />
           </button>
           <button
             onClick={insertLink}
@@ -732,7 +675,7 @@ export default function ToolbarPlugin() {
             <i className="format justify-align" />
           </button>{' '}
         </>
-      )}
+      }
     </div>
   );
 }

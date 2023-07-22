@@ -49,9 +49,7 @@ h1 {
 }
 
 .editor-container {
-  /* margin: 20px auto 20px auto; */
   border-radius: 2px;
-  max-width: 600px;
   color: #000;
   position: relative;
   line-height: 20px;
@@ -64,10 +62,15 @@ h1 {
 .editor-inner {
   background: #fff;
   position: relative;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  /* height: calc(100% - 44px); */
+  height: calc(100vh - 244px);
+  overflow-y: auto;
 }
 
 .editor-input {
-  min-height: 150px;
+  height: 100%;
   resize: none;
   font-size: 15px;
   caret-color: rgb(5, 5, 5);
@@ -218,7 +221,7 @@ h1 {
 }
 
 .editor-paragraph:last-child {
-  margin-bottom: 0;
+  padding-bottom: 8px;
 }
 
 .editor-heading-h1 {
@@ -388,15 +391,15 @@ pre::-webkit-scrollbar-thumb {
   border-radius: 10px;
   padding: 8px;
   vertical-align: middle;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
   width: 70px;
   font-size: 14px;
   color: #777;
   text-overflow: ellipsis;
 }
 
-.toolbar select.code-language {
+.toolbar select.map-language {
   text-transform: capitalize;
   width: 130px;
 }
@@ -492,8 +495,8 @@ i.chevron-down {
   background-image: url(/editor/icons/list-ol.svg);
 }
 
-#block-controls span.block-type.code {
-  background-image: url(/editor/icons/code.svg);
+#block-controls span.block-type.map {
+  background-image: url(/editor/icons/map.svg);
 }
 
 .dropdown {
@@ -685,8 +688,8 @@ i.redo {
   background-image: url(/editor/icons/chat-square-quote.svg);
 }
 
-.icon.code {
-  background-image: url(/editor/icons/code.svg);
+.icon.map {
+  background-image: url(/editor/icons/map.svg);
 }
 
 i.bold {
@@ -705,8 +708,8 @@ i.strikethrough {
   background-image: url(/editor/icons/type-strikethrough.svg);
 }
 
-i.code {
-  background-image: url(/editor/icons/code.svg);
+i.map {
+  background-image: url(/editor/icons/map.svg);
 }
 
 i.link {

@@ -49,7 +49,7 @@ export default function DiaryEditor({ document, metaData, diaryId }: Props) {
     });
   };
 
-  const handleDebounceChange = debounce(saveData, 2000);
+  const handleDebounceChange = debounce(saveData, 1000);
   const handleChange = (editorState: EditorState) => {
     editorState.read(() => {
       value.current = JSON.stringify(editorState.toJSON());
@@ -57,51 +57,41 @@ export default function DiaryEditor({ document, metaData, diaryId }: Props) {
     });
   };
 
-  const preventDebounce = () => {
-    if (!debounceId.current) return;
-    clearTimeout(debounceId.current);
-    debounceId.current = null;
-    saveData();
-  };
-
   return (
-    <>
-      <button onClick={preventDebounce}>save!</button>
-      <LexicalComposer
-        initialConfig={{
-          namespace: 'MyEditor',
-          onError(error: Error) {
-            throw error;
-          },
-          editorState: document ? JSON.stringify(document) : null,
-          theme: editorTheme,
-          nodes: [
-            HeadingNode,
-            ListNode,
-            ListItemNode,
-            QuoteNode,
-            AutoLinkNode,
-            LinkNode,
-          ],
-          // editable: false,
-        }}
-      >
-        <div className={`${style.wrapper} editor-container`}>
-          <ToolbarPlugin />
-          <div className="editor-inner">
-            <RichTextPlugin
-              contentEditable={<ContentEditable className="editor-input" />}
-              placeholder={null}
-              ErrorBoundary={LexicalErrorBoundary}
-            />
-            <OnChangePlugin onChange={handleChange} ignoreSelectionChange />
-            <HistoryPlugin />
-            <LinkPlugin />
-            <AutoLinkPlugin />
-            <InitalPlugin initValue={document} editorRef={editorRef} />
-          </div>
+    <LexicalComposer
+      initialConfig={{
+        namespace: 'MyEditor',
+        onError(error: Error) {
+          throw error;
+        },
+        editorState: document ? JSON.stringify(document) : null,
+        theme: editorTheme,
+        nodes: [
+          HeadingNode,
+          ListNode,
+          ListItemNode,
+          QuoteNode,
+          AutoLinkNode,
+          LinkNode,
+        ],
+        // editable: false,
+      }}
+    >
+      <div className={`${style.wrapper} editor-container`}>
+        <ToolbarPlugin />
+        <div className="editor-inner">
+          <RichTextPlugin
+            contentEditable={<ContentEditable className="editor-input" />}
+            placeholder={null}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <OnChangePlugin onChange={handleChange} ignoreSelectionChange />
+          <HistoryPlugin />
+          <LinkPlugin />
+          <AutoLinkPlugin />
+          <InitalPlugin initValue={document} editorRef={editorRef} />
         </div>
-      </LexicalComposer>
-    </>
+      </div>
+    </LexicalComposer>
   );
 }

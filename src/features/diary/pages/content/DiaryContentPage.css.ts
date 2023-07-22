@@ -7,6 +7,7 @@ export const container = style({
 export const title = style({
   fontWeight: 700,
   fontSize: 24,
+  marginBottom: 20,
 });
 
 export const content = style({
@@ -16,4 +17,11 @@ export const content = style({
   ':focus-visible': {
     outline: 'none',
   },
+});
+
+export const sectionDivision = style({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: 20,
+  minHeight: 'calc(100vh - 200px)',
 });
