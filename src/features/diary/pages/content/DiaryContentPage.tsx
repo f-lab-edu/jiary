@@ -6,6 +6,7 @@ import useGetFileMetaData from '@/features/diary/apis/queries/useGetFileMetaData
 import { useEffect } from 'react';
 import { freezeScroll, releaseScroll } from '@/core/utils/uiUtils.ts';
 import DiaryMap from '@/features/diary/components/content/DiaryMap/DiaryMap.tsx';
+import Head from 'next/head';
 
 type Props = {
   document: string;
@@ -28,16 +29,22 @@ export default function DiaryContentPage({ diaryId }: Props) {
   }, []);
 
   return (
-    <div className={style.container}>
-      <h1 className={style.title}>{metaData?.name || ''}</h1>
-      <section className={style.sectionDivision}>
-        <DiaryEditor
-          diaryId={diaryId}
-          document={document || ''}
-          metaData={metaData || {}}
-        />
-        <DiaryMap />
-      </section>
-    </div>
+    <>
+      <Head>
+        <title>{`${metaData?.name || ''} 다이어리 📔`}</title>
+      </Head>
+
+      <div className={style.container}>
+        <h1 className={style.title}>{metaData?.name || ''}</h1>
+        <section className={style.sectionDivision}>
+          <DiaryEditor
+            diaryId={diaryId}
+            document={document || ''}
+            metaData={metaData || {}}
+          />
+          <DiaryMap />
+        </section>
+      </div>
+    </>
   );
 }

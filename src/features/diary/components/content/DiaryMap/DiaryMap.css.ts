@@ -6,3 +6,7 @@ export const container = style({
   background: '#fff',
   borderRadius: 10,
 });
+
+export const mapSection = style({
+  height: 'calc(100vh - 200px)',
+});
