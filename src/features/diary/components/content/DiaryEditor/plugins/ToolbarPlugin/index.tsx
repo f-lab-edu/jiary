@@ -12,24 +12,25 @@ import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
-  FORMAT_TEXT_COMMAND,
   $getSelection,
   $isRangeSelection,
   RangeSelection,
 } from 'lexical';
+import { $isCodeNode } from '@lexical/code';
 import { $isLinkNode } from '@lexical/link';
 import { $isAtNodeEnd } from '@lexical/selection';
 import { $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
 import { $isHeadingNode } from '@lexical/rich-text';
-import BlockToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/BlockToolbar';
-import LinkToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/LinkToolbar';
+import BlockToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/BlockToolbar.tsx';
+import LinkToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/LinkToolbar.tsx';
 import UndoToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/UndoToolbar.tsx';
 import BoldToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/BoldToolbar.tsx';
 import ItalicToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/ItalicToolbar.tsx';
 import UnderlineToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/UnderlineToolbar.tsx';
 import StrikethroughToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/StrikethroughToolbar.tsx';
 import DirectionToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/DirectionToolbar.tsx';
+import MapToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/index.tsx';
 
 const LowPriority = 1;
 
@@ -55,9 +56,8 @@ export default function ToolbarPlugin() {
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
   const [blockType, setBlockType] = useState('paragraph');
-  // const [showMapDropDown, setShowMapDropDown] = useState(false);
-
   const [isLink, setIsLink] = useState(false);
+  const [isMap, setIsMap] = useState(false);
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
@@ -83,6 +83,9 @@ export default function ToolbarPlugin() {
             ? element.getTag()
             : element.getType();
           setBlockType(type);
+          if ($isCodeNode(element)) {
+            return;
+          }
         }
       }
       // Update text format
@@ -90,6 +93,7 @@ export default function ToolbarPlugin() {
       setIsItalic(selection.hasFormat('italic'));
       setIsUnderline(selection.hasFormat('underline'));
       setIsStrikethrough(selection.hasFormat('strikethrough'));
+      setIsMap(selection.hasFormat('code'));
 
       // Update links
       const node = getSelectedNode(selection);
@@ -149,16 +153,7 @@ export default function ToolbarPlugin() {
       <LinkToolbar isLink={isLink} getSelectedNode={getSelectedNode} />
       <div className="divider" />
       <DirectionToolbar />
-
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
-        }}
-        className={'toolbar-item spaced map'}
-        aria-label="Insert Map"
-      >
-        <i className="format map" />
-      </button>
+      <MapToolbar isMap={isMap} setIsMap={setIsMap} />
     </div>
   );
 }

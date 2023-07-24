@@ -1,11 +1,13 @@
 import * as style from '@/features/diary/components/content/DiaryMap/DiaryMap.css';
-import { useMapLoad } from '@/features/diary/hooks/useMapLoad.ts';
 import { useMapMarker } from '@/features/diary/hooks/useMapMarker.ts';
-import { useState } from 'react';
+import { MutableRefObject } from 'react';
 
-export default function DiaryMap() {
-  const [mapRef, setMapRef] = useState<HTMLDivElement | null>(null);
-  const { map } = useMapLoad(mapRef);
+type Props = {
+  map: google.maps.Map | null;
+  mapRef: MutableRefObject<HTMLDivElement | null>;
+};
+
+export default function DiaryMap({ map, mapRef }: Props) {
   const { addMarker, removeMarker } = useMapMarker(map);
 
   const setMap = () => {
@@ -23,7 +25,7 @@ export default function DiaryMap() {
       <button onClick={setMap}> click!</button>
       <button onClick={removeMarker}> remove!</button>
       <div
-        ref={(node: HTMLDivElement) => setMapRef(node)}
+        ref={(node: HTMLDivElement) => (mapRef.current = node)}
         className={style.mapSection}
       />
     </div>

@@ -541,6 +541,10 @@ i.chevron-down {
   transition: opacity 0.5s;
 }
 
+.link-editor.map {
+  max-width: 420px;
+}
+
 .link-editor .link-input {
   display: block;
   width: calc(100% - 24px);
