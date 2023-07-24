@@ -1,30 +1,36 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  MutableRefObject,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { POTISION, ZOOM } from '@/constants/map.ts';
 
-export const useMapLoad = (mapRef: HTMLDivElement | null) => {
-  const [map, setMap] = useState<google.maps.Map | null>(null);
+type HookType = (mapRef: RefObject<HTMLDivElement>) => {
+  map: MutableRefObject<google.maps.Map | null>;
+};
+
+export const useMapLoad: HookType = mapRef => {
+  const map = useRef<google.maps.Map | null>(null);
+  const autocomplete = useRef<google.maps.places.Autocomplete | null>(null);
 
   const initMap = useCallback(() => {
     const loader = new Loader({
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
       version: 'weekly',
-      libraries: ['maps', 'marker'],
+      libraries: ['maps', 'marker', 'places'],
     });
 
     loader.load().then(async () => {
       const { Map } = (await google.maps.importLibrary(
         'maps'
       )) as google.maps.MapsLibrary;
-
-      if (mapRef) {
-        setMap(
-          new Map(mapRef, {
-            center: POTISION,
-            zoom: ZOOM,
-          })
-        );
-      }
+      map.current = new Map(mapRef.current as HTMLDivElement, {
+        center: POTISION,
+        zoom: ZOOM,
+      });
     });
   }, [mapRef]);
 
@@ -32,5 +38,5 @@ export const useMapLoad = (mapRef: HTMLDivElement | null) => {
     initMap();
   }, [initMap]);
 
-  return { map };
+  return { map, autocomplete };
 };
