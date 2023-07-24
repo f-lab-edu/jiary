@@ -11,9 +11,9 @@ import {
   GridSelection,
   TextNode,
   ElementNode,
-  LexicalEditor,
 } from 'lexical';
 import { mergeRegister } from '@lexical/utils';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 function positionEditorElement(
   editor: HTMLElement,
@@ -37,11 +37,11 @@ function positionEditorElement(
 }
 
 type FloatingLinkProps = {
-  editor: LexicalEditor;
   getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
 };
 
-function FloatingLinkEditor({ editor, getSelectedNode }: FloatingLinkProps) {
+function FloatingLinkEditor({ getSelectedNode }: FloatingLinkProps) {
+  const [editor] = useLexicalComposerContext();
   const editorRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const mouseDownRef = useRef(false);
@@ -185,16 +185,12 @@ function FloatingLinkEditor({ editor, getSelectedNode }: FloatingLinkProps) {
 }
 
 type Props = {
-  editor: LexicalEditor;
   isLink: boolean;
   getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
 };
 
-export default function LinkToolbar({
-  editor,
-  isLink,
-  getSelectedNode,
-}: Props) {
+export default function LinkToolbar({ isLink, getSelectedNode }: Props) {
+  const [editor] = useLexicalComposerContext();
   const insertLink = useCallback(() => {
     if (!isLink) {
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, 'https://');
@@ -214,10 +210,7 @@ export default function LinkToolbar({
       </button>
       {isLink &&
         createPortal(
-          <FloatingLinkEditor
-            editor={editor}
-            getSelectedNode={getSelectedNode}
-          />,
+          <FloatingLinkEditor getSelectedNode={getSelectedNode} />,
           document.body
         )}
     </>

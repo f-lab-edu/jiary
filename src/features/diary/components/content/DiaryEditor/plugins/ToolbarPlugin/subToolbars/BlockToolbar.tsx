@@ -1,4 +1,3 @@
-import { LexicalEditor } from 'lexical/LexicalEditor';
 import {
   $getSelection,
   $isRangeSelection,
@@ -11,6 +10,7 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
 } from '@lexical/list';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -31,26 +31,24 @@ type Block = {
 const blockTypeToBlockName: Block = {
   h1: 'Large Heading',
   h2: 'Small Heading',
-  h3: 'Heading',
-  h4: 'Heading',
-  h5: 'Heading',
   ol: 'Numbered List',
   paragraph: 'Normal',
   quote: 'Quote',
   ul: 'Bulleted List',
 };
 
-function BlockOptionsDropdownList({
-  editor,
-  blockType,
-  toolbarRef,
-  setShowBlockOptionsDropDown,
-}: {
-  editor: LexicalEditor;
+type BlockOptionsDropdown = {
   blockType: string;
   toolbarRef: RefObject<HTMLDivElement>;
   setShowBlockOptionsDropDown: (arg: boolean) => void;
-}) {
+};
+
+function BlockOptionsDropdownList({
+  blockType,
+  toolbarRef,
+  setShowBlockOptionsDropDown,
+}: BlockOptionsDropdown) {
+  const [editor] = useLexicalComposerContext();
   const dropDownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -191,12 +189,11 @@ function BlockOptionsDropdownList({
 }
 
 type Props = {
-  editor: LexicalEditor;
   blockType: string;
   toolbarRef: RefObject<HTMLDivElement>;
 };
 
-export default function BlockToolbar({ editor, blockType, toolbarRef }: Props) {
+export default function BlockToolbar({ blockType, toolbarRef }: Props) {
   const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
     useState(false);
 
@@ -218,7 +215,6 @@ export default function BlockToolbar({ editor, blockType, toolbarRef }: Props) {
           {showBlockOptionsDropDown &&
             createPortal(
               <BlockOptionsDropdownList
-                editor={editor}
                 blockType={blockType}
                 toolbarRef={toolbarRef}
                 setShowBlockOptionsDropDown={setShowBlockOptionsDropDown}

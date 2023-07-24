@@ -11,11 +11,8 @@ import {
 import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
-  REDO_COMMAND,
-  UNDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
   FORMAT_TEXT_COMMAND,
-  FORMAT_ELEMENT_COMMAND,
   $getSelection,
   $isRangeSelection,
   RangeSelection,
@@ -27,6 +24,12 @@ import { $isListNode, ListNode } from '@lexical/list';
 import { $isHeadingNode } from '@lexical/rich-text';
 import BlockToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/BlockToolbar';
 import LinkToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/LinkToolbar';
+import UndoToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/UndoToolbar.tsx';
+import BoldToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/BoldToolbar.tsx';
+import ItalicToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/ItalicToolbar.tsx';
+import UnderlineToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/UnderlineToolbar.tsx';
+import StrikethroughToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/StrikethroughToolbar.tsx';
+import DirectionToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/DirectionToolbar.tsx';
 
 const LowPriority = 1;
 
@@ -135,115 +138,18 @@ export default function ToolbarPlugin() {
 
   return (
     <div className="toolbar" ref={toolbarRef}>
-      <button
-        disabled={!canUndo}
-        onClick={() => {
-          editor.dispatchCommand(UNDO_COMMAND, undefined);
-        }}
-        className="toolbar-item spaced"
-        aria-label="Undo"
-      >
-        <i className="format undo" />
-      </button>
-      <button
-        disabled={!canRedo}
-        onClick={() => {
-          editor.dispatchCommand(REDO_COMMAND, undefined);
-        }}
-        className="toolbar-item"
-        aria-label="Redo"
-      >
-        <i className="format redo" />
-      </button>
+      <UndoToolbar canUndo={canUndo} canRedo={canRedo} />
       <div className="divider" />
-
-      <BlockToolbar
-        editor={editor}
-        blockType={blockType}
-        toolbarRef={toolbarRef}
-      />
+      <BlockToolbar blockType={blockType} toolbarRef={toolbarRef} />
       <div className="divider" />
-
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
-        }}
-        className={'toolbar-item spaced ' + (isBold ? 'active' : '')}
-        aria-label="Format Bold"
-      >
-        <i className="format bold" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
-        }}
-        className={'toolbar-item spaced ' + (isItalic ? 'active' : '')}
-        aria-label="Format Italics"
-      >
-        <i className="format italic" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
-        }}
-        className={'toolbar-item spaced ' + (isUnderline ? 'active' : '')}
-        aria-label="Format Underline"
-      >
-        <i className="format underline" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
-        }}
-        className={'toolbar-item spaced ' + (isStrikethrough ? 'active' : '')}
-        aria-label="Format Strikethrough"
-      >
-        <i className="format strikethrough" />
-      </button>
-
-      <LinkToolbar
-        editor={editor}
-        isLink={isLink}
-        getSelectedNode={getSelectedNode}
-      />
-
+      <BoldToolbar isBold={isBold} />
+      <ItalicToolbar isItalic={isItalic} />
+      <UnderlineToolbar isUnderline={isUnderline} />
+      <StrikethroughToolbar isStrikethrough={isStrikethrough} />
+      <LinkToolbar isLink={isLink} getSelectedNode={getSelectedNode} />
       <div className="divider" />
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
-        }}
-        className="toolbar-item spaced"
-        aria-label="Left Align"
-      >
-        <i className="format left-align" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
-        }}
-        className="toolbar-item spaced"
-        aria-label="Center Align"
-      >
-        <i className="format center-align" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
-        }}
-        className="toolbar-item spaced"
-        aria-label="Right Align"
-      >
-        <i className="format right-align" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
-        }}
-        className="toolbar-item"
-        aria-label="Justify Align"
-      >
-        <i className="format justify-align" />
-      </button>
+      <DirectionToolbar />
+
       <button
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
