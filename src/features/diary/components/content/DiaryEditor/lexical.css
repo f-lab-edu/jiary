@@ -324,7 +324,6 @@ pre::-webkit-scrollbar-thumb {
 }
 
 .toolbar {
-  display: flex;
   margin-bottom: 1px;
   background: #fff;
   padding: 4px;
@@ -335,7 +334,7 @@ pre::-webkit-scrollbar-thumb {
 
 .toolbar button.toolbar-item {
   border: 0;
-  display: flex;
+  display: inline-flex;
   background: none;
   border-radius: 10px;
   padding: 8px;
@@ -349,6 +348,11 @@ pre::-webkit-scrollbar-thumb {
 
 .toolbar button.toolbar-item.spaced {
   margin-right: 2px;
+}
+
+.toolbar button.toolbar-item.spaced.map {
+  float: right;
+  margin-right: 10px;
 }
 
 .toolbar button.toolbar-item i.format {
@@ -382,6 +386,7 @@ pre::-webkit-scrollbar-thumb {
   width: 1px;
   background-color: #eee;
   margin: 0 4px;
+  display: inline-flex;
 }
 
 .toolbar select.toolbar-item {
@@ -391,8 +396,6 @@ pre::-webkit-scrollbar-thumb {
   border-radius: 10px;
   padding: 8px;
   vertical-align: middle;
-  /* -webkit-appearance: none;
-  -moz-appearance: none; */
   width: 70px;
   font-size: 14px;
   color: #777;
@@ -453,50 +456,6 @@ i.chevron-down {
   height: 8px;
   width: 8px;
   background-image: url(/editor/icons/chevron-down.svg);
-}
-
-#block-controls button:hover {
-  background-color: #efefef;
-}
-
-#block-controls button:focus-visible {
-  border-color: blue;
-}
-
-#block-controls span.block-type {
-  background-size: contain;
-  display: block;
-  width: 18px;
-  height: 18px;
-  margin: 2px;
-}
-
-#block-controls span.block-type.paragraph {
-  background-image: url(/editor/icons/text-paragraph.svg);
-}
-
-#block-controls span.block-type.h1 {
-  background-image: url(/editor/icons/type-h1.svg);
-}
-
-#block-controls span.block-type.h2 {
-  background-image: url(/editor/icons/type-h2.svg);
-}
-
-#block-controls span.block-type.quote {
-  background-image: url(/editor/icons/chat-square-quote.svg);
-}
-
-#block-controls span.block-type.ul {
-  background-image: url(/editor/icons/list-ul.svg);
-}
-
-#block-controls span.block-type.ol {
-  background-image: url(/editor/icons/list-ol.svg);
-}
-
-#block-controls span.block-type.map {
-  background-image: url(/editor/icons/map.svg);
 }
 
 .dropdown {
