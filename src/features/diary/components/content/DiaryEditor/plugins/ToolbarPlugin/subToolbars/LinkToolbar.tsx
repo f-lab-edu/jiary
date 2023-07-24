@@ -14,27 +14,7 @@ import {
 } from 'lexical';
 import { mergeRegister } from '@lexical/utils';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-
-function positionEditorElement(
-  editor: HTMLElement,
-  rect: DOMRect | undefined | null
-) {
-  if (rect === null) {
-    editor.style.opacity = '0';
-    editor.style.top = '-1000px';
-    editor.style.left = '-1000px';
-  } else {
-    if (rect?.top && rect.height) {
-      editor.style.opacity = '1';
-      editor.style.top = `${
-        rect.top + rect.height + window.pageYOffset + 10
-      }px`;
-      editor.style.left = `${
-        rect.left + window.pageXOffset - editor.offsetWidth / 2 + rect.width / 2
-      }px`;
-    }
-  }
-}
+import { attachPositionElement } from '@/core/utils/uiUtils.ts';
 
 type FloatingLinkProps = {
   getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
@@ -93,11 +73,11 @@ function FloatingLinkEditor({ getSelectedNode }: FloatingLinkProps) {
       }
 
       if (!mouseDownRef.current) {
-        positionEditorElement(editorElem, rect);
+        attachPositionElement(editorElem, rect);
       }
       setLastSelection(selection);
     } else if (!activeElement || activeElement.className !== 'link-input') {
-      positionEditorElement(editorElem, null);
+      attachPositionElement(editorElem, null);
       setLastSelection(null);
       setEditMode(false);
       setLinkUrl('');
