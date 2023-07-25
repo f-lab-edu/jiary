@@ -1,26 +1,18 @@
 import fs from 'fs';
 import jwtDecode from 'jwt-decode';
-
-export interface JSONFile {
-  access_token: string;
-  refresh_token: string;
-  user_email: string;
-}
-
-export interface Credentials {
-  refresh_token?: string | null;
-  expiry_date?: number | null;
-  access_token?: string | null;
-  token_type?: string | null;
-  id_token?: string | null;
-  scope?: string;
-  user_email?: string | null;
-}
+import { Credentials, JSONFile } from '@/backend/auth/interfaces.ts';
 
 export const readJSONFile: () => JSONFile[] = () => {
   const dataJSON =
     fs.readFileSync(process.env.TOKEN_JSON_PATH as string).toString() || '[]';
   return JSON.parse(dataJSON);
+};
+
+export const writeFile = (tokens: JSONFile[]) => {
+  fs.writeFileSync(
+    process.env.TOKEN_JSON_PATH as string,
+    JSON.stringify(tokens)
+  );
 };
 
 export const checkSameToken = (tokens: Credentials) => {
@@ -47,11 +39,4 @@ export const checkSameToken = (tokens: Credentials) => {
     });
   }
   return jsonTokens;
-};
-
-export const writeFile = (tokens: JSONFile[]) => {
-  fs.writeFileSync(
-    process.env.TOKEN_JSON_PATH as string,
-    JSON.stringify(tokens)
-  );
 };
