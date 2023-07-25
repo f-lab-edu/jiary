@@ -87,7 +87,7 @@ export const useAuth = () => {
       alert('로그아웃을 다시 시도해주십시요.');
       return;
     }
-    const confirm: boolean = window.confirm('로그아웃 하시겠습니까?');
+    const confirm = window.confirm('로그아웃 하시겠습니까?');
     if (!confirm) return;
 
     logoutMutation.mutate(accessToken);
