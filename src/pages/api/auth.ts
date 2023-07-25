@@ -129,10 +129,10 @@ export default async function handler(
         break;
     }
   } else if (req.method === 'DELETE') {
-    const { access_token } = req.query;
+    const accessToken = req.cookies.Authorization;
 
     const jsonTokens = readJSONFile();
-    const index = jsonTokens.findIndex(v => v.access_token === access_token);
+    const index = jsonTokens.findIndex(v => v.access_token === accessToken);
     if (index > -1) {
       jsonTokens.splice(index, 1);
     }

@@ -80,17 +80,10 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      // eslint-disable-next-line no-console
-      console.error('로그아웃 에러');
-      alert('로그아웃을 다시 시도해주십시요.');
-      return;
-    }
     const confirm = window.confirm('로그아웃 하시겠습니까?');
     if (!confirm) return;
 
-    logoutMutation.mutate(accessToken);
+    logoutMutation.mutate();
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user');
     dispatch(removeUser());
