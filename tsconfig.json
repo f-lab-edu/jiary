@@ -23,6 +23,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@/backend": [
+        "./src/backend/*"
       ]
     }
   },
@@ -34,6 +37,5 @@
   "exclude": [
     "node_modules",
     ".next",
-    "./src/pages/api/auth.ts"
   ],
 }

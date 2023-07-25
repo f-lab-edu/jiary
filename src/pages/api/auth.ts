@@ -6,9 +6,9 @@ import {
   checkSameToken,
   readJSONFile,
   writeFile,
-} from '@/serverUtils/authUtils.ts';
-import { setCookie } from '@/serverUtils/cookieUtils.ts';
-import { GOOGLE_INFO } from '@/serverUtils/constants.ts';
+} from '@/backend/authUtils.ts';
+import { setCookie } from '@/backend/cookieUtils.ts';
+import { GOOGLE_INFO } from '@/backend/constants.ts';
 
 interface GoogleUrl {
   location: string;
@@ -97,6 +97,7 @@ export default async function handler(
           return;
         }
 
+        // @ts-ignore
         const { tokens } = await oauth2Client.refreshToken(
           jsonTokens[targetIndex].refresh_token
         );
