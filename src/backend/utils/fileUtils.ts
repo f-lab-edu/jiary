@@ -1,26 +1,26 @@
 import fs from 'fs';
 import jwtDecode from 'jwt-decode';
+import { Credentials, JSONFile } from '@/backend/auth/interfaces.ts';
 
-export interface JSONFile {
-  access_token: string;
-  refresh_token: string;
-  user_email: string;
-}
+const tokenFilePath = process.env.JSON_TOKEN_FILE_NAME as string;
 
-export interface Credentials {
-  refresh_token?: string | null;
-  expiry_date?: number | null;
-  access_token?: string | null;
-  token_type?: string | null;
-  id_token?: string | null;
-  scope?: string;
-  user_email?: string | null;
-}
+const createFile = (path: string) => {
+  fs.writeFileSync(path, '[]', 'utf8');
+};
 
 export const readJSONFile: () => JSONFile[] = () => {
-  const dataJSON =
-    fs.readFileSync(process.env.TOKEN_JSON_PATH as string).toString() || '[]';
+  if (!fs.existsSync(tokenFilePath)) {
+    createFile(tokenFilePath);
+  }
+  const dataJSON = fs.readFileSync(tokenFilePath, 'utf8').toString() || '[]';
   return JSON.parse(dataJSON);
+};
+
+export const writeFile = (tokens: JSONFile[]) => {
+  if (!fs.existsSync(tokenFilePath)) {
+    createFile(tokenFilePath);
+  }
+  fs.writeFileSync(tokenFilePath, JSON.stringify(tokens), 'utf8');
 };
 
 export const checkSameToken = (tokens: Credentials) => {
@@ -47,11 +47,4 @@ export const checkSameToken = (tokens: Credentials) => {
     });
   }
   return jsonTokens;
-};
-
-export const writeFile = (tokens: JSONFile[]) => {
-  fs.writeFileSync(
-    process.env.TOKEN_JSON_PATH as string,
-    JSON.stringify(tokens)
-  );
 };

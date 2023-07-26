@@ -11,11 +11,8 @@ export default function DiaryCard({ file }: { file: File }) {
   const title = file.name.includes('jiary-') ? file.name.slice(6) : file.name;
 
   const handleLinkClick = (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (
-      target.className.includes('menuIcon') ||
-      target.className.includes('deleteButton')
-    ) {
+    const { className } = e.target as HTMLElement;
+    if (className.toLowerCase().includes('dropdown')) {
       e.preventDefault();
     }
   };

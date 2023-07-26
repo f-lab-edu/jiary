@@ -2,7 +2,7 @@
 /out/
 /node_modules
 .eslintcache
-/src/pages/api/refresh-token.json
+/user-tokens.json
 .env*
 /.github
 /.husky

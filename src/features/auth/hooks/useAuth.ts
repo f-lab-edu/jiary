@@ -11,6 +11,7 @@ import useLogout from '@/features/auth/apis/mutations/useLogout.ts';
 import useGetUserInfo from '@/features/auth/apis/mutations/useGetUserInfo.ts';
 import { useRouter } from 'next/router';
 import { JIARY_DOMAIN } from '@/constants/domain.ts';
+import { useQueryClient } from '@tanstack/react-query';
 
 let popupWindow: Window | null = null;
 
@@ -32,6 +33,7 @@ export const useAuth = () => {
   const logoutMutation = useLogout();
   const dispatch = useDispatch();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const messageCallback = async (event: MessageEvent) => {
     if (event.origin !== JIARY_DOMAIN) {
@@ -78,18 +80,16 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      // eslint-disable-next-line no-console
-      console.error('로그아웃 에러');
-      alert('로그아웃을 다시 시도해주십시요.');
-      return;
-    }
-    logoutMutation.mutate(accessToken);
+    const confirm = window.confirm('로그아웃 하시겠습니까?');
+    if (!confirm) return;
+
+    logoutMutation.mutate();
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user');
     dispatch(removeUser());
     dispatch(removeAccessToken());
+    queryClient.clear();
+    router.push('/');
   };
 
   return { openLoginPopup, logout };

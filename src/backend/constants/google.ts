@@ -6,9 +6,6 @@ export const GOOGLE_INFO = {
     'https://www.googleapis.com/auth/userinfo.profile',
     'https://www.googleapis.com/auth/userinfo.email',
     'openid',
-    // 'https://www.googleapis.com/auth/documents',
-    // 'https://www.googleapis.com/auth/drive.file',
-    // 'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/drive.appdata',
   ],
 };
