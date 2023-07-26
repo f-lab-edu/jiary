@@ -6,7 +6,7 @@ import {
   useRef,
 } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
-import { POTISION, ZOOM } from '@/constants/map.ts';
+import { DEFAULT_POTISION, ZOOM } from '@/constants/map.ts';
 
 type HookType = (mapRef: RefObject<HTMLDivElement>) => {
   map: MutableRefObject<google.maps.Map | null>;
@@ -28,7 +28,7 @@ export const useMapLoad: HookType = mapRef => {
         'maps'
       )) as google.maps.MapsLibrary;
       map.current = new Map(mapRef.current as HTMLDivElement, {
-        center: POTISION,
+        center: DEFAULT_POTISION,
         zoom: ZOOM,
       });
     });
