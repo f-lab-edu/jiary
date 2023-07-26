@@ -1,12 +1,8 @@
 import fs from 'fs';
-import path from 'path';
 import jwtDecode from 'jwt-decode';
 import { Credentials, JSONFile } from '@/backend/auth/interfaces.ts';
 
-const tokenFilePath = path.join(
-  process.cwd(),
-  `./${process.env.JSON_TOKEN_FILE_NAME}`
-);
+const tokenFilePath = process.env.JSON_TOKEN_FILE_NAME as string;
 
 const createFile = (path: string) => {
   fs.writeFileSync(path, '[]', 'utf8');
