@@ -9,7 +9,7 @@ export default function Home() {
         <title>홈 입니다</title>
       </Head>
       <button onClick={getAccessTokenByRefreshToken}>get refresh token!</button>
-      <div className={style.Main}>Home</div>
+      .<div className={style.Main}>Home</div>
     </>
   );
 }
