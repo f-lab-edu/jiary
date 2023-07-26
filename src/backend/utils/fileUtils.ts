@@ -1,18 +1,22 @@
 import fs from 'fs';
+import path from 'path';
 import jwtDecode from 'jwt-decode';
 import { Credentials, JSONFile } from '@/backend/auth/interfaces.ts';
 
-const tokenFilePath = `./${process.env.JSON_TOKEN_FILE_NAME}`;
+const tokenFilePath = path.join(
+  process.cwd(),
+  `./${process.env.JSON_TOKEN_FILE_NAME}`
+);
 
 const createFile = (path: string) => {
-  fs.writeFileSync(path, '[]');
+  fs.writeFileSync(path, '[]', 'utf8');
 };
 
 export const readJSONFile: () => JSONFile[] = () => {
   if (!fs.existsSync(tokenFilePath)) {
     createFile(tokenFilePath);
   }
-  const dataJSON = fs.readFileSync(tokenFilePath).toString() || '[]';
+  const dataJSON = fs.readFileSync(tokenFilePath, 'utf8').toString() || '[]';
   return JSON.parse(dataJSON);
 };
 
@@ -20,7 +24,7 @@ export const writeFile = (tokens: JSONFile[]) => {
   if (!fs.existsSync(tokenFilePath)) {
     createFile(tokenFilePath);
   }
-  fs.writeFileSync(tokenFilePath, JSON.stringify(tokens));
+  fs.writeFileSync(tokenFilePath, JSON.stringify(tokens), 'utf8');
 };
 
 export const checkSameToken = (tokens: Credentials) => {

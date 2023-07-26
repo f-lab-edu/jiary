@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import * as AUTH from '@/backend/auth/index.ts';
-import type { GET, POST, DELETE } from '@/backend/auth/index.ts';
 import filter from '@/backend/common/filter.ts';
 
 type RouteMehtod = {
-  [key: string]: typeof GET | typeof POST | typeof DELETE;
+  [key: string]: typeof AUTH.GET | typeof AUTH.POST | typeof AUTH.DELETE;
 };
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
