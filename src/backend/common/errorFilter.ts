@@ -7,7 +7,7 @@ export default function errorFilter(handler: Hanlder) {
     if (!(HTTP_METHODS as ReadonlyArray<string>).includes(req.method!)) {
       return res
         .status(405)
-        .json({ message: 'http method가 허용되지 않습니다.' });
+        .json({ message: '허용되지 않는 http method 입니다.' });
     }
     // NOTE:  공통 에러 처리 추가 가능
 
