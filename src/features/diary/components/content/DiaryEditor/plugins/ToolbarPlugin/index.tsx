@@ -47,8 +47,8 @@ const getSelectedNode = (selection: RangeSelection) => {
 export function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef<HTMLDivElement>(null);
-  const [canUndo, setCanUndo] = useState(false);
-  const [canRedo, setCanRedo] = useState(false);
+  const [disabledUndo, setDisabledUndo] = useState(true);
+  const [disabledRedo, setDisabledRedo] = useState(true);
   const [blockType, setBlockType] = useState('paragraph');
   const [isLink, setIsLink] = useState(false);
   const [isMap, setIsMap] = useState(false);
@@ -119,7 +119,7 @@ export function ToolbarPlugin() {
       editor.registerCommand(
         CAN_UNDO_COMMAND,
         payload => {
-          setCanUndo(payload);
+          setDisabledUndo(!payload);
           return false;
         },
         LOW_PRIORITY
@@ -127,7 +127,7 @@ export function ToolbarPlugin() {
       editor.registerCommand(
         CAN_REDO_COMMAND,
         payload => {
-          setCanRedo(payload);
+          setDisabledRedo(!payload);
           return false;
         },
         LOW_PRIORITY
@@ -137,7 +137,7 @@ export function ToolbarPlugin() {
 
   return (
     <div className="toolbar" ref={toolbarRef}>
-      <UndoToolbar canUndo={canUndo} canRedo={canRedo} />
+      <UndoToolbar disabledUndo={disabledUndo} disabledRedo={disabledRedo} />
       <div className="divider" />
       <BlockToolbar blockType={blockType} toolbarRef={toolbarRef} />
       <div className="divider" />

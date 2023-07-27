@@ -2,17 +2,17 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { REDO_COMMAND, UNDO_COMMAND } from 'lexical';
 
 type Props = {
-  canUndo: boolean;
-  canRedo: boolean;
+  disabledUndo: boolean;
+  disabledRedo: boolean;
 };
 
-export function UndoToolbar({ canUndo, canRedo }: Props) {
+export function UndoToolbar({ disabledUndo, disabledRedo }: Props) {
   const [editor] = useLexicalComposerContext();
 
   return (
     <>
       <button
-        disabled={!canUndo}
+        disabled={disabledUndo}
         onClick={() => {
           editor.dispatchCommand(UNDO_COMMAND, undefined);
         }}
@@ -22,7 +22,7 @@ export function UndoToolbar({ canUndo, canRedo }: Props) {
         <i className="format undo" />
       </button>
       <button
-        disabled={!canRedo}
+        disabled={disabledRedo}
         onClick={() => {
           editor.dispatchCommand(REDO_COMMAND, undefined);
         }}

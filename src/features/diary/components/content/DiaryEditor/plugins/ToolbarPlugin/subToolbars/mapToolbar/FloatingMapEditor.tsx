@@ -43,7 +43,7 @@ export default function FloatingMapEditor({ setIsMap }: Props) {
       let rect: DOMRect | undefined;
       if (nativeSelection?.anchorNode === rootElement) {
         let inner = rootElement;
-        while (inner.firstElementChild != null) {
+        while (inner.firstElementChild !== null) {
           inner = inner.firstElementChild as HTMLElement;
         }
         rect = inner.getBoundingClientRect();
