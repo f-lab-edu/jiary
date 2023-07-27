@@ -4,14 +4,15 @@ import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import useGetFile from '@/features/diary/apis/queries/useGetFile.ts';
 import useGetFileMetaData from '@/features/diary/apis/queries/useGetFileMetaData.ts';
 import { useEffect, useRef } from 'react';
-import { freezeScroll, releaseScroll } from '@/core/utils/uiUtils.ts';
 import DiaryMap from '@/features/diary/components/content/DiaryMap/DiaryMap.tsx';
 import Head from 'next/head';
 import { useMapLoad } from '@/features/diary/hooks/useMapLoad.ts';
 import MapContext from '@/features/diary/contexts/MapContext.ts';
+import { disableScroll, enableScroll } from '@/libs/bodyScrollLock/index.ts';
+import { isSSR } from '@/core/utils/objectUtils.ts';
 
 type Props = {
-  document: string;
+  documentData: string;
   metaData: MetaData;
   diaryId: string;
 };
@@ -22,15 +23,16 @@ export type DiaryValue = {
 };
 
 export default function DiaryContentPage({ diaryId }: Props) {
-  const { data: document } = useGetFile(diaryId);
+  const { data: documentData } = useGetFile(diaryId);
   const { data: metaData } = useGetFileMetaData(diaryId);
 
   const mapRef = useRef<HTMLDivElement | null>(null);
   const { map } = useMapLoad(mapRef);
 
   useEffect(() => {
-    freezeScroll();
-    () => releaseScroll();
+    if (isSSR) return;
+    disableScroll(document.body);
+    () => enableScroll(document.body);
   }, []);
 
   return (
@@ -45,7 +47,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
           <section className={style.sectionDivision}>
             <DiaryEditor
               diaryId={diaryId}
-              document={document || ''}
+              documentData={documentData || ''}
               metaData={metaData || {}}
             />
             <DiaryMap map={map.current} mapRef={mapRef} />

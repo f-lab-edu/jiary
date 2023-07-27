@@ -75,17 +75,3 @@ globalStyle('a', {
 globalStyle('textarea', {
   fontFamily: 'sans-serif',
 });
-
-globalStyle('body.freeze-scroll', {
-  overflow: 'hidden',
-  touchAction: 'none',
-});
-// 사파리에서만 동작(css safari hack)
-// @media not all and (min-resolution:.001dpcm) {
-//     @supports (-webkit-appearance:none) {
-//         padding-right: 6px,
-//     }
-// }
-// &.is--mobile {
-//     padding-right: initial;
-// }

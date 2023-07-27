@@ -22,15 +22,19 @@ import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/
 import { useRef } from 'react';
 
 type Props = {
-  document: string;
+  documentData: string;
   metaData: MetaData;
   diaryId: string;
 };
 
-export default function DiaryEditor({ document, metaData, diaryId }: Props) {
+export default function DiaryEditor({
+  documentData,
+  metaData,
+  diaryId,
+}: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const debounceId = useRef<number | null>(null);
-  const value = useRef<string>(document);
+  const value = useRef<string>(documentData);
   const patchMutation = usePatchFile();
 
   const saveData = () => {
@@ -64,7 +68,7 @@ export default function DiaryEditor({ document, metaData, diaryId }: Props) {
         onError(error: Error) {
           throw error;
         },
-        editorState: document ? JSON.stringify(document) : null,
+        editorState: documentData ? JSON.stringify(documentData) : null,
         theme: editorTheme,
         nodes: [
           HeadingNode,
@@ -89,7 +93,7 @@ export default function DiaryEditor({ document, metaData, diaryId }: Props) {
           <HistoryPlugin />
           <LinkPlugin />
           <AutoLinkPlugin />
-          <InitalPlugin initValue={document} editorRef={editorRef} />
+          <InitalPlugin initValue={documentData} editorRef={editorRef} />
         </div>
       </div>
     </LexicalComposer>
