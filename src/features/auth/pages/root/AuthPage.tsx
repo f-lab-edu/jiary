@@ -3,13 +3,8 @@ import LoginSection from '@/features/auth/components/LoginSection/LoginSection.t
 import loginBackground from '@/static/auth/open-peeps.png';
 import * as style from '@/features/auth/pages/root/AuthPage.css.ts';
 import Head from 'next/head';
-import { OpenLoginPopup } from '@/features/auth/hooks/useAuth.ts';
 
-type Props = {
-  openLoginPopup: OpenLoginPopup;
-};
-
-export default function AuthPage({ openLoginPopup }: Props) {
+export default function AuthPage() {
   return (
     <div className={style.container}>
       <Head>
@@ -23,7 +18,7 @@ export default function AuthPage({ openLoginPopup }: Props) {
         placeholder="blur"
       />
       <div className={style.backgroundAfter}></div>
-      <LoginSection openLoginPopup={openLoginPopup} />
+      <LoginSection />
     </div>
   );
 }

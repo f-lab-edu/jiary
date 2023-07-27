@@ -9,8 +9,6 @@ import {
 import { AxiosError } from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-let hasGetTokenRequest = false;
-
 export async function POST(
   req: NextApiRequest,
   res: NextApiResponse<GoogleUrl | Login | Response | AxiosError>
@@ -19,13 +17,6 @@ export async function POST(
 
   switch (body.type) {
     case 'GET_TOKEN': {
-      if (hasGetTokenRequest) {
-        res.status(429).end();
-        hasGetTokenRequest = false;
-        return;
-      }
-      hasGetTokenRequest = true;
-
       const { tokens } = await oauth2Client.getToken(body.code);
 
       oauth2Client.setCredentials(tokens);
