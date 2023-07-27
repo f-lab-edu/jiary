@@ -3,15 +3,11 @@ import jiaryLogo from '@/static/jiary-logo.svg';
 import googleLogo from '@/static/auth/google_signin.png';
 import * as style from './LoginSection.css.ts';
 import useGetAuthCode from '@/features/auth/apis/queries/useGetAuthCode.ts';
-import { OpenLoginPopup } from '@/features/auth/hooks/useAuth.ts';
+import { useLoginPopup } from '@/features/auth/hooks/useLoginPopup.ts';
 
-export default function LoginSection({
-  openLoginPopup,
-}: {
-  openLoginPopup: OpenLoginPopup;
-}) {
+export default function LoginSection() {
   const { data } = useGetAuthCode();
-  const handleLoginClick = () => openLoginPopup(data?.location);
+  const { openLoginPopup } = useLoginPopup();
 
   return (
     <div className={style.container}>
@@ -46,7 +42,10 @@ export default function LoginSection({
       </p>
 
       <div className={style.buttonWrapper}>
-        <button onClick={handleLoginClick} className={style.loginButton}>
+        <button
+          onClick={() => openLoginPopup(data?.location)}
+          className={style.loginButton}
+        >
           <Image
             src={googleLogo}
             alt="Google Logo"
