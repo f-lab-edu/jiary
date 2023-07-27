@@ -10,6 +10,7 @@ import { DEFAULT_POTISION, ZOOM } from '@/constants/map.ts';
 
 type HookType = (mapRef: RefObject<HTMLDivElement>) => {
   map: MutableRefObject<google.maps.Map | null>;
+  autocomplete: MutableRefObject<google.maps.places.Autocomplete | null>;
 };
 
 export const useMapLoad: HookType = mapRef => {
