@@ -1,7 +1,7 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { FORMAT_ELEMENT_COMMAND } from 'lexical';
 
-export default function DirectionToolbar() {
+export function DirectionToolbar() {
   const [editor] = useLexicalComposerContext();
 
   return (

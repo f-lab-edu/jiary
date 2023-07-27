@@ -6,7 +6,7 @@ type Props = {
   canRedo: boolean;
 };
 
-export default function UndoToolbar({ canUndo, canRedo }: Props) {
+export function UndoToolbar({ canUndo, canRedo }: Props) {
   const [editor] = useLexicalComposerContext();
 
   return (

@@ -31,6 +31,6 @@ const MATCHERS = [
   },
 ];
 
-export default function PlaygroundAutoLinkPlugin() {
+export function PlaygroundAutoLinkPlugin() {
   return <AutoLinkPlugin matchers={MATCHERS} />;
 }

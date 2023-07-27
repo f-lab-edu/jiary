@@ -5,7 +5,7 @@ type Props = {
   isUnderline: boolean;
 };
 
-export default function UnderlineToolbar({ isUnderline }: Props) {
+export function UnderlineToolbar({ isUnderline }: Props) {
   const [editor] = useLexicalComposerContext();
 
   return (

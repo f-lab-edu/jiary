@@ -1,16 +1,4 @@
-body {
-  margin: 0;
-  background: #eee;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    ".SFNSText-Regular",
-    sans-serif;
-  font-weight: 500;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* NOTE: lexical libarary가 로드되면 Element가 나타나기 때문에 vanilla-extract를 이용해 스타일을 줄 수 없음. */
 
 .other h2 {
   font-size: 18px;

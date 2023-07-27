@@ -21,7 +21,6 @@ export default function FloatingMapEditor({ setIsMap }: Props) {
   const [editor] = useLexicalComposerContext();
   const [isEditMode, setEditMode] = useState(false);
   const editorRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-  // const { map } = useContext(MapContext);
 
   const updateMapEditor = useCallback(() => {
     const selection = $getSelection();
@@ -40,6 +39,7 @@ export default function FloatingMapEditor({ setIsMap }: Props) {
       rootElement.contains(nativeSelection.anchorNode)
     ) {
       const domRange = nativeSelection?.getRangeAt(0);
+
       let rect: DOMRect | undefined;
       if (nativeSelection?.anchorNode === rootElement) {
         let inner = rootElement;

@@ -169,7 +169,7 @@ type Props = {
   getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
 };
 
-export default function LinkToolbar({ isLink, getSelectedNode }: Props) {
+export function LinkToolbar({ isLink, getSelectedNode }: Props) {
   const [editor] = useLexicalComposerContext();
   const insertLink = useCallback(() => {
     if (!isLink) {

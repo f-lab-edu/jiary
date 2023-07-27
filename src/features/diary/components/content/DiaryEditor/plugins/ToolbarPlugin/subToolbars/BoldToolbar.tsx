@@ -5,7 +5,7 @@ type Props = {
   isBold: boolean;
 };
 
-export default function BoldToolbar({ isBold }: Props) {
+export function BoldToolbar({ isBold }: Props) {
   const [editor] = useLexicalComposerContext();
 
   return (

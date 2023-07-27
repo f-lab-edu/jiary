@@ -6,7 +6,7 @@ type Props = {
   editorRef: MutableRefObject<HTMLElement | null>;
 };
 
-function InitalPlugin({ editorRef }: Props) {
+export function InitalPlugin({ editorRef }: Props) {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -17,5 +17,3 @@ function InitalPlugin({ editorRef }: Props) {
 
   return null;
 }
-
-export default InitalPlugin;

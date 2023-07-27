@@ -1,13 +1,5 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import {
-  // ChangeEvent,
-  // ChangeEventHandler,
-  useCallback,
-  useEffect,
-  // useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
@@ -22,19 +14,21 @@ import { $isAtNodeEnd } from '@lexical/selection';
 import { $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
 import { $isHeadingNode } from '@lexical/rich-text';
-import BlockToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/BlockToolbar.tsx';
-import LinkToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/LinkToolbar.tsx';
-import UndoToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/UndoToolbar.tsx';
-import BoldToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/BoldToolbar.tsx';
-import ItalicToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/ItalicToolbar.tsx';
-import UnderlineToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/UnderlineToolbar.tsx';
-import StrikethroughToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/StrikethroughToolbar.tsx';
-import DirectionToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/DirectionToolbar.tsx';
-import MapToolbar from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/index.tsx';
+import {
+  BlockToolbar,
+  BoldToolbar,
+  DirectionToolbar,
+  ItalicToolbar,
+  LinkToolbar,
+  StrikethroughToolbar,
+  UnderlineToolbar,
+  UndoToolbar,
+  MapToolbar,
+} from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/index.ts';
 
-const LowPriority = 1;
+const LOW_PRIORITY = 1;
 
-function getSelectedNode(selection: RangeSelection) {
+const getSelectedNode = (selection: RangeSelection) => {
   const anchor = selection.anchor;
   const focus = selection.focus;
   const anchorNode = selection.anchor.getNode();
@@ -48,9 +42,9 @@ function getSelectedNode(selection: RangeSelection) {
   } else {
     return $isAtNodeEnd(anchor) ? focusNode : anchorNode;
   }
-}
+};
 
-export default function ToolbarPlugin() {
+export function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef<HTMLDivElement>(null);
   const [canUndo, setCanUndo] = useState(false);
@@ -88,6 +82,7 @@ export default function ToolbarPlugin() {
           }
         }
       }
+
       // Update text format
       setIsBold(selection.hasFormat('bold'));
       setIsItalic(selection.hasFormat('italic'));
@@ -119,7 +114,7 @@ export default function ToolbarPlugin() {
           updateToolbar();
           return false;
         },
-        LowPriority
+        LOW_PRIORITY
       ),
       editor.registerCommand(
         CAN_UNDO_COMMAND,
@@ -127,7 +122,7 @@ export default function ToolbarPlugin() {
           setCanUndo(payload);
           return false;
         },
-        LowPriority
+        LOW_PRIORITY
       ),
       editor.registerCommand(
         CAN_REDO_COMMAND,
@@ -135,7 +130,7 @@ export default function ToolbarPlugin() {
           setCanRedo(payload);
           return false;
         },
-        LowPriority
+        LOW_PRIORITY
       )
     );
   }, [editor, updateToolbar]);

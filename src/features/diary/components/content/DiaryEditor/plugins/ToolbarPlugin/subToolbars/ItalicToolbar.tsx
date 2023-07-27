@@ -5,7 +5,7 @@ type Props = {
   isItalic: boolean;
 };
 
-export default function ItalicToolbar({ isItalic }: Props) {
+export function ItalicToolbar({ isItalic }: Props) {
   const [editor] = useLexicalComposerContext();
   return (
     <button

@@ -5,7 +5,7 @@ type Props = {
   isStrikethrough: boolean;
 };
 
-export default function StrikethroughToolbar({ isStrikethrough }: Props) {
+export function StrikethroughToolbar({ isStrikethrough }: Props) {
   const [editor] = useLexicalComposerContext();
 
   return (

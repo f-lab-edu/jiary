@@ -9,7 +9,7 @@ type Props = {
   setIsMap: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function MapToolbar({ isMap, setIsMap }: Props) {
+export function MapToolbar({ isMap, setIsMap }: Props) {
   const [editor] = useLexicalComposerContext();
 
   return (

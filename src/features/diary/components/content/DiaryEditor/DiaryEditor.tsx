@@ -10,15 +10,17 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { EditorState } from 'lexical/LexicalEditorState';
 
-import ToolbarPlugin from './plugins/ToolbarPlugin/index.tsx';
-import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
-import AutoLinkPlugin from './plugins/AutoLinkPlugin.tsx';
-import InitalPlugin from '@/features/diary/components/content/DiaryEditor/plugins/InitialPlugin.tsx';
+import {
+  InitalPlugin,
+  PlaygroundAutoLinkPlugin as AutoLinkPlugin,
+  ToolbarPlugin,
+} from '@/features/diary/components/content/DiaryEditor/plugins/index.ts';
 import usePatchFile from '@/features/diary/apis/mutations/usePatchFile.ts';
 import { debounce } from '@/core/utils/eventUtils.ts';
 import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/editorTheme.ts';
 
+import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 import { useRef } from 'react';
 
 type Props = {

@@ -55,7 +55,7 @@ function BlockOptionsDropdownList({
     const toolbar = toolbarRef.current;
     const dropDown = dropDownRef.current;
 
-    if (toolbar !== null && dropDown !== null) {
+    if (toolbar && dropDown) {
       const { top, left } = toolbar.getBoundingClientRect();
       dropDown.style.top = `${top + 40}px`;
       dropDown.style.left = `${left}px`;
@@ -193,7 +193,7 @@ type Props = {
   toolbarRef: RefObject<HTMLDivElement>;
 };
 
-export default function BlockToolbar({ blockType, toolbarRef }: Props) {
+export function BlockToolbar({ blockType, toolbarRef }: Props) {
   const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
     useState(false);
 
