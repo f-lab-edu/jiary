@@ -69,8 +69,10 @@ export const onErrorResponse = async (
       );
       return await axios.request(config);
     } catch (error) {
-      alert('로그인이 필요합니다.');
-      window.location.href = `${JIARY_DOMAIN}/auth`;
+      if (!isSSR) {
+        alert('로그인이 필요합니다.');
+        window.location.href = `${JIARY_DOMAIN}/auth`;
+      }
     }
   }
   return Promise.reject(error);

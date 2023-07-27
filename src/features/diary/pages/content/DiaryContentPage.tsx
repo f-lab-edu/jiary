@@ -3,9 +3,16 @@ import DiaryEditor from '@/features/diary/components/content/DiaryEditor/DiaryEd
 import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import useGetFile from '@/features/diary/apis/queries/useGetFile.ts';
 import useGetFileMetaData from '@/features/diary/apis/queries/useGetFileMetaData.ts';
+import { useEffect, useRef } from 'react';
+import DiaryMap from '@/features/diary/components/content/DiaryMap/DiaryMap.tsx';
+import Head from 'next/head';
+import { useMapLoad } from '@/features/diary/hooks/useMapLoad.ts';
+import MapContext from '@/features/diary/contexts/MapContext.ts';
+import { disableScroll, enableScroll } from '@/libs/bodyScrollLock/index.ts';
+import { isSSR } from '@/core/utils/objectUtils.ts';
 
 type Props = {
-  document: string;
+  documentData: string;
   metaData: MetaData;
   diaryId: string;
 };
@@ -16,17 +23,37 @@ export type DiaryValue = {
 };
 
 export default function DiaryContentPage({ diaryId }: Props) {
-  const { data: document } = useGetFile(diaryId);
+  const { data: documentData } = useGetFile(diaryId);
   const { data: metaData } = useGetFileMetaData(diaryId);
 
+  const mapRef = useRef<HTMLDivElement | null>(null);
+  const { map } = useMapLoad(mapRef);
+
+  useEffect(() => {
+    if (isSSR) return;
+    disableScroll(document.body);
+    () => enableScroll(document.body);
+  }, []);
+
   return (
-    <div className={style.container}>
-      <h1 className={style.title}>{metaData?.name || ''}</h1>
-      <DiaryEditor
-        diaryId={diaryId}
-        document={document || ''}
-        metaData={metaData || {}}
-      />
-    </div>
+    <>
+      <Head>
+        <title>{`${metaData?.name || ''} 다이어리 📔`}</title>
+      </Head>
+
+      <MapContext.Provider value={{ map }}>
+        <div className={style.container}>
+          <h1 className={style.title}>{metaData?.name || ''}</h1>
+          <section className={style.sectionDivision}>
+            <DiaryEditor
+              diaryId={diaryId}
+              documentData={documentData || ''}
+              metaData={metaData || {}}
+            />
+            <DiaryMap map={map.current} mapRef={mapRef} />
+          </section>
+        </div>
+      </MapContext.Provider>
+    </>
   );
 }

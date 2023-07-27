@@ -3,6 +3,8 @@ import { globalStyle } from '@vanilla-extract/css';
 /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
 globalStyle('*', {
   boxSizing: 'border-box',
+  WebkitFontSmoothing: 'antialiased',
+  MozOsxFontSmoothing: 'grayscale',
 });
 
 globalStyle(

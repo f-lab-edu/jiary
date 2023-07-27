@@ -10,27 +10,33 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { EditorState } from 'lexical/LexicalEditorState';
 
-import ToolbarPlugin from './plugins/ToolbarPlugin.tsx';
-import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
-import AutoLinkPlugin from './plugins/AutoLinkPlugin.tsx';
-import InitalPlugin from '@/features/diary/components/content/DiaryEditor/plugins/InitialPlugin.tsx';
+import {
+  InitalPlugin,
+  PlaygroundAutoLinkPlugin as AutoLinkPlugin,
+  ToolbarPlugin,
+} from '@/features/diary/components/content/DiaryEditor/plugins/index.ts';
 import usePatchFile from '@/features/diary/apis/mutations/usePatchFile.ts';
 import { debounce } from '@/core/utils/eventUtils.ts';
 import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/editorTheme.ts';
 
+import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 import { useRef } from 'react';
 
 type Props = {
-  document: string;
+  documentData: string;
   metaData: MetaData;
   diaryId: string;
 };
 
-export default function DiaryEditor({ document, metaData, diaryId }: Props) {
+export default function DiaryEditor({
+  documentData,
+  metaData,
+  diaryId,
+}: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const debounceId = useRef<number | null>(null);
-  const value = useRef<string>(document);
+  const value = useRef<string>(documentData);
   const patchMutation = usePatchFile();
 
   const saveData = () => {
@@ -49,7 +55,7 @@ export default function DiaryEditor({ document, metaData, diaryId }: Props) {
     });
   };
 
-  const handleDebounceChange = debounce(saveData, 2000);
+  const handleDebounceChange = debounce(saveData, 1000);
   const handleChange = (editorState: EditorState) => {
     editorState.read(() => {
       value.current = JSON.stringify(editorState.toJSON());
@@ -57,51 +63,41 @@ export default function DiaryEditor({ document, metaData, diaryId }: Props) {
     });
   };
 
-  const preventDebounce = () => {
-    if (!debounceId.current) return;
-    clearTimeout(debounceId.current);
-    debounceId.current = null;
-    saveData();
-  };
-
   return (
-    <>
-      <button onClick={preventDebounce}>save!</button>
-      <LexicalComposer
-        initialConfig={{
-          namespace: 'MyEditor',
-          onError(error: Error) {
-            throw error;
-          },
-          editorState: document ? JSON.stringify(document) : null,
-          theme: editorTheme,
-          nodes: [
-            HeadingNode,
-            ListNode,
-            ListItemNode,
-            QuoteNode,
-            AutoLinkNode,
-            LinkNode,
-          ],
-          // editable: false,
-        }}
-      >
-        <div className={`${style.wrapper} editor-container`}>
-          <ToolbarPlugin />
-          <div className="editor-inner">
-            <RichTextPlugin
-              contentEditable={<ContentEditable className="editor-input" />}
-              placeholder={null}
-              ErrorBoundary={LexicalErrorBoundary}
-            />
-            <OnChangePlugin onChange={handleChange} ignoreSelectionChange />
-            <HistoryPlugin />
-            <LinkPlugin />
-            <AutoLinkPlugin />
-            <InitalPlugin initValue={document} editorRef={editorRef} />
-          </div>
+    <LexicalComposer
+      initialConfig={{
+        namespace: 'MyEditor',
+        onError(error: Error) {
+          throw error;
+        },
+        editorState: documentData ? JSON.stringify(documentData) : null,
+        theme: editorTheme,
+        nodes: [
+          HeadingNode,
+          ListNode,
+          ListItemNode,
+          QuoteNode,
+          AutoLinkNode,
+          LinkNode,
+        ],
+        // editable: false,
+      }}
+    >
+      <div className={`${style.wrapper} editor-container`}>
+        <ToolbarPlugin />
+        <div className="editor-inner">
+          <RichTextPlugin
+            contentEditable={<ContentEditable className="editor-input" />}
+            placeholder={null}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <OnChangePlugin onChange={handleChange} ignoreSelectionChange />
+          <HistoryPlugin />
+          <LinkPlugin />
+          <AutoLinkPlugin />
+          <InitalPlugin initValue={documentData} editorRef={editorRef} />
         </div>
-      </LexicalComposer>
-    </>
+      </div>
+    </LexicalComposer>
   );
 }

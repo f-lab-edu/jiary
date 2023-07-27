@@ -1,16 +1,4 @@
-body {
-  margin: 0;
-  background: #eee;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    ".SFNSText-Regular",
-    sans-serif;
-  font-weight: 500;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* NOTE: lexical libarary가 로드되면 Element가 나타나기 때문에 vanilla-extract를 이용해 스타일을 줄 수 없음. */
 
 .other h2 {
   font-size: 18px;
@@ -49,9 +37,7 @@ h1 {
 }
 
 .editor-container {
-  /* margin: 20px auto 20px auto; */
   border-radius: 2px;
-  max-width: 600px;
   color: #000;
   position: relative;
   line-height: 20px;
@@ -64,10 +50,15 @@ h1 {
 .editor-inner {
   background: #fff;
   position: relative;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  /* height: calc(100% - 44px); */
+  height: calc(100vh - 244px);
+  overflow-y: auto;
 }
 
 .editor-input {
-  min-height: 150px;
+  height: 100%;
   resize: none;
   font-size: 15px;
   caret-color: rgb(5, 5, 5);
@@ -218,7 +209,7 @@ h1 {
 }
 
 .editor-paragraph:last-child {
-  margin-bottom: 0;
+  padding-bottom: 8px;
 }
 
 .editor-heading-h1 {
@@ -321,7 +312,6 @@ pre::-webkit-scrollbar-thumb {
 }
 
 .toolbar {
-  display: flex;
   margin-bottom: 1px;
   background: #fff;
   padding: 4px;
@@ -332,7 +322,7 @@ pre::-webkit-scrollbar-thumb {
 
 .toolbar button.toolbar-item {
   border: 0;
-  display: flex;
+  display: inline-flex;
   background: none;
   border-radius: 10px;
   padding: 8px;
@@ -346,6 +336,11 @@ pre::-webkit-scrollbar-thumb {
 
 .toolbar button.toolbar-item.spaced {
   margin-right: 2px;
+}
+
+.toolbar button.toolbar-item.spaced.map {
+  float: right;
+  margin-right: 10px;
 }
 
 .toolbar button.toolbar-item i.format {
@@ -379,6 +374,7 @@ pre::-webkit-scrollbar-thumb {
   width: 1px;
   background-color: #eee;
   margin: 0 4px;
+  display: inline-flex;
 }
 
 .toolbar select.toolbar-item {
@@ -388,15 +384,13 @@ pre::-webkit-scrollbar-thumb {
   border-radius: 10px;
   padding: 8px;
   vertical-align: middle;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   width: 70px;
   font-size: 14px;
   color: #777;
   text-overflow: ellipsis;
 }
 
-.toolbar select.code-language {
+.toolbar select.map-language {
   text-transform: capitalize;
   width: 130px;
 }
@@ -450,50 +444,6 @@ i.chevron-down {
   height: 8px;
   width: 8px;
   background-image: url(/editor/icons/chevron-down.svg);
-}
-
-#block-controls button:hover {
-  background-color: #efefef;
-}
-
-#block-controls button:focus-visible {
-  border-color: blue;
-}
-
-#block-controls span.block-type {
-  background-size: contain;
-  display: block;
-  width: 18px;
-  height: 18px;
-  margin: 2px;
-}
-
-#block-controls span.block-type.paragraph {
-  background-image: url(/editor/icons/text-paragraph.svg);
-}
-
-#block-controls span.block-type.h1 {
-  background-image: url(/editor/icons/type-h1.svg);
-}
-
-#block-controls span.block-type.h2 {
-  background-image: url(/editor/icons/type-h2.svg);
-}
-
-#block-controls span.block-type.quote {
-  background-image: url(/editor/icons/chat-square-quote.svg);
-}
-
-#block-controls span.block-type.ul {
-  background-image: url(/editor/icons/list-ul.svg);
-}
-
-#block-controls span.block-type.ol {
-  background-image: url(/editor/icons/list-ol.svg);
-}
-
-#block-controls span.block-type.code {
-  background-image: url(/editor/icons/code.svg);
 }
 
 .dropdown {
@@ -577,6 +527,10 @@ i.chevron-down {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   transition: opacity 0.5s;
+}
+
+.link-editor.map {
+  max-width: 420px;
 }
 
 .link-editor .link-input {
@@ -685,8 +639,8 @@ i.redo {
   background-image: url(/editor/icons/chat-square-quote.svg);
 }
 
-.icon.code {
-  background-image: url(/editor/icons/code.svg);
+.icon.map {
+  background-image: url(/editor/icons/map.svg);
 }
 
 i.bold {
@@ -705,8 +659,8 @@ i.strikethrough {
   background-image: url(/editor/icons/type-strikethrough.svg);
 }
 
-i.code {
-  background-image: url(/editor/icons/code.svg);
+i.map {
+  background-image: url(/editor/icons/map.svg);
 }
 
 i.link {
