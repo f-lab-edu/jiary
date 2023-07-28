@@ -2,14 +2,20 @@ import { Dispatch, SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 import FloatingMapEditor from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/FloatingMapEditor.tsx';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { FORMAT_TEXT_COMMAND } from 'lexical';
+import {
+  ElementNode,
+  FORMAT_TEXT_COMMAND,
+  RangeSelection,
+  TextNode,
+} from 'lexical';
 
 type Props = {
   isMap: boolean;
   setIsMap: Dispatch<SetStateAction<boolean>>;
+  getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
 };
 
-export function MapToolbar({ isMap, setIsMap }: Props) {
+export function MapToolbar({ isMap, setIsMap, getSelectedNode }: Props) {
   const [editor] = useLexicalComposerContext();
 
   return (
@@ -23,7 +29,13 @@ export function MapToolbar({ isMap, setIsMap }: Props) {
       </button>
 
       {isMap &&
-        createPortal(<FloatingMapEditor setIsMap={setIsMap} />, document.body)}
+        createPortal(
+          <FloatingMapEditor
+            setIsMap={setIsMap}
+            getSelectedNode={getSelectedNode}
+          />,
+          document.body
+        )}
     </>
   );
 }

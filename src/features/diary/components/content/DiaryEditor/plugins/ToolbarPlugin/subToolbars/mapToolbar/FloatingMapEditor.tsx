@@ -10,20 +10,42 @@ import {
   useState,
 } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getSelection, SELECTION_CHANGE_COMMAND } from 'lexical';
+import {
+  $getSelection,
+  $isRangeSelection,
+  ElementNode,
+  RangeSelection,
+  SELECTION_CHANGE_COMMAND,
+  TextNode,
+} from 'lexical';
 import FloatInput from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/FloatInput.tsx';
 
 type Props = {
   setIsMap: Dispatch<SetStateAction<boolean>>;
+  getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
 };
 
-export default function FloatingMapEditor({ setIsMap }: Props) {
+export default function FloatingMapEditor({
+  setIsMap,
+  getSelectedNode,
+}: Props) {
   const [editor] = useLexicalComposerContext();
   const [isEditMode, setEditMode] = useState(false);
+  const [placeName, setPlaceName] = useState('');
+  const [selectedNode, setSelectedNode] = useState<
+    TextNode | ElementNode | null
+  >(null);
   const editorRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const updateMapEditor = useCallback(() => {
     const selection = $getSelection();
+
+    if ($isRangeSelection(selection)) {
+      const node = getSelectedNode(selection);
+      setSelectedNode(node);
+      setPlaceName(node?.__text || '');
+    }
+
     const editorElem = editorRef.current;
     const nativeSelection = window.getSelection();
     const activeElement = document.activeElement;
@@ -51,12 +73,13 @@ export default function FloatingMapEditor({ setIsMap }: Props) {
         rect = domRange?.getBoundingClientRect();
       }
       attachPositionElement(editorElem, rect);
-    } else if (!activeElement || activeElement.className !== 'link-input') {
+    } else if (!activeElement?.className.toLowerCase().includes('pac')) {
       attachPositionElement(editorElem, null);
+      setEditMode(false);
     }
 
     return true;
-  }, [editor]);
+  }, [editor, getSelectedNode]);
 
   useEffect(() => {
     return mergeRegister(
@@ -100,12 +123,15 @@ export default function FloatingMapEditor({ setIsMap }: Props) {
   return (
     <div ref={editorRef} className="link-editor map">
       {isEditMode ? (
-        <FloatInput isEditMode={isEditMode} setIsMap={setIsMap} />
+        <FloatInput
+          isEditMode={isEditMode}
+          setIsMap={setIsMap}
+          selectedNode={selectedNode}
+        />
       ) : (
         <>
           <div className="link-input">
-            {/* TODO: 이전 값 들어가도록 작업 */}
-            <button>{'이전 값이 들어가야 함'}</button>
+            <button onClick={() => setEditMode(true)}>{placeName}</button>
             <div
               className="link-edit"
               role="button"

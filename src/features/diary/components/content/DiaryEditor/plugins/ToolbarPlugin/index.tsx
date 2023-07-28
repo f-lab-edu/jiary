@@ -148,7 +148,11 @@ export function ToolbarPlugin() {
       <LinkToolbar isLink={isLink} getSelectedNode={getSelectedNode} />
       <div className="divider" />
       <DirectionToolbar />
-      <MapToolbar isMap={isMap} setIsMap={setIsMap} />
+      <MapToolbar
+        isMap={isMap}
+        setIsMap={setIsMap}
+        getSelectedNode={getSelectedNode}
+      />
     </div>
   );
 }

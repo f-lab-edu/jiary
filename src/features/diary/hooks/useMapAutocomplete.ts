@@ -8,7 +8,8 @@ export const useMapAutocomplete = (inputRef: HTMLInputElement | null) => {
     if (!inputRef) return;
     setAutocomplete(
       new google.maps.places.Autocomplete(inputRef as HTMLInputElement, {
-        fields: ['address_components', 'geometry', 'icon', 'name'],
+        // fields: ['address_components', 'geometry', 'icon', 'name'],
+        fields: ['formatted_address', 'geometry', 'icon', 'name', 'place_id'],
         strictBounds: false,
         types: ['establishment'],
       })
