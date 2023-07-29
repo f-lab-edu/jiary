@@ -1,7 +1,8 @@
 import MapContext from '@/features/diary/contexts/MapContext.ts';
 import { useMapAutocomplete } from '@/features/diary/hooks/useMapAutocomplete.ts';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { ElementNode, TextNode } from 'lexical';
+import { $createTextNode, ElementNode, TextNode } from 'lexical';
+import { $createCodeNode } from '@lexical/code';
 import {
   Dispatch,
   SetStateAction,
@@ -14,12 +15,14 @@ type FlotInputProps = {
   isEditMode: boolean;
   setIsMap: Dispatch<SetStateAction<boolean>>;
   selectedNode: TextNode | ElementNode | null;
+  placeName: string;
 };
 
 export default function FloatInput({
   isEditMode,
   setIsMap,
   selectedNode,
+  placeName,
 }: FlotInputProps) {
   const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null);
   const [editor] = useLexicalComposerContext();
@@ -28,9 +31,11 @@ export default function FloatInput({
 
   useEffect(() => {
     if (isEditMode && inputRef) {
+      const value = placeName.includes('📍') ? placeName.slice(2) : placeName;
+      inputRef.value = value;
       inputRef.focus();
     }
-  }, [isEditMode, inputRef]);
+  }, [isEditMode, inputRef, placeName]);
 
   useEffect(() => {
     if (!autocomplete) return;
@@ -40,7 +45,19 @@ export default function FloatInput({
       addMarker(place);
 
       editor.update(() => {
-        selectedNode?.setTextContent(`📍${name}: ${formatted_address}`);
+        const codeNode = $createCodeNode();
+        const textNode = $createTextNode();
+        textNode.setTextContent(`📍${name}: ${formatted_address}`);
+        codeNode.append(textNode);
+
+        if (selectedNode?.__type === 'text') {
+          selectedNode.getParent()?.replace(codeNode);
+        } else {
+          selectedNode?.append(codeNode);
+        }
+        // TODO: selectNode JSON
+
+        textNode?.setFormat('code');
       });
     });
   }, [editor, autocomplete, selectedNode, addMarker]);

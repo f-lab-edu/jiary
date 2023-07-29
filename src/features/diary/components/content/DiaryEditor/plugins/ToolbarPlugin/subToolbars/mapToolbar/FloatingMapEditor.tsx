@@ -24,11 +24,13 @@ import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEdi
 type Props = {
   setIsMap: Dispatch<SetStateAction<boolean>>;
   getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
+  buttonRef: RefObject<HTMLButtonElement | null>;
 };
 
 export default function FloatingMapEditor({
   setIsMap,
   getSelectedNode,
+  buttonRef,
 }: Props) {
   const [editor] = useLexicalComposerContext();
   const [isEditMode, setEditMode] = useState(false);
@@ -40,7 +42,6 @@ export default function FloatingMapEditor({
 
   const updateMapEditor = useCallback(() => {
     const selection = $getSelection();
-
     if ($isRangeSelection(selection)) {
       const node = getSelectedNode(selection);
       setSelectedNode(node);
@@ -48,11 +49,10 @@ export default function FloatingMapEditor({
     }
 
     const editorElem = editorRef.current;
+    if (!editorElem) return;
+
     const nativeSelection = window.getSelection();
-    const activeElement = document.activeElement;
-    if (editorElem === null) {
-      return;
-    }
+    // const activeElement = document.activeElement;
     const rootElement = editor.getRootElement();
     if (
       selection !== null &&
@@ -74,13 +74,21 @@ export default function FloatingMapEditor({
         rect = domRange?.getBoundingClientRect();
       }
       attachPositionElement(editorElem, rect);
-    } else if (!activeElement?.className.toLowerCase().includes('pac')) {
+    } else if (
+      nativeSelection?.isCollapsed &&
+      nativeSelection?.anchorNode?.hasChildNodes()
+    ) {
+      attachPositionElement(
+        editorElem,
+        buttonRef.current?.getBoundingClientRect()
+      );
+    } else {
       attachPositionElement(editorElem, null);
-      setEditMode(false);
     }
+    setEditMode(false);
 
     return true;
-  }, [editor, getSelectedNode]);
+  }, [editor, getSelectedNode, buttonRef]);
 
   useEffect(() => {
     return mergeRegister(
@@ -128,6 +136,7 @@ export default function FloatingMapEditor({
           isEditMode={isEditMode}
           setIsMap={setIsMap}
           selectedNode={selectedNode}
+          placeName={placeName}
         />
       ) : (
         <>

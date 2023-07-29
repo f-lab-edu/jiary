@@ -10,4 +10,5 @@ export const inputButton = style({
   padding: '8px 12px',
   borderRadius: 15,
   fontSize: 16,
+  minHeight: '35px',
 });

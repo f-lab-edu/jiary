@@ -14,12 +14,14 @@ export const useMapMarker = (map: google.maps.Map | null) => {
   }, [markerList, map]);
 
   const addMarker = (place: google.maps.places.PlaceResult) => {
+    console.log('place', place);
     const location = place.geometry?.location;
     const newMarker = new google.maps.Marker({
       map,
       position: location,
       animation: google.maps.Animation.DROP,
       optimized: true,
+      title: place.name,
     });
 
     setMarkerList([...markerList, newMarker]);

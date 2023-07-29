@@ -1,13 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import FloatingMapEditor from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/FloatingMapEditor.tsx';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import {
-  ElementNode,
-  FORMAT_TEXT_COMMAND,
-  RangeSelection,
-  TextNode,
-} from 'lexical';
+import { ElementNode, RangeSelection, TextNode } from 'lexical';
 
 type Props = {
   isMap: boolean;
@@ -16,12 +10,13 @@ type Props = {
 };
 
 export function MapToolbar({ isMap, setIsMap, getSelectedNode }: Props) {
-  const [editor] = useLexicalComposerContext();
+  const buttonRef = useRef<null | HTMLButtonElement>(null);
 
   return (
     <>
       <button
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}
+        ref={buttonRef}
+        onClick={() => setIsMap(true)}
         className={'toolbar-item spaced map ' + (isMap ? 'active' : '')}
         aria-label="Insert Map"
       >
@@ -33,6 +28,7 @@ export function MapToolbar({ isMap, setIsMap, getSelectedNode }: Props) {
           <FloatingMapEditor
             setIsMap={setIsMap}
             getSelectedNode={getSelectedNode}
+            buttonRef={buttonRef}
           />,
           document.body
         )}
