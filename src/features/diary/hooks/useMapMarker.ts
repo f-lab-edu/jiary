@@ -1,23 +1,28 @@
-import { useState } from 'react';
-
-type Marker = {
-  position?: google.maps.LatLng | google.maps.LatLngLiteral;
-};
+import { useEffect, useState } from 'react';
 
 export const useMapMarker = (map: google.maps.Map | null) => {
   const [markerList, setMarkerList] = useState<google.maps.Marker[]>([]);
 
-  const addMarker = (marker: Marker) => {
-    setMarkerList([
-      ...markerList,
-      new google.maps.Marker({
-        map,
-        position: marker.position,
-        animation: google.maps.Animation.DROP,
-        label: 'abcasdfasdfawef ewv wef',
-        title: 'Hello World!',
-      }),
-    ]);
+  useEffect(() => {
+    if (markerList.length === 0) return;
+    const bounds = new google.maps.LatLngBounds();
+
+    markerList.forEach(marker => {
+      bounds.extend(marker.getPosition() as google.maps.LatLng);
+    });
+    map?.fitBounds(bounds);
+  }, [markerList, map]);
+
+  const addMarker = (place: google.maps.places.PlaceResult) => {
+    const location = place.geometry?.location;
+    const newMarker = new google.maps.Marker({
+      map,
+      position: location,
+      animation: google.maps.Animation.DROP,
+      optimized: true,
+    });
+
+    setMarkerList([...markerList, newMarker]);
   };
 
   // TODO: index로 marker 지우기

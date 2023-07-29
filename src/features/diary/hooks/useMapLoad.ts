@@ -4,17 +4,18 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useState,
 } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { DEFAULT_POTISION, ZOOM } from '@/constants/map.ts';
 
 type HookType = (mapRef: RefObject<HTMLDivElement>) => {
-  map: MutableRefObject<google.maps.Map | null>;
+  map: google.maps.Map | null;
   autocomplete: MutableRefObject<google.maps.places.Autocomplete | null>;
 };
 
 export const useMapLoad: HookType = mapRef => {
-  const map = useRef<google.maps.Map | null>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
   const autocomplete = useRef<google.maps.places.Autocomplete | null>(null);
 
   const initMap = useCallback(() => {
@@ -28,10 +29,11 @@ export const useMapLoad: HookType = mapRef => {
       const { Map } = (await google.maps.importLibrary(
         'maps'
       )) as google.maps.MapsLibrary;
-      map.current = new Map(mapRef.current as HTMLDivElement, {
+      const newMap = new Map(mapRef.current as HTMLDivElement, {
         center: DEFAULT_POTISION,
         zoom: ZOOM,
       });
+      setMap(newMap);
     });
   }, [mapRef]);
 

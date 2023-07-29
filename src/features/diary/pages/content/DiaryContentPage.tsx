@@ -10,6 +10,7 @@ import { useMapLoad } from '@/features/diary/hooks/useMapLoad.ts';
 import MapContext from '@/features/diary/contexts/MapContext.ts';
 import { disableScroll, enableScroll } from '@/libs/bodyScrollLock/index.ts';
 import { isSSR } from '@/core/utils/objectUtils.ts';
+import { useMapMarker } from '@/features/diary/hooks/useMapMarker.ts';
 
 type Props = {
   documentData: string;
@@ -28,6 +29,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
 
   const mapRef = useRef<HTMLDivElement | null>(null);
   const { map } = useMapLoad(mapRef);
+  const { addMarker } = useMapMarker(map);
 
   useEffect(() => {
     if (isSSR) return;
@@ -41,7 +43,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
         <title>{`${metaData?.name || ''} 다이어리 📔`}</title>
       </Head>
 
-      <MapContext.Provider value={{ map }}>
+      <MapContext.Provider value={{ map, addMarker }}>
         <div className={style.container}>
           <h1 className={style.title}>{metaData?.name || ''}</h1>
           <section className={style.sectionDivision}>
@@ -50,7 +52,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
               documentData={documentData || ''}
               metaData={metaData || {}}
             />
-            <DiaryMap map={map.current} mapRef={mapRef} />
+            <DiaryMap mapRef={mapRef} />
           </section>
         </div>
       </MapContext.Provider>

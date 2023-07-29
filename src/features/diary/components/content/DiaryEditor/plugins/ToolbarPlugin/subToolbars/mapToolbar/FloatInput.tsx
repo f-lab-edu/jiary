@@ -1,7 +1,14 @@
+import MapContext from '@/features/diary/contexts/MapContext.ts';
 import { useMapAutocomplete } from '@/features/diary/hooks/useMapAutocomplete.ts';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ElementNode, TextNode } from 'lexical';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 type FlotInputProps = {
   isEditMode: boolean;
@@ -17,17 +24,7 @@ export default function FloatInput({
   const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null);
   const [editor] = useLexicalComposerContext();
   const { autocomplete } = useMapAutocomplete(inputRef);
-
-  // const { addMarker, removeMarker } = useMapMarker(map);
-  // const setMap = () => {
-  //   if (!map) return;
-  //   addMarker({
-  //     position: {
-  //       lat: 37.51175556,
-  //       lng: 127.1079306,
-  //     },
-  //   });
-  // };
+  const { addMarker } = useContext(MapContext);
 
   useEffect(() => {
     if (isEditMode && inputRef) {
@@ -39,14 +36,14 @@ export default function FloatInput({
     if (!autocomplete) return;
     autocomplete?.addListener('place_changed', () => {
       const place = autocomplete?.getPlace();
-      console.log('place', place);
       const { formatted_address, name } = place;
+      addMarker(place);
 
       editor.update(() => {
         selectedNode?.setTextContent(`📍${name}: ${formatted_address}`);
       });
     });
-  }, [editor, autocomplete, selectedNode]);
+  }, [editor, autocomplete, selectedNode, addMarker]);
 
   return (
     <input
