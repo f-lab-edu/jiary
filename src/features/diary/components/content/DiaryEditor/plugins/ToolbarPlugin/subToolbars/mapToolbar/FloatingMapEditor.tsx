@@ -19,6 +19,7 @@ import {
   TextNode,
 } from 'lexical';
 import FloatInput from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/FloatInput.tsx';
+import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 
 type Props = {
   setIsMap: Dispatch<SetStateAction<boolean>>;
@@ -131,7 +132,12 @@ export default function FloatingMapEditor({
       ) : (
         <>
           <div className="link-input">
-            <button onClick={() => setEditMode(true)}>{placeName}</button>
+            <button
+              className={style.inputButton}
+              onClick={() => setEditMode(true)}
+            >
+              {placeName}
+            </button>
             <div
               className="link-edit"
               role="button"
