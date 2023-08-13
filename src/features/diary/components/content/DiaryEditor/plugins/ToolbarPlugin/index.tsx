@@ -57,6 +57,8 @@ export function ToolbarPlugin() {
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
 
+  const changeIsMapState = (isMap: boolean) => setIsMap(isMap);
+
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -88,7 +90,7 @@ export function ToolbarPlugin() {
       setIsItalic(selection.hasFormat('italic'));
       setIsUnderline(selection.hasFormat('underline'));
       setIsStrikethrough(selection.hasFormat('strikethrough'));
-      setIsMap(selection.hasFormat('code'));
+      changeIsMapState(selection.hasFormat('code'));
 
       // Update links
       const node = getSelectedNode(selection);
@@ -148,7 +150,11 @@ export function ToolbarPlugin() {
       <LinkToolbar isLink={isLink} getSelectedNode={getSelectedNode} />
       <div className="divider" />
       <DirectionToolbar />
-      <MapToolbar isMap={isMap} setIsMap={setIsMap} />
+      <MapToolbar
+        isMap={isMap}
+        changeIsMapState={changeIsMapState}
+        getSelectedNode={getSelectedNode}
+      />
     </div>
   );
 }

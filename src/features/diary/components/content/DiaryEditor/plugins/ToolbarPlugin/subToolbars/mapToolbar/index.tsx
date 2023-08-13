@@ -1,21 +1,26 @@
-import { Dispatch, SetStateAction } from 'react';
+import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import FloatingMapEditor from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/FloatingMapEditor.tsx';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { FORMAT_TEXT_COMMAND } from 'lexical';
+import { ElementNode, RangeSelection, TextNode } from 'lexical';
 
 type Props = {
   isMap: boolean;
-  setIsMap: Dispatch<SetStateAction<boolean>>;
+  changeIsMapState: (isMap: boolean) => void;
+  getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
 };
 
-export function MapToolbar({ isMap, setIsMap }: Props) {
-  const [editor] = useLexicalComposerContext();
+export function MapToolbar({
+  isMap,
+  changeIsMapState,
+  getSelectedNode,
+}: Props) {
+  const buttonRef = useRef<null | HTMLButtonElement>(null);
 
   return (
     <>
       <button
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}
+        ref={buttonRef}
+        onClick={() => changeIsMapState(true)}
         className={'toolbar-item spaced map ' + (isMap ? 'active' : '')}
         aria-label="Insert Map"
       >
@@ -23,7 +28,14 @@ export function MapToolbar({ isMap, setIsMap }: Props) {
       </button>
 
       {isMap &&
-        createPortal(<FloatingMapEditor setIsMap={setIsMap} />, document.body)}
+        createPortal(
+          <FloatingMapEditor
+            changeIsMapState={changeIsMapState}
+            getSelectedNode={getSelectedNode}
+            buttonRef={buttonRef}
+          />,
+          document.body
+        )}
     </>
   );
 }

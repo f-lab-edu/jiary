@@ -1,11 +1,13 @@
-import { MutableRefObject, createContext } from 'react';
+import { createContext } from 'react';
 
 type MapContext = {
-  map: MutableRefObject<google.maps.Map | null> | null;
+  map: google.maps.Map | null;
+  addMarker: (place: google.maps.places.PlaceResult) => void;
 };
 
 const MapContext = createContext<MapContext>({
   map: null,
+  addMarker: () => {},
 });
 
 export default MapContext;

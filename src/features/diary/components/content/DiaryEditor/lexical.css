@@ -534,19 +534,22 @@ i.chevron-down {
 }
 
 .link-editor .link-input {
-  display: block;
+  display: flex;
   width: calc(100% - 24px);
   box-sizing: border-box;
   margin: 8px 12px;
-  padding: 8px 12px;
   border-radius: 15px;
   background-color: #eee;
-  font-size: 15px;
+  font-size: 16px;
   color: rgb(5, 5, 5);
   border: 0;
   outline: 0;
   position: relative;
   font-family: inherit;
+}
+
+input.link-input {
+  padding: 8px 12px;
 }
 
 .link-editor div.link-edit {
@@ -556,7 +559,7 @@ i.chevron-down {
   background-repeat: no-repeat;
   width: 35px;
   vertical-align: -0.25em;
-  position: absolute;
+  /* position: absolute; */
   right: 0;
   top: 0;
   bottom: 0;

@@ -1,35 +1,50 @@
 import { mergeRegister } from '@lexical/utils';
 import { attachPositionElement } from '@/core/utils/uiUtils.ts';
-import {
-  Dispatch,
-  RefObject,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getSelection, SELECTION_CHANGE_COMMAND } from 'lexical';
+import {
+  $getSelection,
+  $isRangeSelection,
+  ElementNode,
+  RangeSelection,
+  SELECTION_CHANGE_COMMAND,
+  TextNode,
+} from 'lexical';
 import FloatInput from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/FloatInput.tsx';
+import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 
 type Props = {
-  setIsMap: Dispatch<SetStateAction<boolean>>;
+  changeIsMapState: (isMap: boolean) => void;
+  getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
+  buttonRef: RefObject<HTMLButtonElement | null>;
 };
 
-export default function FloatingMapEditor({ setIsMap }: Props) {
+export default function FloatingMapEditor({
+  changeIsMapState,
+  getSelectedNode,
+  buttonRef,
+}: Props) {
   const [editor] = useLexicalComposerContext();
   const [isEditMode, setEditMode] = useState(false);
+  const [placeName, setPlaceName] = useState('');
+  const [selectedNode, setSelectedNode] = useState<
+    TextNode | ElementNode | null
+  >(null);
   const editorRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const updateMapEditor = useCallback(() => {
     const selection = $getSelection();
-    const editorElem = editorRef.current;
-    const nativeSelection = window.getSelection();
-    const activeElement = document.activeElement;
-    if (editorElem === null) {
-      return;
+    if ($isRangeSelection(selection)) {
+      const node = getSelectedNode(selection);
+      setSelectedNode(node);
+      setPlaceName(node?.__text || '');
     }
+
+    const editorElem = editorRef.current;
+    if (!editorElem) return;
+
+    const nativeSelection = window.getSelection();
+    // const activeElement = document.activeElement;
     const rootElement = editor.getRootElement();
     if (
       selection !== null &&
@@ -51,12 +66,21 @@ export default function FloatingMapEditor({ setIsMap }: Props) {
         rect = domRange?.getBoundingClientRect();
       }
       attachPositionElement(editorElem, rect);
-    } else if (!activeElement || activeElement.className !== 'link-input') {
+    } else if (
+      nativeSelection?.isCollapsed &&
+      nativeSelection?.anchorNode?.hasChildNodes()
+    ) {
+      attachPositionElement(
+        editorElem,
+        buttonRef.current?.getBoundingClientRect()
+      );
+    } else {
       attachPositionElement(editorElem, null);
     }
+    setEditMode(false);
 
     return true;
-  }, [editor]);
+  }, [editor, getSelectedNode, buttonRef]);
 
   useEffect(() => {
     return mergeRegister(
@@ -87,10 +111,10 @@ export default function FloatingMapEditor({ setIsMap }: Props) {
     (e: Event) => {
       const event = e as unknown as KeyboardEvent;
       if (event.key === 'Escape') {
-        setIsMap(false);
+        changeIsMapState(false);
       }
     },
-    [setIsMap]
+    [changeIsMapState]
   );
   useEffect(() => {
     window.addEventListener('keydown', closeFloating);
@@ -100,12 +124,21 @@ export default function FloatingMapEditor({ setIsMap }: Props) {
   return (
     <div ref={editorRef} className="link-editor map">
       {isEditMode ? (
-        <FloatInput isEditMode={isEditMode} setIsMap={setIsMap} />
+        <FloatInput
+          isEditMode={isEditMode}
+          changeIsMapState={changeIsMapState}
+          selectedNode={selectedNode}
+          placeName={placeName}
+        />
       ) : (
         <>
           <div className="link-input">
-            {/* TODO: 이전 값 들어가도록 작업 */}
-            <button>{'이전 값이 들어가야 함'}</button>
+            <button
+              className={style.inputButton}
+              onClick={() => setEditMode(true)}
+            >
+              {placeName}
+            </button>
             <div
               className="link-edit"
               role="button"
