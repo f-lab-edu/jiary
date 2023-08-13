@@ -2,25 +2,19 @@ import MapContext from '@/features/diary/contexts/MapContext.ts';
 import { useMapAutocomplete } from '@/features/diary/hooks/useMapAutocomplete.ts';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createTextNode, ElementNode, TextNode } from 'lexical';
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { $getMapNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
 
 type FlotInputProps = {
   isEditMode: boolean;
-  setIsMap: Dispatch<SetStateAction<boolean>>;
+  changeIsMapState: (isMap: boolean) => void;
   selectedNode: TextNode | ElementNode | null;
   placeName: string;
 };
 
 export default function FloatInput({
   isEditMode,
-  setIsMap,
+  changeIsMapState,
   selectedNode,
   placeName,
 }: FlotInputProps) {
@@ -75,7 +69,7 @@ export default function FloatInput({
       onKeyDown={event => {
         if (event.key === 'Enter') {
           event.preventDefault();
-          setIsMap(false);
+          changeIsMapState(false);
         }
       }}
     />

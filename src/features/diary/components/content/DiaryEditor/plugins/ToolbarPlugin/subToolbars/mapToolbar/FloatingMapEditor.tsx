@@ -1,14 +1,6 @@
 import { mergeRegister } from '@lexical/utils';
 import { attachPositionElement } from '@/core/utils/uiUtils.ts';
-import {
-  Dispatch,
-  RefObject,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getSelection,
@@ -22,13 +14,13 @@ import FloatInput from '@/features/diary/components/content/DiaryEditor/plugins/
 import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 
 type Props = {
-  setIsMap: Dispatch<SetStateAction<boolean>>;
+  changeIsMapState: (isMap: boolean) => void;
   getSelectedNode: (selection: RangeSelection) => TextNode | ElementNode;
   buttonRef: RefObject<HTMLButtonElement | null>;
 };
 
 export default function FloatingMapEditor({
-  setIsMap,
+  changeIsMapState,
   getSelectedNode,
   buttonRef,
 }: Props) {
@@ -119,10 +111,10 @@ export default function FloatingMapEditor({
     (e: Event) => {
       const event = e as unknown as KeyboardEvent;
       if (event.key === 'Escape') {
-        setIsMap(false);
+        changeIsMapState(false);
       }
     },
-    [setIsMap]
+    [changeIsMapState]
   );
   useEffect(() => {
     window.addEventListener('keydown', closeFloating);
@@ -134,7 +126,7 @@ export default function FloatingMapEditor({
       {isEditMode ? (
         <FloatInput
           isEditMode={isEditMode}
-          setIsMap={setIsMap}
+          changeIsMapState={changeIsMapState}
           selectedNode={selectedNode}
           placeName={placeName}
         />
