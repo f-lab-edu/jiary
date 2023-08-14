@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { getAccessTokenByRefreshToken } from '@/features/auth/apis/index.ts';
 
 export default function Home() {
-  console.log('github actions lint test');
+  const b;
   return (
     <>
       <Head>
