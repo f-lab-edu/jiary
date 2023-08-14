@@ -16,11 +16,13 @@ jobs:
           cache: npm
 
       - uses: actions/cache@v3
+        id: npm-cache
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Install Node.js dependencies
+      - if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
+        name: Install Node.js dependencies
         run: npm ci
 
       - name: Run linters
