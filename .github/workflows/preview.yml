@@ -16,6 +16,20 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+      - name: Run linters
+        uses: wearerequired/lint-action@v2.3.0
+        with:
+          eslint: true
+          eslint_extensions: js, ts
+          eslint_auto_fix: true
+          prettier: true
+          prettier_extensions: js, ts
+          prettier_auto_fix: true
+        continue-on-error: false # Lint 실패 시 중단
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
