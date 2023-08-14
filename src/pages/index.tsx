@@ -10,7 +10,7 @@ export default function Home() {
       <button onClick={getAccessTokenByRefreshToken}>get refresh token!</button>
       <div>Home</div>
 
-      <div style={{ color: 'red' }}>preview sucess!!</div>
+      <div style={{ color: 'red' }}>preview sucess!</div>
     </>
   );
 }
