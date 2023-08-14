@@ -2,7 +2,6 @@ import Head from 'next/head';
 import { getAccessTokenByRefreshToken } from '@/features/auth/apis/index.ts';
 
 export default function Home() {
-  const b;
   return (
     <>
       <Head>

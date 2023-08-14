@@ -27,7 +27,6 @@ jobs:
 
       - name: Run linters
         run: npm run lint
-        # continue-on-error: false # Lint 실패 시 중단
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
