@@ -12,7 +12,7 @@ import { JIARY_DOMAIN } from '@/constants/domain.ts';
 
 type ChangeConfigNewToken = (
   config: AxiosRequestConfig,
-  token: string
+  token: string,
 ) => AxiosRequestConfig;
 
 const changeConfigNewToken: ChangeConfigNewToken = (config, token) => {
@@ -41,7 +41,7 @@ const changeConfigNewToken: ChangeConfigNewToken = (config, token) => {
 export const onRequest = (request: InternalAxiosRequestConfig) => {
   if (!isSSR) {
     request.headers['Authorization'] = `Bearer ${localStorage.getItem(
-      'accessToken'
+      'accessToken',
     )}`;
   }
   return request;
@@ -52,7 +52,7 @@ export const onResponse = (response: AxiosResponse) => {
 };
 
 export const onErrorResponse = async (
-  error: AxiosError
+  error: AxiosError,
 ): Promise<AxiosError> => {
   if (Number(error.response?.status) === 401) {
     try {
@@ -65,7 +65,7 @@ export const onErrorResponse = async (
 
       const config = changeConfigNewToken(
         error.config as AxiosRequestConfig,
-        token
+        token,
       );
       return await axios.request(config);
     } catch (error) {

@@ -25,13 +25,12 @@ export const writeFile = (tokens: JSONFile[]) => {
 
 export const checkSameToken = (tokens: Credentials) => {
   const jsonTokens: JSONFile[] = readJSONFile();
-  const userEmail = jwtDecode<{ email: string }>(
-    tokens.id_token as string
-  )?.email;
+  const userEmail = jwtDecode<{ email: string }>(tokens.id_token as string)
+    ?.email;
 
   const index = jsonTokens.findIndex(
     (v: { access_token: string; refresh_token: string; user_email: string }) =>
-      v.user_email === userEmail
+      v.user_email === userEmail,
   );
 
   if (index > -1) {

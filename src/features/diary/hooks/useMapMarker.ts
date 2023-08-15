@@ -34,7 +34,7 @@ export const useMapMarker = (map: google.maps.Map | null) => {
     findElement?.setMap(null);
 
     const filteredMarker = markerList.filter(
-      v => v.getTitle() !== 'Hello World!'
+      v => v.getTitle() !== 'Hello World!',
     );
     setMarkerList(filteredMarker);
   };

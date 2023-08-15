@@ -18,7 +18,7 @@ export const createFile = async (title: string): Promise<File> =>
         name: title,
         parents: ['appDataFolder'],
       },
-      { params: { uploadType: 'multipart' } }
+      { params: { uploadType: 'multipart' } },
     )
     .then(res => res.data);
 
@@ -42,7 +42,7 @@ export const getFileList = async (accessToken?: string): Promise<DriveFile> => {
 
 export const getFile = async (
   id: string,
-  accessToken?: string
+  accessToken?: string,
 ): Promise<string> => {
   let headers = {};
   if (accessToken) {
@@ -58,7 +58,7 @@ export const getFile = async (
 
 export const getFileMetaData = async (
   id: string,
-  accessToken?: string
+  accessToken?: string,
 ): Promise<MetaData> => {
   let headers = {};
   if (accessToken) {
@@ -85,6 +85,6 @@ export const patchFile = async ({
 };
 
 export const deleteFile = async (
-  fileId: string
+  fileId: string,
 ): Promise<{ message: string } | AxiosError> =>
   await driveApi.delete(`/${fileId}`).then(res => res.data);

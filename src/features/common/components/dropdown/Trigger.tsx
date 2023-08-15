@@ -10,7 +10,7 @@ export default function Trigger({ children, className }: Props) {
   const { isShow, setIsShow, setTriggerRef } = useContext(DropdownContext);
   const triggerRef = useCallback(
     (node: HTMLButtonElement) => setTriggerRef(node),
-    [setTriggerRef]
+    [setTriggerRef],
   );
 
   return (

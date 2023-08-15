@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export function DELETE(
   req: NextApiRequest,
-  res: NextApiResponse<AxiosError | { message: string }>
+  res: NextApiResponse<AxiosError | { message: string }>,
 ) {
   const accessToken = req.cookies.Authorization;
 

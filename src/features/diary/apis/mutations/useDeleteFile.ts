@@ -15,7 +15,7 @@ const useDeleteFile = () => {
         (oldData): DriveFile => ({
           ...oldData,
           files: oldData?.files.filter(file => file.id !== variables) as File[],
-        })
+        }),
       );
     },
   });

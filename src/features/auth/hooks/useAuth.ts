@@ -43,7 +43,7 @@ export const useAuth = () => {
     window.removeEventListener(
       'message',
       e => messageCallback(e, popWindowRef.current),
-      false
+      false,
     );
     router.push('/diary');
   }, [accessToken, userInfo, dispatch, router]);

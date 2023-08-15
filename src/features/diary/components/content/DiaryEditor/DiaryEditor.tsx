@@ -47,7 +47,7 @@ export default function DiaryEditor({
       'metadata',
       new Blob([JSON.stringify({ name: metaData.name })], {
         type: 'application/json',
-      })
+      }),
     );
     formData.append('media', new Blob([value.current], { type: 'text/plain' }));
 

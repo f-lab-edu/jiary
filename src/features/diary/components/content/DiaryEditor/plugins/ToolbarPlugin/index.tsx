@@ -39,9 +39,8 @@ const getSelectedNode = (selection: RangeSelection) => {
   const isBackward = selection.isBackward();
   if (isBackward) {
     return $isAtNodeEnd(focus) ? anchorNode : focusNode;
-  } else {
-    return $isAtNodeEnd(anchor) ? focusNode : anchorNode;
   }
+  return $isAtNodeEnd(anchor) ? focusNode : anchorNode;
 };
 
 export function ToolbarPlugin() {
@@ -116,7 +115,7 @@ export function ToolbarPlugin() {
           updateToolbar();
           return false;
         },
-        LOW_PRIORITY
+        LOW_PRIORITY,
       ),
       editor.registerCommand(
         CAN_UNDO_COMMAND,
@@ -124,7 +123,7 @@ export function ToolbarPlugin() {
           setDisabledUndo(!payload);
           return false;
         },
-        LOW_PRIORITY
+        LOW_PRIORITY,
       ),
       editor.registerCommand(
         CAN_REDO_COMMAND,
@@ -132,8 +131,8 @@ export function ToolbarPlugin() {
           setDisabledRedo(!payload);
           return false;
         },
-        LOW_PRIORITY
-      )
+        LOW_PRIORITY,
+      ),
     );
   }, [editor, updateToolbar]);
 

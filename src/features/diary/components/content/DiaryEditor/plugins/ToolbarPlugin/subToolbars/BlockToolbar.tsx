@@ -219,7 +219,7 @@ export function BlockToolbar({ blockType, toolbarRef }: Props) {
                 toolbarRef={toolbarRef}
                 setShowBlockOptionsDropDown={setShowBlockOptionsDropDown}
               />,
-              document.body
+              document.body,
             )}
         </>
       )}

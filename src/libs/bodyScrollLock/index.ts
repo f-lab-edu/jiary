@@ -7,7 +7,7 @@ import {
 
 export const disableScroll = (
   targetElement: HTMLElement | Element,
-  options?: BodyScrollOptions
+  options?: BodyScrollOptions,
 ) => {
   disableBodyScroll(targetElement, options);
 };
