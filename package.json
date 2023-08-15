@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "format": "prettier --write --cache .",
     "prepare": "husky install"
   },
@@ -44,6 +44,7 @@
     "eslint-config-next": "13.2.4",
     "eslint-config-prettier": "^9.0.0",
     "husky": "^8.0.3",
+    "lint-staged": "^14.0.0",
     "prettier": "^3.0.1",
     "typescript": "5.1.3"
   }
