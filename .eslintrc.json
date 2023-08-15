@@ -3,9 +3,11 @@
   "extends": [
     "eslint:recommended",
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "eslint-config-prettier"
   ],
   "rules": {
+    "no-else-return": "error",
     "no-console": "warn",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/ban-ts-comment": "off"

@@ -100,8 +100,8 @@ function FloatingLinkEditor({ getSelectedNode }: FloatingLinkProps) {
           updateLinkEditor();
           return true;
         },
-        1
-      )
+        1,
+      ),
     );
   }, [editor, updateLinkEditor]);
 
@@ -191,7 +191,7 @@ export function LinkToolbar({ isLink, getSelectedNode }: Props) {
       {isLink &&
         createPortal(
           <FloatingLinkEditor getSelectedNode={getSelectedNode} />,
-          document.body
+          document.body,
         )}
     </>
   );

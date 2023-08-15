@@ -2,7 +2,7 @@ import { RefObject, useCallback, useEffect } from 'react';
 
 export const useClickOutSide = (
   ref: RefObject<HTMLElement> | null,
-  callback: () => void
+  callback: () => void,
 ) => {
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
@@ -13,7 +13,7 @@ export const useClickOutSide = (
         callback();
       }
     },
-    [ref, callback]
+    [ref, callback],
   );
 
   useEffect(() => {

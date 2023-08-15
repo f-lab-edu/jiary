@@ -1,6 +1,6 @@
 export const throttle = <T extends unknown[]>(
   callback: (...params: T) => void,
-  delay: number
+  delay: number,
 ) => {
   let wait = false;
   return (...params: T) => {
@@ -17,7 +17,7 @@ export const throttle = <T extends unknown[]>(
 
 export const debounce = <T extends unknown[]>(
   callback: (...params: T) => void,
-  delay: number
+  delay: number,
 ) => {
   let timeout: number;
   return (...params: T) => {

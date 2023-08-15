@@ -72,7 +72,7 @@ export default function FloatingMapEditor({
     ) {
       attachPositionElement(
         editorElem,
-        buttonRef.current?.getBoundingClientRect()
+        buttonRef.current?.getBoundingClientRect(),
       );
     } else {
       attachPositionElement(editorElem, null);
@@ -96,8 +96,8 @@ export default function FloatingMapEditor({
           updateMapEditor();
           return true;
         },
-        1
-      )
+        1,
+      ),
     );
   }, [editor, updateMapEditor]);
 
@@ -114,7 +114,7 @@ export default function FloatingMapEditor({
         changeIsMapState(false);
       }
     },
-    [changeIsMapState]
+    [changeIsMapState],
   );
   useEffect(() => {
     window.addEventListener('keydown', closeFloating);

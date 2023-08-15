@@ -27,7 +27,7 @@ export const useMapLoad: HookType = mapRef => {
 
     loader.load().then(async () => {
       const { Map } = (await google.maps.importLibrary(
-        'maps'
+        'maps',
       )) as google.maps.MapsLibrary;
       const newMap = new Map(mapRef.current as HTMLDivElement, {
         center: DEFAULT_POTISION,

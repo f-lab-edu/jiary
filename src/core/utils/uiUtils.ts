@@ -1,6 +1,6 @@
 export const attachPositionElement = (
   editor: HTMLElement,
-  rect: DOMRect | undefined | null
+  rect: DOMRect | undefined | null,
 ) => {
   if (!rect) {
     editor.style.opacity = '0';

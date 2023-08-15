@@ -11,7 +11,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export async function POST(
   req: NextApiRequest,
-  res: NextApiResponse<GoogleUrl | Login | Response | AxiosError>
+  res: NextApiResponse<GoogleUrl | Login | Response | AxiosError>,
 ) {
   const body = req.body;
 
@@ -50,7 +50,7 @@ export async function POST(
       const accessToken = req.cookies.Authorization;
       const jsonTokens: JSONFile[] = readJSONFile();
       const targetIndex = jsonTokens.findIndex(
-        token => token.access_token === accessToken
+        token => token.access_token === accessToken,
       );
 
       if (targetIndex < 0) {
@@ -65,7 +65,7 @@ export async function POST(
 
       // @ts-ignore
       const { tokens } = await oauth2Client.refreshToken(
-        jsonTokens[targetIndex].refresh_token
+        jsonTokens[targetIndex].refresh_token,
       );
 
       jsonTokens[targetIndex] = {

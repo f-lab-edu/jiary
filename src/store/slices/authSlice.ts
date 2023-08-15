@@ -42,7 +42,7 @@ export const authSlice = createSlice({
 const tokenSelector = (state: RootState) => state.auth.accessToken;
 export const isLoggedInSelector = createSelector(
   tokenSelector,
-  token => !!token
+  token => !!token,
 );
 
 export const { setUser, setAccessToken, removeUser, removeAccessToken } =

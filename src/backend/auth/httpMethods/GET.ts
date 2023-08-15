@@ -11,7 +11,7 @@ const authorizationUrl: string = oauth2Client.generateAuthUrl({
 
 export function GET(
   req: NextApiRequest,
-  res: NextApiResponse<GoogleUrl | AxiosError>
+  res: NextApiResponse<GoogleUrl | AxiosError>,
 ) {
   res.status(200).json({ location: authorizationUrl });
 }

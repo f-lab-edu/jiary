@@ -22,9 +22,7 @@ export default function DiaryPage() {
       <div className={style.container}>
         <DiaryListHeader count={files?.length || 0} />
         <ul className={style.ul}>
-          {files?.map(file => (
-            <DiaryCard key={file.id} file={file} />
-          ))}
+          {files?.map(file => <DiaryCard key={file.id} file={file} />)}
         </ul>
       </div>
     </>

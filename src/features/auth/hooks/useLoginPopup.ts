@@ -8,7 +8,7 @@ const openPopup = (url: string | undefined) => {
   popupWindow = window.open(
     url,
     MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE,
-    'toolbar=no, width=560, height=700, top=100, left=100'
+    'toolbar=no, width=560, height=700, top=100, left=100',
   );
 };
 
@@ -28,7 +28,7 @@ export const useLoginPopup = () => {
     window.addEventListener(
       'message',
       e => messageCallback(e, popupWindow),
-      false
+      false,
     );
   };
 

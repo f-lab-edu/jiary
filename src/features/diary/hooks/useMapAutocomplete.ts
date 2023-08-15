@@ -12,7 +12,7 @@ export const useMapAutocomplete = (inputRef: HTMLInputElement | null) => {
         fields: ['formatted_address', 'geometry', 'icon', 'name', 'place_id'],
         strictBounds: false,
         types: ['establishment'],
-      })
+      }),
     );
   }, [inputRef]);
 

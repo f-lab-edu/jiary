@@ -34,7 +34,7 @@ export function MapToolbar({
             getSelectedNode={getSelectedNode}
             buttonRef={buttonRef}
           />,
-          document.body
+          document.body,
         )}
     </>
   );

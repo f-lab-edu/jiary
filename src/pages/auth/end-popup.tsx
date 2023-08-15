@@ -9,7 +9,7 @@ export default function EndPopup() {
         type: MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE,
         params: window.location.href,
       },
-      JIARY_DOMAIN
+      JIARY_DOMAIN,
     );
   }, []);
 }
