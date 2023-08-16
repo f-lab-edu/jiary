@@ -3,6 +3,8 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
+  push:
+    branches-ignore: main
   pull_request:
     types:
       - opened
@@ -11,20 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
-      - if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
-        name: Install Node.js dependencies
-        run: npm ci
+      - run: ls -al
+      - name: Package Install
+        uses: ./.github/workflows/node_install.yml
 
       - name: Run linters
         run: npm run lint
