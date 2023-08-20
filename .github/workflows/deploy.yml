@@ -10,8 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Package Install
-        uses: ./.github/workflows/node_install.yml
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
+        name: Install Node.js dependencies
+        run: npm ci
 
       - name: Run linters
         run: npm run lint
