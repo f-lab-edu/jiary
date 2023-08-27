@@ -22,16 +22,12 @@ jobs:
         id: npm-cache
         with:
           path: |
-            ~/.npm
+            **/node_modules
             **/.next
+            **/.vercel
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-            ${{ runner.os }}
-
-      # - if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
-      # name: Install Node.js dependencies
-      # run: npm install
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest

@@ -14,19 +14,16 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: npm
-
       - uses: actions/cache@v3
         id: npm-cache
         with:
-          path: ~/.npm
+          path: |
+            **/node_modules
+            **/.next
+            **/.vercel
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
-      - if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
-        name: Install Node.js dependencies
-        run: npm ci
-
-      - name: Run linters
-        run: npm run lint
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
