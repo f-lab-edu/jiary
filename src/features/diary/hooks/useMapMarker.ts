@@ -6,7 +6,6 @@ export const useMapMarker = (map: google.maps.Map | null) => {
   useEffect(() => {
     if (markerList.length === 0) return;
     const bounds = new google.maps.LatLngBounds();
-
     markerList.forEach(marker => {
       bounds.extend(marker.getPosition() as google.maps.LatLng);
     });
@@ -23,7 +22,7 @@ export const useMapMarker = (map: google.maps.Map | null) => {
       title: place.name,
     });
 
-    setMarkerList([...markerList, newMarker]);
+    setMarkerList(prev => [...prev, newMarker]);
   };
 
   // TODO: index로 marker 지우기

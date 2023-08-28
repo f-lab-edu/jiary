@@ -3,10 +3,7 @@ import { useMapAutocomplete } from '@/features/diary/hooks/useMapAutocomplete.ts
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ElementNode, TextNode } from 'lexical';
 import { useContext, useEffect, useState } from 'react';
-import {
-  $createMapInfoNode,
-  Map,
-} from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
+import { $createMapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
 
 type FlotInputProps = {
   isEditMode: boolean;
@@ -42,18 +39,9 @@ export default function FloatInput({
       addMarker(place);
 
       editor.update(() => {
-        const info: Map = {
-          location: {
-            lat: place.geometry?.location?.lat(),
-            lng: place.geometry?.location?.lng(),
-          },
-          name: place.name as string,
-          placeId: place.place_id as string,
-        };
-
         const mapInfoNode = $createMapInfoNode(
           `📍${name}: ${formatted_address}`,
-          info,
+          place,
         );
 
         if (selectedNode?.__type === 'text') {

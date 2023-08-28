@@ -24,6 +24,7 @@ import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/
 import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 import { useRef } from 'react';
 import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
+import { MarkerSetPlugin } from '@/features/diary/components/content/DiaryEditor/plugins/MarkerSetPlugin.tsx';
 
 type Props = {
   documentData: string;
@@ -100,6 +101,7 @@ export default function DiaryEditor({
           <LinkPlugin />
           <AutoLinkPlugin />
           <InitalPlugin initValue={documentData} editorRef={editorRef} />
+          <MarkerSetPlugin />
         </div>
       </div>
     </LexicalComposer>

@@ -1,25 +1,14 @@
 import { SerializedTextNode, TextNode } from 'lexical';
 
-export type Map = {
-  placeId: string;
-  name: string;
-  location: {
-    lat?: number;
-    lng?: number;
-  };
+type SerializedMapNode = SerializedTextNode & {
+  map: google.maps.places.PlaceResult;
 };
 
-type SerializedMapNode = SerializedTextNode & { map: Map };
-
 export class MapInfoNode extends TextNode {
-  map: Map = {
-    placeId: '',
-    name: '',
-    location: {},
-  };
+  map: google.maps.places.PlaceResult;
   text: string;
 
-  constructor(text: string, map: Map) {
+  constructor(text: string, map: google.maps.places.PlaceResult) {
     super(text);
     this.text = text;
     this.map = map;
@@ -60,17 +49,35 @@ export class MapInfoNode extends TextNode {
     return this.map;
   }
 
-  setMapInfo(map: Map) {
+  setMapInfo(map: google.maps.places.PlaceResult) {
     this.map = map;
   }
 
   deleteMapInfo() {
     this.map = {
-      placeId: '',
+      place_id: '',
       name: '',
-      location: {
-        lat: 0,
-        lng: 0,
+      geometry: {
+        location: {
+          lat() {
+            return 0;
+          },
+          lng() {
+            return 0;
+          },
+          equals() {
+            return false;
+          },
+          toJSON() {
+            return {
+              lat: 0,
+              lng: 0,
+            };
+          },
+          toUrlValue() {
+            return '';
+          },
+        },
       },
     };
   }
@@ -79,7 +86,10 @@ export class MapInfoNode extends TextNode {
     return $createMapInfoNode(serializedMapNode.text, serializedMapNode.map);
   }
 
-  exportJSON(): SerializedTextNode & { map: Map; type: string } {
+  exportJSON(): SerializedTextNode & {
+    map: google.maps.places.PlaceResult;
+    type: string;
+  } {
     return {
       ...super.exportJSON(),
       type: 'map-info-node',
@@ -88,5 +98,7 @@ export class MapInfoNode extends TextNode {
   }
 }
 
-export const $createMapInfoNode = (text: string, map: Map) =>
-  new MapInfoNode(text, map);
+export const $createMapInfoNode = (
+  text: string,
+  map: google.maps.places.PlaceResult,
+) => new MapInfoNode(text, map);
