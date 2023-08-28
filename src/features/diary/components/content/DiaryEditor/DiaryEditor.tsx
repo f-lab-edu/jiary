@@ -23,7 +23,7 @@ import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/
 
 import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 import { useRef } from 'react';
-import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode';
+import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
 
 type Props = {
   documentData: string;
@@ -83,11 +83,6 @@ export default function DiaryEditor({
           LinkNode,
           CodeNode,
           MapInfoNode,
-          // CustomMapNode,
-          // {
-          //   replace: CodeNode,
-          //   with: () => new CustomMapNode(),
-          // },
         ],
         // editable: false,
       }}

@@ -1,9 +1,12 @@
 import MapContext from '@/features/diary/contexts/MapContext.ts';
 import { useMapAutocomplete } from '@/features/diary/hooks/useMapAutocomplete.ts';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $createTextNode, ElementNode, TextNode } from 'lexical';
+import { ElementNode, TextNode } from 'lexical';
 import { useContext, useEffect, useState } from 'react';
-import { $getMapNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
+import {
+  $createMapInfoNode,
+  Map,
+} from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
 
 type FlotInputProps = {
   isEditMode: boolean;
@@ -39,24 +42,24 @@ export default function FloatInput({
       addMarker(place);
 
       editor.update(() => {
-        const textNode = $createTextNode();
-        const mapNode = $getMapNode();
-        // console.log('mapNode', mapNode);
-
-        textNode.setTextContent(`📍${name}: ${formatted_address}`);
-        textNode.setMode('token');
-        textNode?.setFormat('code');
-
-        mapNode.setMapInfo({
-          location: place.geometry?.location as google.maps.LatLng,
+        const info: Map = {
+          location: {
+            lat: place.geometry?.location?.lat(),
+            lng: place.geometry?.location?.lng(),
+          },
           name: place.name as string,
           placeId: place.place_id as string,
-        });
+        };
+
+        const mapInfoNode = $createMapInfoNode(
+          `📍${name}: ${formatted_address}`,
+          info,
+        );
 
         if (selectedNode?.__type === 'text') {
-          selectedNode.getParent()?.replace(textNode);
+          selectedNode?.replace(mapInfoNode);
         } else {
-          selectedNode?.append(textNode);
+          selectedNode?.append(mapInfoNode);
         }
       });
     });
