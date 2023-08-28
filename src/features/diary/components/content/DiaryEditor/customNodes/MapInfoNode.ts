@@ -53,35 +53,6 @@ export class MapInfoNode extends TextNode {
     this.map = map;
   }
 
-  deleteMapInfo() {
-    this.map = {
-      place_id: '',
-      name: '',
-      geometry: {
-        location: {
-          lat() {
-            return 0;
-          },
-          lng() {
-            return 0;
-          },
-          equals() {
-            return false;
-          },
-          toJSON() {
-            return {
-              lat: 0,
-              lng: 0,
-            };
-          },
-          toUrlValue() {
-            return '';
-          },
-        },
-      },
-    };
-  }
-
   static importJSON(serializedMapNode: SerializedMapNode): TextNode {
     return $createMapInfoNode(serializedMapNode.text, serializedMapNode.map);
   }

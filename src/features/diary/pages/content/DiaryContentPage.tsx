@@ -29,7 +29,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
 
   const mapRef = useRef<HTMLDivElement | null>(null);
   const { map } = useMapLoad(mapRef);
-  const { addMarker } = useMapMarker(map);
+  const { addMarker, removeMarker } = useMapMarker(map);
 
   useEffect(() => {
     if (isSSR) return;
@@ -43,7 +43,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
         <title>{`${metaData?.name || ''} 다이어리 📔`}</title>
       </Head>
 
-      <MapContext.Provider value={{ map, addMarker }}>
+      <MapContext.Provider value={{ map, addMarker, removeMarker }}>
         <div className={style.container}>
           <h1 className={style.title}>{metaData?.name || ''}</h1>
           <section className={style.sectionDivision}>

@@ -25,16 +25,11 @@ export const useMapMarker = (map: google.maps.Map | null) => {
     setMarkerList(prev => [...prev, newMarker]);
   };
 
-  // TODO: index로 marker 지우기
-  // https://developers.google.com/maps/documentation/javascript/examples/marker-remove
-  // const removeMarker = (markIndex: number) => {
-  const removeMarker = () => {
-    const findElement = markerList.find(v => v.getTitle() === 'Hello World!');
+  const removeMarker = (title: string) => {
+    const findElement = markerList.find(v => v.getTitle() === title);
     findElement?.setMap(null);
 
-    const filteredMarker = markerList.filter(
-      v => v.getTitle() !== 'Hello World!',
-    );
+    const filteredMarker = markerList.filter(v => v.getTitle() !== title);
     setMarkerList(filteredMarker);
   };
 
