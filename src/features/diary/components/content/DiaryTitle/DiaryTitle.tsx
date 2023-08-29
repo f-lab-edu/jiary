@@ -19,7 +19,7 @@ export default function DiaryTitle({ metaData }: Props) {
   const saveTitle = () => {
     const value = inputRef.current?.value;
     if (value && title.current !== value) {
-      saveDiary(null, { name: value });
+      saveDiary({ metaData: { name: value } });
       title.current = value;
     }
     closeTitleInput();

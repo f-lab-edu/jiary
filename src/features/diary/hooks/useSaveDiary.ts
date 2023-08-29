@@ -3,19 +3,32 @@ import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import usePatchFile from '@/features/diary/apis/mutations/usePatchFile.ts';
 import { MutableRefObject } from 'react';
 
+type RequestMedatData = {
+  [key: string]: string;
+};
+
 export const useSaveDiary = (diaryId: string) => {
   const patchMutation = usePatchFile();
 
-  const saveDiary = (
-    value?: MutableRefObject<string> | null,
-    metaData?: MetaData,
-  ) => {
+  const saveDiary = (saveData: {
+    value?: MutableRefObject<string> | null;
+    metaData?: MetaData;
+  }) => {
+    const { value, metaData } = saveData;
     const formData = new FormData();
 
     if (!isObjectEmpty(metaData)) {
+      const requestMedatData: RequestMedatData = {};
+      if (metaData?.name) {
+        requestMedatData['name'] = metaData.name;
+      }
+      if (metaData?.description) {
+        requestMedatData['description'] = metaData.description;
+      }
+
       formData.append(
         'metadata',
-        new Blob([JSON.stringify({ name: metaData?.name })], {
+        new Blob([JSON.stringify(requestMedatData)], {
           type: 'application/json',
         }),
       );

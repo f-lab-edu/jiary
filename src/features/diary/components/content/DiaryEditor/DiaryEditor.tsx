@@ -17,7 +17,6 @@ import {
   ToolbarPlugin,
 } from '@/features/diary/components/content/DiaryEditor/plugins/index.ts';
 import { debounce } from '@/core/utils/eventUtils.ts';
-import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/editorTheme.ts';
 
 import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
@@ -28,10 +27,9 @@ import MapContext from '@/features/diary/contexts/MapContext.ts';
 
 type Props = {
   documentData: string;
-  metaData: MetaData;
 };
 
-export default memo(function DiaryEditor({ documentData, metaData }: Props) {
+export default memo(function DiaryEditor({ documentData }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const value = useRef<string>(documentData);
   const { saveDiary } = useContext(MapContext);
@@ -41,7 +39,7 @@ export default memo(function DiaryEditor({ documentData, metaData }: Props) {
   const handleChange = (editorState: EditorState) => {
     editorState.read(() => {
       value.current = JSON.stringify(editorState.toJSON());
-      handleDebounceChange(value, metaData);
+      handleDebounceChange({ value });
     });
   };
 
