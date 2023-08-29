@@ -23,6 +23,5 @@ export const debounce = <T extends unknown[]>(
   return (...params: T) => {
     clearTimeout(timeout);
     timeout = window.setTimeout(() => callback.apply(this, params), delay);
-    return timeout;
   };
 };

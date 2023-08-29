@@ -22,7 +22,7 @@ import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/editorTheme.ts';
 
 import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
-import { useRef } from 'react';
+import { memo, useCallback, useRef } from 'react';
 import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
 import { MarkerSetPlugin } from '@/features/diary/components/content/DiaryEditor/plugins/MarkerSetPlugin.tsx';
 
@@ -32,13 +32,12 @@ type Props = {
   diaryId: string;
 };
 
-export default function DiaryEditor({
+export default memo(function DiaryEditor({
   documentData,
   metaData,
   diaryId,
 }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
-  const debounceId = useRef<number | null>(null);
   const value = useRef<string>(documentData);
   const patchMutation = usePatchFile();
 
@@ -58,11 +57,12 @@ export default function DiaryEditor({
     });
   };
 
-  const handleDebounceChange = debounce(saveData, 1000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleDebounceChange = useCallback(debounce(saveData, 1000), []);
   const handleChange = (editorState: EditorState) => {
     editorState.read(() => {
       value.current = JSON.stringify(editorState.toJSON());
-      debounceId.current = handleDebounceChange();
+      handleDebounceChange();
     });
   };
 
@@ -106,4 +106,4 @@ export default function DiaryEditor({
       </div>
     </LexicalComposer>
   );
-}
+});
