@@ -6,9 +6,11 @@ import earth from '@/static/diary/earth2.svg';
 import calendar from '@/static/diary/calendar.svg';
 import DiaryCardDropdown from '@/features/diary/components/list/DiaryCardDropdown/DiaryCardDropdown.tsx';
 import { MouseEvent } from 'react';
+import { format } from 'date-fns';
 
 export default function DiaryCard({ file }: { file: File }) {
   const title = file.name.includes('jiary-') ? file.name.slice(6) : file.name;
+  const datetime = format(new Date(file.createdTime), 'yyyy-MM-dd');
 
   const handleLinkClick = (e: MouseEvent) => {
     const { className } = e.target as HTMLElement;
@@ -34,12 +36,10 @@ export default function DiaryCard({ file }: { file: File }) {
         </div>
         <div className={style.contentWrapper}>
           <span className={style.title}>{title}</span>
-          <div className={style.tag}>{/* TODO: 하드 코딩 remove */}</div>
         </div>
         <div className={style.footer}>
           <Image src={calendar} width={20} height={20} alt="calendar icon" />
-          {/* TODO: 하드 코딩 remove */}
-          <span>May 12, 2020</span>
+          <span>{datetime}</span>
         </div>
       </Link>
     </li>

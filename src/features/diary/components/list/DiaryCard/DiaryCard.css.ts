@@ -47,8 +47,6 @@ export const locationText = style({
   maxWidth: 162,
 });
 
-export const tag = style({});
-
 export const contentWrapper = style({
   marginTop: 14,
   height: '60%',
@@ -59,7 +57,7 @@ export const title = style({
   display: '-webkit-box',
   width: '100%',
   wordWrap: 'break-word',
-  WebkitLineClamp: 2,
+  WebkitLineClamp: 5,
   WebkitBoxOrient: 'vertical',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
