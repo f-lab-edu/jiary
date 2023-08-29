@@ -12,6 +12,7 @@ import { disableScroll, enableScroll } from '@/libs/bodyScrollLock/index.ts';
 import { isSSR } from '@/core/utils/objectUtils.ts';
 import { useMapMarker } from '@/features/diary/hooks/useMapMarker.ts';
 import { useSaveDiary } from '@/features/diary/hooks/useSaveDiary.ts';
+import DiaryTitle from '@/features/diary/components/content/DiaryTitle/DiaryTitle.tsx';
 
 type Props = {
   documentData: string;
@@ -47,6 +48,10 @@ export default function DiaryContentPage({ diaryId }: Props) {
 
       <MapContext.Provider value={{ map, addMarker, removeMarker, saveDiary }}>
         <div className={style.container}>
+          <div className={style.titleWrapper}>
+            <DiaryTitle metaData={metaData} />
+          </div>
+
           <section className={style.sectionDivision}>
             <DiaryEditor
               documentData={documentData || ''}
