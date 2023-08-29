@@ -24,9 +24,26 @@ export default function DiaryTitle({ metaData }: Props) {
     }
     closeTitleInput();
   };
+  const changeInputWidth = () => {
+    if (!inputRef.current) return;
+    const $div = document.createElement('div');
+    $div.style.display = 'inline-block';
+    $div.style.fontWeight = '600';
+    $div.style.fontSize = '24px';
+    $div.style.border = 'none';
+    $div.style.padding = '20px';
+    $div.style.visibility = 'none';
+    $div.innerText = inputRef.current.value;
+
+    document.body.appendChild($div);
+    inputRef.current.style.width = `${$div.offsetWidth}px`;
+
+    document.body.removeChild($div);
+  };
 
   useClickOutSide(inputRef, saveTitle);
-  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    changeInputWidth();
     if (e.key === 'Escape') {
       closeTitleInput();
     }
@@ -53,12 +70,13 @@ export default function DiaryTitle({ metaData }: Props) {
         </button>
       ) : (
         <input
-          onKeyUp={handleKeyUp}
+          onKeyDown={handleKeyDown}
           className={style.titleInput}
           ref={(element: HTMLInputElement) => {
             inputRef.current = element;
             if (!element) return;
             element.value = title.current;
+            changeInputWidth();
             element.focus();
           }}
         />

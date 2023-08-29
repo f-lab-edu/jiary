@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 export default function DiaryCard({ file }: { file: File }) {
   const title = file.name.includes('jiary-') ? file.name.slice(6) : file.name;
   const datetime = format(new Date(file.createdTime), 'yyyy-MM-dd');
+  console.log('file', file);
 
   const handleLinkClick = (e: MouseEvent) => {
     const { className } = e.target as HTMLElement;

@@ -8,10 +8,11 @@ export const container = style({
 export const titleWrapper = style({
   display: 'inline-block',
   height: 36,
-  padding: 1,
+  padding: '1px 2px',
   marginBottom: 20,
   transition: '0.15s ease',
   borderRadius: '8px',
+  maxWidth: 692,
   ':hover': {
     background: COLORS.TAG_BACKGROUND,
   },
@@ -24,7 +25,12 @@ export const titleButton = style({
 });
 
 export const title = style({
-  display: 'inline-block',
+  display: 'block',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  width: '100%',
+  maxWidth: 692,
   fontWeight: 700,
   fontSize: 24,
 });
@@ -32,15 +38,19 @@ export const title = style({
 export const editIcon = style({
   display: 'inline-block',
   marginLeft: 10,
+  visibility: 'hidden',
+  selectors: {
+    [`${titleWrapper}:hover &`]: {
+      visibility: 'visible',
+    },
+  },
 });
 
 export const titleInput = style({
   background: COLORS.TAG_BACKGROUND,
   fontWeight: 600,
   fontSize: 24,
-  minWidth: 220,
   maxWidth: 692,
-  width: 'fit-content',
   border: 'none',
   padding: 2,
 });
