@@ -36,7 +36,6 @@ export default function FloatInput({
     autocomplete?.addListener('place_changed', () => {
       const place = autocomplete?.getPlace();
       const { formatted_address, name } = place;
-      addMarker(place);
 
       editor.update(() => {
         const mapInfoNode = $createMapInfoNode(
