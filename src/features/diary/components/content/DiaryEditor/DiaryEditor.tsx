@@ -16,53 +16,32 @@ import {
   PlaygroundAutoLinkPlugin as AutoLinkPlugin,
   ToolbarPlugin,
 } from '@/features/diary/components/content/DiaryEditor/plugins/index.ts';
-import usePatchFile from '@/features/diary/apis/mutations/usePatchFile.ts';
 import { debounce } from '@/core/utils/eventUtils.ts';
 import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/editorTheme.ts';
 
 import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
-import { memo, useCallback, useRef } from 'react';
+import { memo, useCallback, useContext, useRef } from 'react';
 import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
 import { MarkerSetPlugin } from '@/features/diary/components/content/DiaryEditor/plugins/MarkerSetPlugin.tsx';
+import MapContext from '@/features/diary/contexts/MapContext.ts';
 
 type Props = {
   documentData: string;
   metaData: MetaData;
-  diaryId: string;
 };
 
-export default memo(function DiaryEditor({
-  documentData,
-  metaData,
-  diaryId,
-}: Props) {
+export default memo(function DiaryEditor({ documentData, metaData }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const value = useRef<string>(documentData);
-  const patchMutation = usePatchFile();
-
-  const saveData = () => {
-    const formData = new FormData();
-    formData.append(
-      'metadata',
-      new Blob([JSON.stringify({ name: metaData.name })], {
-        type: 'application/json',
-      }),
-    );
-    formData.append('media', new Blob([value.current], { type: 'text/plain' }));
-
-    patchMutation.mutate({
-      fileId: diaryId,
-      multipartData: formData,
-    });
-  };
+  const { saveDiary } = useContext(MapContext);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleDebounceChange = useCallback(debounce(saveData, 1000), []);
+  const handleDebounceChange = useCallback(debounce(saveDiary, 1000), []);
   const handleChange = (editorState: EditorState) => {
     editorState.read(() => {
       value.current = JSON.stringify(editorState.toJSON());
-      handleDebounceChange();
+      handleDebounceChange(value, metaData);
     });
   };
 
