@@ -38,7 +38,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
   useEffect(() => {
     if (isSSR) return;
     disableScroll(document.body);
-    () => enableScroll(document.body);
+    return () => enableScroll(document.body);
   }, []);
 
   return (
