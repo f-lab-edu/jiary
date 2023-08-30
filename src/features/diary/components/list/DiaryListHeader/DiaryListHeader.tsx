@@ -1,5 +1,5 @@
 import * as style from '@/features/diary/components/list/DiaryListHeader/DiaryListHeader.css.ts';
-import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
+import Dropdown from '../../../../common/components/dropdown/Dropdown';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import useCreateFile from '@/features/diary/apis/mutations/useCreateFile.ts';
 import { useRouter } from 'next/router';

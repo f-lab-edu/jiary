@@ -50,7 +50,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
       <MapContext.Provider value={{ map, addMarker, removeMarker, saveDiary }}>
         <div className={style.container}>
           <DiaryTitle metaData={metaData} />
-          <DiaryDescription metaData={metaData} />
+          {metaData?.description && <DiaryDescription metaData={metaData} />}
 
           <section className={style.sectionDivision}>
             <DiaryEditor documentData={documentData || ''} />
