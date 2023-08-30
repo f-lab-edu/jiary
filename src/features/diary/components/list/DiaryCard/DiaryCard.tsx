@@ -24,30 +24,22 @@ export default function DiaryCard({ file }: { file: File }) {
         className={style.link}
         onClick={handleLinkClick}
       >
-        <div className={style.header}>
-          <div className={style.location}>
+        <div className={style.footer}>
+          <div className={style.date}>
             <Image
-              src="/icons/earth.svg"
+              src="/icons/calendar.svg"
               width={20}
               height={20}
-              alt="earth icon"
+              alt="calendar icon"
             />
-            {/* TODO: 하드 코딩 remove */}
-            <span className={style.locationText}>Unitied State</span>
+            <span>{datetime}</span>
           </div>
-          <DiaryCardDropdown id={file.id} />
+          <div>
+            <DiaryCardDropdown id={file.id} />
+          </div>
         </div>
         <div className={style.contentWrapper}>
           <span className={style.title}>{title}</span>
-        </div>
-        <div className={style.footer}>
-          <Image
-            src="/icons/calendar.svg"
-            width={20}
-            height={20}
-            alt="calendar icon"
-          />
-          <span>{datetime}</span>
         </div>
       </Link>
     </li>

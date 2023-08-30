@@ -32,8 +32,7 @@ export const getFileList = async (accessToken?: string): Promise<DriveFile> => {
       params: {
         q: 'trashed=false',
         spaces: 'appDataFolder',
-        fields:
-          'files(id,name,createdTime,modifiedTime,hasThumbnail,thumbnailLink,contentHints)',
+        fields: 'files(id,name,createdTime,modifiedTime,description)',
       },
       headers,
     })
