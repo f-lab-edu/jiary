@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import LoginSection from '@/features/auth/components/LoginSection/LoginSection.tsx';
-import loginBackground from '@/static/auth/open-peeps.png';
 import * as style from '@/features/auth/pages/root/AuthPage.css.ts';
 import Head from 'next/head';
 
@@ -12,10 +11,12 @@ export default function AuthPage() {
       </Head>
 
       <Image
-        src={loginBackground}
+        src="/background/open-peeps.png"
         alt="Auth Background Image"
         className={style.backgroundImage}
-        placeholder="blur"
+        fill
+        sizes="100vw"
+        style={{ position: 'absolute' }}
       />
       <div className={style.backgroundAfter}></div>
       <LoginSection />
