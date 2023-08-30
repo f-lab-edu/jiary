@@ -4,6 +4,7 @@ import { useClickOutSide } from '@/features/common/hooks/useClickOutSide.ts';
 import Image from 'next/image';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { COLORS } from '@/constants/colors.ts';
+import { focusContentEditableTextToEnd } from '@/core/utils/uiUtils.ts';
 
 type Props = {
   title: string | undefined;
@@ -19,7 +20,7 @@ export default function GrowingInput({ title = '', saveMethod, small }: Props) {
   const closeTitleInput = () => setIsOpenInput(false);
 
   const saveTitle = () => {
-    const value = inputRef.current?.value;
+    const value = inputRef.current?.innerText;
     if (value && titleRef.current !== value) {
       saveMethod(value);
       titleRef.current = value;
@@ -27,26 +28,8 @@ export default function GrowingInput({ title = '', saveMethod, small }: Props) {
     closeTitleInput();
   };
 
-  const changeInputWidth = () => {
-    if (!inputRef.current) return;
-    const $div = document.createElement('div');
-    $div.style.display = 'inline-block';
-    $div.style.fontWeight = '600';
-    $div.style.fontSize = '24px';
-    $div.style.border = 'none';
-    $div.style.padding = '20px';
-    $div.style.visibility = 'none';
-    $div.innerText = inputRef.current.value;
-
-    document.body.appendChild($div);
-    inputRef.current.style.width = `${$div.offsetWidth}px`;
-
-    document.body.removeChild($div);
-  };
-
   useClickOutSide(inputRef, saveTitle);
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    changeInputWidth();
     if (e.key === 'Escape') {
       closeTitleInput();
     }
@@ -86,7 +69,8 @@ export default function GrowingInput({ title = '', saveMethod, small }: Props) {
           />
         </button>
       ) : (
-        <input
+        <span
+          contentEditable
           onKeyDown={handleKeyDown}
           className={style.titleInput}
           style={assignInlineVars({
@@ -96,9 +80,9 @@ export default function GrowingInput({ title = '', saveMethod, small }: Props) {
           ref={(element: HTMLInputElement) => {
             inputRef.current = element;
             if (!element) return;
-            element.value = titleRef.current;
-            changeInputWidth();
             element.focus();
+            element.innerText = titleRef.current;
+            focusContentEditableTextToEnd(element);
           }}
         />
       )}
