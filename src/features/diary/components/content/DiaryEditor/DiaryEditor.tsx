@@ -24,12 +24,14 @@ import { memo, useCallback, useContext, useRef } from 'react';
 import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
 import { MarkerSetPlugin } from '@/features/diary/components/content/DiaryEditor/plugins/MarkerSetPlugin.tsx';
 import MapContext from '@/features/diary/contexts/MapContext.ts';
+import { MetaData } from '@/features/diary/apis/interfaces.ts';
 
 type Props = {
   documentData: string;
+  metaData: MetaData;
 };
 
-export default memo(function DiaryEditor({ documentData }: Props) {
+export default memo(function DiaryEditor({ documentData, metaData }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const value = useRef<string>(documentData);
   const { saveDiary } = useContext(MapContext);
@@ -39,7 +41,7 @@ export default memo(function DiaryEditor({ documentData }: Props) {
   const handleChange = (editorState: EditorState) => {
     editorState.read(() => {
       value.current = JSON.stringify(editorState.toJSON());
-      handleDebounceChange({ value });
+      handleDebounceChange({ value, metaData });
     });
   };
 
@@ -78,7 +80,7 @@ export default memo(function DiaryEditor({ documentData }: Props) {
           <LinkPlugin />
           <AutoLinkPlugin />
           <InitalPlugin initValue={documentData} editorRef={editorRef} />
-          <MarkerSetPlugin />
+          <MarkerSetPlugin metaData={metaData} />
         </div>
       </div>
     </LexicalComposer>

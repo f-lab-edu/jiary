@@ -53,7 +53,10 @@ export default function DiaryContentPage({ diaryId }: Props) {
           {metaData?.description && <DiaryDescription metaData={metaData} />}
 
           <section className={style.sectionDivision}>
-            <DiaryEditor documentData={documentData || ''} />
+            <DiaryEditor
+              documentData={documentData || ''}
+              metaData={metaData || {}}
+            />
             <DiaryMap mapRef={mapRef} />
           </section>
         </div>

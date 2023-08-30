@@ -17,7 +17,6 @@ export default function DiaryDescription({ metaData }: Props) {
 
   return (
     <div className={style.container}>
-      {/* <Image src={earth} width={20} height={20} alt="earth icon" /> */}
       <Earth className="earth-icon" />
       <GrowingInput
         title={metaData?.description}
