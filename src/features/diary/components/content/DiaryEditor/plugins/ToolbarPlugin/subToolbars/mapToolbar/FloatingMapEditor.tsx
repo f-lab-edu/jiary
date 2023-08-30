@@ -66,20 +66,13 @@ export default function FloatingMapEditor({
         rect = domRange?.getBoundingClientRect();
       }
       attachPositionElement(editorElem, rect);
-    } else if (
-      nativeSelection?.isCollapsed &&
-      nativeSelection?.anchorNode?.hasChildNodes()
-    ) {
+    } else {
       attachPositionElement(
         editorElem,
         buttonRef.current?.getBoundingClientRect(),
       );
-    } else {
-      attachPositionElement(editorElem, null);
     }
     setEditMode(false);
-
-    return true;
   }, [editor, getSelectedNode, buttonRef]);
 
   useEffect(() => {

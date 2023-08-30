@@ -1,7 +1,7 @@
 import MapContext from '@/features/diary/contexts/MapContext.ts';
 import { useMapAutocomplete } from '@/features/diary/hooks/useMapAutocomplete.ts';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { ElementNode, TextNode } from 'lexical';
+import { $createParagraphNode, $getRoot, ElementNode, TextNode } from 'lexical';
 import { useContext, useEffect, useState } from 'react';
 import { $createMapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
 
@@ -42,9 +42,16 @@ export default function FloatInput({
           `📍${name}: ${formatted_address}`,
           place,
         );
-
-        if (selectedNode?.__type === 'text') {
+        if (
+          selectedNode?.__type === 'text' ||
+          selectedNode?.__type === 'map-info-node'
+        ) {
           selectedNode?.replace(mapInfoNode);
+        } else if (!selectedNode || selectedNode?.__type === 'root') {
+          const root = $getRoot();
+          const paragraghNode = $createParagraphNode();
+          paragraghNode.append(mapInfoNode);
+          root.append(paragraghNode);
         } else {
           selectedNode?.append(mapInfoNode);
         }
