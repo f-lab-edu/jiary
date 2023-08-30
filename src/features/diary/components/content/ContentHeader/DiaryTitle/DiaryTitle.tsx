@@ -1,7 +1,7 @@
 import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import Image from 'next/image';
 import { KeyboardEvent, useContext, useRef, useState } from 'react';
-import * as style from '@/features/diary/pages/content/DiaryContentPage.css.ts';
+import * as style from '@/features/diary/components/content/ContentHeader/DiaryTitle/DiaryTitle.css.ts';
 import { useClickOutSide } from '@/features/common/hooks/useClickOutSide.ts';
 import MapContext from '@/features/diary/contexts/MapContext.ts';
 
@@ -53,7 +53,7 @@ export default function DiaryTitle({ metaData }: Props) {
   };
 
   return (
-    <>
+    <div className={style.titleWrapper}>
       {!isOpenTitleInput ? (
         <button
           className={style.titleButton}
@@ -81,6 +81,6 @@ export default function DiaryTitle({ metaData }: Props) {
           }}
         />
       )}
-    </>
+    </div>
   );
 }
