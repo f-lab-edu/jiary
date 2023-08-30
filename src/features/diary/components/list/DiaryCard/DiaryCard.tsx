@@ -2,8 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { File } from '@/features/diary/apis/interfaces.ts';
 import * as style from '@/features/diary/components/list/DiaryCard/DiaryCard.css.ts';
-import earth from '@/static/diary/earth2.svg';
-import calendar from '@/static/diary/calendar.svg';
 import DiaryCardDropdown from '@/features/diary/components/list/DiaryCardDropdown/DiaryCardDropdown.tsx';
 import { MouseEvent } from 'react';
 import { format } from 'date-fns';
@@ -11,7 +9,6 @@ import { format } from 'date-fns';
 export default function DiaryCard({ file }: { file: File }) {
   const title = file.name.includes('jiary-') ? file.name.slice(6) : file.name;
   const datetime = format(new Date(file.createdTime), 'yyyy-MM-dd');
-  console.log('file', file);
 
   const handleLinkClick = (e: MouseEvent) => {
     const { className } = e.target as HTMLElement;
@@ -29,7 +26,12 @@ export default function DiaryCard({ file }: { file: File }) {
       >
         <div className={style.header}>
           <div className={style.location}>
-            <Image src={earth} width={20} height={20} alt="earth icon" />
+            <Image
+              src="/icons/earth.svg"
+              width={20}
+              height={20}
+              alt="earth icon"
+            />
             {/* TODO: 하드 코딩 remove */}
             <span className={style.locationText}>Unitied State</span>
           </div>
@@ -39,7 +41,12 @@ export default function DiaryCard({ file }: { file: File }) {
           <span className={style.title}>{title}</span>
         </div>
         <div className={style.footer}>
-          <Image src={calendar} width={20} height={20} alt="calendar icon" />
+          <Image
+            src="/icons/calendar.svg"
+            width={20}
+            height={20}
+            alt="calendar icon"
+          />
           <span>{datetime}</span>
         </div>
       </Link>

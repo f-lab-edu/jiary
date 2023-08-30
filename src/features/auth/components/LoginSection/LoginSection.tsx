@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import jiaryLogo from '@/static/jiary-logo.svg';
 import googleLogo from '@/static/auth/google_signin.png';
 import * as style from './LoginSection.css.ts';
 import useGetAuthCode from '@/features/auth/apis/queries/useGetAuthCode.ts';
@@ -13,7 +12,7 @@ export default function LoginSection() {
     <div className={style.container}>
       <div className={style.logo}>
         <Image
-          src={jiaryLogo}
+          src="/logo/jiary-logo.svg"
           width={60}
           height={60}
           alt="Picture of the logo"

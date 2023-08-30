@@ -1,4 +1,3 @@
-import menu from '@/static/diary/menu.svg';
 import Image from 'next/image';
 import useDeleteFile from '@/features/diary/apis/mutations/useDeleteFile.ts';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
@@ -11,7 +10,7 @@ export default function DiaryCardDropdown({ id }: { id: string }) {
     <Dropdown>
       <Dropdown.Trigger>
         <Image
-          src={menu}
+          src="/icons/menu.svg"
           width={30}
           height={30}
           alt="menu"

@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import JiaryLogo from '@/static/jiary-logo.svg';
-import GithubLogo from '@/static/github-logo.svg';
 import UserProfile from '@/features/common/components/profile/UserProfile.tsx';
 import * as style from '@/features/common/components/header/PageHeader.css.ts';
 import Link from 'next/link';
@@ -18,7 +16,7 @@ export default function PageHeader() {
             <li className="jiary-logo">
               <Link href="/" className={style.imageLogoWrapper}>
                 <Image
-                  src={JiaryLogo}
+                  src="/logo/jiary-logo.svg"
                   width={30}
                   height={30}
                   alt="jiary-logo"
@@ -40,7 +38,7 @@ export default function PageHeader() {
                 className={style.a}
               >
                 <Image
-                  src={GithubLogo}
+                  src="/logo/github-logo.svg"
                   width={30}
                   height={30}
                   alt="github-logo"
