@@ -3,12 +3,14 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
-  pull_request:
-    types:
-      - opened
+  push:
+    branches-ignore: main
+  pull_request_target:
+    types: [labeled]
 jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'run build')
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -19,15 +21,13 @@ jobs:
       - uses: actions/cache@v3
         id: npm-cache
         with:
-          path: ~/.npm
+          path: |
+            **/node_modules
+            **/.next
+            **/.vercel
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
-      - if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
-        name: Install Node.js dependencies
-        run: npm ci
-
-      - name: Run linters
-        run: npm run lint
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -37,3 +37,11 @@ jobs:
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,eventName,workflow,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
