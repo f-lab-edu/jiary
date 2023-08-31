@@ -54,7 +54,7 @@ export default function GrowingInput({ title = '', saveMethod, small }: Props) {
             className={style.title}
             style={assignInlineVars({
               [style.fontWeight]: small ? '500' : '700',
-              [style.fontSize]: small ? '18px' : '24px',
+              [style.fontSize]: small ? '18px' : '34px',
               [style.fontColor]: small ? COLORS.THIRD_TEXT_COLOR : '#000',
             })}
           >
