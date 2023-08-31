@@ -6,6 +6,7 @@ export const wrapperTop = createVar();
 
 export const container = style({
   position: 'relative',
+  height: 30,
 });
 
 export const wrapper = style({

@@ -53,7 +53,7 @@ h1 {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   /* height: calc(100% - 44px); */
-  height: calc(100vh - 244px);
+  height: calc(100vh - 288px);
   overflow-y: auto;
 }
 
@@ -443,7 +443,7 @@ i.chevron-down {
   display: inline-block;
   height: 8px;
   width: 8px;
-  background-image: url(/editor/icons/chevron-down.svg);
+  background-image: url(/icons/chevron-down.svg);
 }
 
 .dropdown {
@@ -553,7 +553,7 @@ input.link-input {
 }
 
 .link-editor div.link-edit {
-  background-image: url(/editor/icons/pencil-fill.svg);
+  background-image: url(/icons/pencil-fill.svg);
   background-size: 16px;
   background-position: center;
   background-repeat: no-repeat;
@@ -607,81 +607,81 @@ input.link-input {
 }
 
 i.undo {
-  background-image: url(/editor/icons/arrow-counterclockwise.svg);
+  background-image: url(/icons/arrow-counterclockwise.svg);
 }
 
 i.redo {
-  background-image: url(/editor/icons/arrow-clockwise.svg);
+  background-image: url(/icons/arrow-clockwise.svg);
 }
 
 .icon.paragraph {
-  background-image: url(/editor/icons/text-paragraph.svg);
+  background-image: url(/icons/text-paragraph.svg);
 }
 
 .icon.large-heading,
 .icon.h1 {
-  background-image: url(/editor/icons/type-h1.svg);
+  background-image: url(/icons/type-h1.svg);
 }
 
 .icon.small-heading,
 .icon.h2 {
-  background-image: url(/editor/icons/type-h2.svg);
+  background-image: url(/icons/type-h2.svg);
 }
 
 .icon.bullet-list,
 .icon.ul {
-  background-image: url(/editor/icons/list-ul.svg);
+  background-image: url(/icons/list-ul.svg);
 }
 
 .icon.numbered-list,
 .icon.ol {
-  background-image: url(/editor/icons/list-ol.svg);
+  background-image: url(/icons/list-ol.svg);
 }
 
 .icon.quote {
-  background-image: url(/editor/icons/chat-square-quote.svg);
+  background-image: url(/icons/chat-square-quote.svg);
 }
 
 .icon.map {
-  background-image: url(/editor/icons/map.svg);
+  background-image: url(/icons/map.svg);
 }
 
 i.bold {
-  background-image: url(/editor/icons/type-bold.svg);
+  background-image: url(/icons/type-bold.svg);
 }
 
 i.italic {
-  background-image: url(/editor/icons/type-italic.svg);
+  background-image: url(/icons/type-italic.svg);
 }
 
 i.underline {
-  background-image: url(/editor/icons/type-underline.svg);
+  background-image: url(/icons/type-underline.svg);
 }
 
 i.strikethrough {
-  background-image: url(/editor/icons/type-strikethrough.svg);
+  background-image: url(/icons/type-strikethrough.svg);
 }
 
 i.map {
-  background-image: url(/editor/icons/map.svg);
+  background-image: url(/icons/map.svg);
 }
 
 i.link {
-  background-image: url(/editor/icons/link.svg);
+  background-image: url(/icons/link.svg);
 }
 
 i.left-align {
-  background-image: url(/editor/icons/text-left.svg);
+  background-image: url(/icons/text-left.svg);
 }
 
 i.center-align {
-  background-image: url(/editor/icons/text-center.svg);
+  background-image: url(/icons/text-center.svg);
 }
 
 i.right-align {
-  background-image: url(/editor/icons/text-right.svg);
+  background-image: url(/icons/text-right.svg);
 }
 
 i.justify-align {
-  background-image: url(/editor/icons/justify.svg);
+  background-image: url(/icons/justify.svg);
 }

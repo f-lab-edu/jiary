@@ -7,5 +7,5 @@ export const container = style({
 });
 
 export const mapSection = style({
-  height: 'calc(100vh - 200px)',
+  height: 'calc(100vh - 244px)',
 });

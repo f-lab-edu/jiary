@@ -1,6 +1,7 @@
 export const COLORS = {
   BORDER_COLOR: 'hsl(230, 25%, 94%)',
   SECOND_TEXT_COLOR: 'hsl(230, 10%, 65%)',
+  THIRD_TEXT_COLOR: 'hsl(230,4%,50%);',
   TAG_BACKGROUND: 'hsl(0, 0%, 85%)',
 
   BLUE_COLOR: 'hsl(226, 100%, 62%)',

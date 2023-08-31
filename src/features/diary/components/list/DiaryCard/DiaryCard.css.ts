@@ -3,7 +3,7 @@ import { COLORS } from '@/constants/colors.ts';
 
 export const li = style({
   width: '100%',
-  height: 280,
+  height: 200,
   backgroundColor: '#fff',
   borderRadius: 8,
   position: 'relative',
@@ -24,42 +24,16 @@ export const link = style({
   height: '100%',
 });
 
-export const header = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  borderBottom: `1px solid ${COLORS.BORDER_COLOR}`,
-  paddingBottom: 10,
-});
-
-export const location = style({
-  display: 'flex',
-  alignItems: 'center',
-});
-
-export const locationText = style({
-  color: COLORS.SECOND_TEXT_COLOR,
-  fontSize: 12,
-  marginLeft: 10,
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  maxWidth: 162,
-});
-
-export const tag = style({});
-
 export const contentWrapper = style({
   marginTop: 14,
   height: '60%',
-  borderBottom: `1px solid ${COLORS.BORDER_COLOR}`,
 });
 
 export const title = style({
   display: '-webkit-box',
   width: '100%',
   wordWrap: 'break-word',
-  WebkitLineClamp: 2,
+  WebkitLineClamp: 4,
   WebkitBoxOrient: 'vertical',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
@@ -69,10 +43,20 @@ export const title = style({
 });
 
 export const footer = style({
-  marginTop: 14,
+  marginBottom: 24,
+  paddingBottom: 8,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  color: COLORS.SECOND_TEXT_COLOR,
+  fontSize: 14,
+  borderBottom: `1px solid ${COLORS.BORDER_COLOR}`,
+});
+
+export const date = style({
   display: 'flex',
   alignItems: 'center',
   gap: 13,
-  color: COLORS.SECOND_TEXT_COLOR,
-  fontSize: 14,
 });
+
+export const memu = style({});

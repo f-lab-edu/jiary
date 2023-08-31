@@ -63,8 +63,6 @@ export const googleLogo = style({
   display: 'inline-block',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
-  width: 30,
-  height: 30,
   marginRight: 10,
   verticalAlign: 'middle',
 });

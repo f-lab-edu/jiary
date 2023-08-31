@@ -1,75 +1,75 @@
-import { CodeNode, SerializedCodeNode } from '@lexical/code';
-import { DecoratorNode } from 'lexical';
-import { ReactNode } from 'react';
+import { SerializedTextNode, TextNode } from 'lexical';
 
-type MapObject = {
-  placeId: string;
-  location: google.maps.LatLng;
-  name: string;
+type SerializedMapNode = SerializedTextNode & {
+  map: google.maps.places.PlaceResult;
 };
-// export class MapInfoNode extends DecoratorNode<HTMLDivElement> {
-export class MapInfoNode extends DecoratorNode<ReactNode> {
-  map: MapObject[];
 
-  constructor(map = []) {
-    super();
+export class MapInfoNode extends TextNode {
+  map: google.maps.places.PlaceResult;
+  text: string;
+
+  constructor(text: string, map: google.maps.places.PlaceResult) {
+    super(text);
+    this.text = text;
     this.map = map;
+    this.setTextContent(text);
+    this.setMode('token');
+    this.__type = 'map-info-node';
   }
 
   static getType() {
-    return 'map-info';
+    return 'map-info-node';
   }
 
-  static clone(): MapInfoNode {
-    return new MapInfoNode();
+  static clone(node: TextNode): MapInfoNode {
+    return new MapInfoNode(node.getTextContent(), node.map);
   }
 
-  // createDOM(config: EditorConfig): HTMLElement {
   createDOM(): HTMLElement {
-    const div = document.createElement('div');
-    div.style.display = 'none';
-    return div;
-  }
+    const wrapper = document.createElement('div');
+    const span = document.createElement('span');
+    span.style.backgroundColor = 'rgb(240, 242, 245)';
+    span.style.padding = '1px 0.25rem';
+    span.style.fontFamily = 'Menlo, Consolas, Monaco, monospace';
+    span.style.fontSize = '94%';
+    span.textContent = this.text;
 
-  updateDOM(): false {
-    return false;
-  }
+    const info = document.createElement('div');
+    info.style.display = 'none';
+    info.classList.add('map-info');
+    info.textContent = JSON.stringify(this.map);
 
-  decorate(): ReactNode {
-    return '<div></div>';
+    wrapper.appendChild(span);
+    wrapper.appendChild(info);
+
+    return wrapper;
   }
 
   getMapInfo() {
     return this.map;
   }
 
-  setMapInfo(map: MapObject) {
-    this.map.push(map);
+  setMapInfo(map: google.maps.places.PlaceResult) {
+    this.map = map;
   }
 
-  deleteMapInfo(placeId: string) {
-    const index = this.map.findIndex(v => v.placeId === placeId);
-    return this.map.splice(index, 1);
+  static importJSON(serializedMapNode: SerializedMapNode): TextNode {
+    return $createMapInfoNode(serializedMapNode.text, serializedMapNode.map);
   }
 
-  static importJSON(serializedNode: SerializedCodeNode): CodeNode {
-    return CodeNode.importJSON(serializedNode);
+  exportJSON(): SerializedTextNode & {
+    map: google.maps.places.PlaceResult;
+    type: string;
+  } {
+    return {
+      ...super.exportJSON(),
+      type: 'map-info-node',
+      map: this.map,
+    };
   }
-
-  // exportJSON(): { mapInfo: MapObject[]; type: string } {
-  //   return {
-  //     // ...super.exportJSON(),
-  //     type: 'map-info',
-  //     mapInfo: this.map,
-  //   };
-  // }
 }
 
-let mapNode: MapInfoNode;
-export const $createMapNode = () => {
-  const newMapNode = new MapInfoNode();
-  mapNode = newMapNode;
-  return newMapNode;
-};
-
-export const $getMapNode = () => mapNode;
+export const $createMapInfoNode = (
+  text: string,
+  map: google.maps.places.PlaceResult,
+) => new MapInfoNode(text, map);

@@ -3,6 +3,7 @@ export interface File {
   kind: string;
   mimeType: string;
   name: string;
+  createdTime: string;
 }
 
 export interface DriveFile {

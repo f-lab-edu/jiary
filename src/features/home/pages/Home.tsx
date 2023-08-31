@@ -1,14 +1,14 @@
+import * as style from '@/features/home/pages/Home.css.ts';
 import Image from 'next/image';
-import LoginSection from '@/features/auth/components/LoginSection/LoginSection.tsx';
-import * as style from '@/features/auth/pages/root/AuthPage.css.ts';
 import Head from 'next/head';
 
-export default function AuthPage() {
+export default function Home() {
   return (
-    <div className={style.container}>
+    <>
       <Head>
-        <title>Jiary 로그인 페이지</title>
+        <title>홈 입니다</title>
       </Head>
+      <div> </div>
 
       <Image
         src="/background/open-peeps.png"
@@ -18,7 +18,6 @@ export default function AuthPage() {
         sizes="100vw"
       />
       <div className={style.backgroundAfter}></div>
-      <LoginSection />
-    </div>
+    </>
   );
 }

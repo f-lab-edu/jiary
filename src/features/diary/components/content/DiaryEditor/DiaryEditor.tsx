@@ -16,52 +16,32 @@ import {
   PlaygroundAutoLinkPlugin as AutoLinkPlugin,
   ToolbarPlugin,
 } from '@/features/diary/components/content/DiaryEditor/plugins/index.ts';
-import usePatchFile from '@/features/diary/apis/mutations/usePatchFile.ts';
 import { debounce } from '@/core/utils/eventUtils.ts';
-import { MetaData } from '@/features/diary/apis/interfaces.ts';
 import editorTheme from '@/features/diary/components/content/DiaryEditor/themes/editorTheme.ts';
 
 import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
-import { useRef } from 'react';
-import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode';
+import { memo, useCallback, useContext, useRef } from 'react';
+import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
+import { MarkerSetPlugin } from '@/features/diary/components/content/DiaryEditor/plugins/MarkerSetPlugin.tsx';
+import MapContext from '@/features/diary/contexts/MapContext.ts';
+import { MetaData } from '@/features/diary/apis/interfaces.ts';
 
 type Props = {
   documentData: string;
   metaData: MetaData;
-  diaryId: string;
 };
 
-export default function DiaryEditor({
-  documentData,
-  metaData,
-  diaryId,
-}: Props) {
+export default memo(function DiaryEditor({ documentData, metaData }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
-  const debounceId = useRef<number | null>(null);
   const value = useRef<string>(documentData);
-  const patchMutation = usePatchFile();
+  const { saveDiary } = useContext(MapContext);
 
-  const saveData = () => {
-    const formData = new FormData();
-    formData.append(
-      'metadata',
-      new Blob([JSON.stringify({ name: metaData.name })], {
-        type: 'application/json',
-      }),
-    );
-    formData.append('media', new Blob([value.current], { type: 'text/plain' }));
-
-    patchMutation.mutate({
-      fileId: diaryId,
-      multipartData: formData,
-    });
-  };
-
-  const handleDebounceChange = debounce(saveData, 1000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleDebounceChange = useCallback(debounce(saveDiary, 1000), []);
   const handleChange = (editorState: EditorState) => {
     editorState.read(() => {
       value.current = JSON.stringify(editorState.toJSON());
-      debounceId.current = handleDebounceChange();
+      handleDebounceChange({ value, metaData });
     });
   };
 
@@ -83,11 +63,6 @@ export default function DiaryEditor({
           LinkNode,
           CodeNode,
           MapInfoNode,
-          // CustomMapNode,
-          // {
-          //   replace: CodeNode,
-          //   with: () => new CustomMapNode(),
-          // },
         ],
         // editable: false,
       }}
@@ -105,8 +80,9 @@ export default function DiaryEditor({
           <LinkPlugin />
           <AutoLinkPlugin />
           <InitalPlugin initValue={documentData} editorRef={editorRef} />
+          <MarkerSetPlugin metaData={metaData} />
         </div>
       </div>
     </LexicalComposer>
   );
-}
+});
