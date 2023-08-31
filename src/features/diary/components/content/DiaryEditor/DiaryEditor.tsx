@@ -25,6 +25,7 @@ import { MapInfoNode } from '@/features/diary/components/content/DiaryEditor/cus
 import { MarkerSetPlugin } from '@/features/diary/components/content/DiaryEditor/plugins/MarkerSetPlugin.tsx';
 import MapContext from '@/features/diary/contexts/MapContext.ts';
 import { MetaData } from '@/features/diary/apis/interfaces.ts';
+import { EditablePlugin } from '@/features/diary/components/content/DiaryEditor/plugins/EditablePlugin.tsx';
 
 type Props = {
   documentData: string;
@@ -64,10 +65,10 @@ export default memo(function DiaryEditor({ documentData, metaData }: Props) {
           CodeNode,
           MapInfoNode,
         ],
-        // editable: false,
       }}
     >
       <div className={`${style.wrapper} editor-container`}>
+        <EditablePlugin documentData={documentData} />
         <ToolbarPlugin />
         <div className="editor-inner">
           <RichTextPlugin
