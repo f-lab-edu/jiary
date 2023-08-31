@@ -6,6 +6,7 @@ export const container = style({
 });
 
 export const sectionDivision = style({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'row',
   gap: 20,

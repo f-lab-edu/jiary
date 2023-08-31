@@ -4,7 +4,8 @@ import { globalStyle, style } from '@vanilla-extract/css';
 export const container = style({
   display: 'flex',
   gap: 4,
-  marginBottom: 32,
+  marginTop: 18,
+  marginBottom: 18,
   height: '20px',
   alignItems: 'center',
 });

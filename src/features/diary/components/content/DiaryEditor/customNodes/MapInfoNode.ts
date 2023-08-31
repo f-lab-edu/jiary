@@ -28,11 +28,14 @@ export class MapInfoNode extends TextNode {
   createDOM(): HTMLElement {
     const wrapper = document.createElement('div');
     const span = document.createElement('span');
+    span.style.display = 'inline-block';
     span.style.backgroundColor = 'rgb(240, 242, 245)';
-    span.style.padding = '1px 0.25rem';
+    span.style.padding = '4px 4px 4px 16px';
+    span.style.margin = '8px 4px 8px';
     span.style.fontFamily = 'Menlo, Consolas, Monaco, monospace';
     span.style.fontSize = '94%';
     span.textContent = this.text;
+    span.style.borderLeft = '4px solid rgb(206, 208, 212)';
 
     const info = document.createElement('div');
     info.style.display = 'none';
