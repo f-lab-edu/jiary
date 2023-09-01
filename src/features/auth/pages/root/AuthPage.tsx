@@ -5,7 +5,7 @@ import Head from 'next/head';
 
 export default function AuthPage() {
   return (
-    <div className={style.container}>
+    <>
       <Head>
         <title>Jiary 로그인 페이지</title>
       </Head>
@@ -18,7 +18,9 @@ export default function AuthPage() {
         sizes="100vw"
       />
       <div className={style.backgroundAfter}></div>
-      <LoginSection />
-    </div>
+      <div className={style.loginSectionContainer}>
+        <LoginSection />
+      </div>
+    </>
   );
 }

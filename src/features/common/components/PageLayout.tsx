@@ -11,7 +11,7 @@ export default function PageLayout(props: { children: ReactNode }) {
   return (
     <>
       <PageHeader />
-      <main className={style.main}>{props.children}</main>
+      <div className={style.main}>{props.children}</div>
       {Boolean(isFetching || isMuatating) && <PageLoadingSpinner />}
     </>
   );

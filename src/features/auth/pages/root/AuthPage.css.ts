@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 
-export const container = style({
+export const loginSectionContainer = style({
   position: 'relative',
   height: 'calc(100vh - 56px)',
   display: 'flex',

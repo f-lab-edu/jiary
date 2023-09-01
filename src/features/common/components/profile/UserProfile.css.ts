@@ -3,7 +3,12 @@ import { style } from '@vanilla-extract/css';
 
 export const userImage = style({
   borderRadius: '50%',
+  opacity: 1,
   padding: 4,
+  transition: '0.15s ease',
+  ':hover': {
+    opacity: 0.5,
+  },
 });
 
 export const logoutButton = style({
