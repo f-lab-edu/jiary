@@ -5,7 +5,6 @@ export const container = style({
   alignItems: 'center',
   flexDirection: 'column',
   background: 'rgb(9, 9, 11)',
-  // height: '100vh',
   color: 'rgb(250, 250, 250)',
 });
 
