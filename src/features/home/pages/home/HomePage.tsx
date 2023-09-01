@@ -1,4 +1,4 @@
-import * as style from '@/features/home/pages/HomePage.css.ts';
+import * as style from '@/features/home/pages/home/HomePage.css.ts';
 import Head from 'next/head';
 import Image from 'next/image';
 import MapIcon from 'public/icons/map.svg';
