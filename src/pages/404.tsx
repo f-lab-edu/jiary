@@ -1,5 +1,5 @@
 import localFont from 'next/font/local';
-import * as style from '@/pages/404.css.ts';
+import * as style from '@/pages/notFound.css.ts';
 import { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
