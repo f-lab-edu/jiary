@@ -1,1 +1,1 @@
-export { default } from '@/features/home/pages/HomePage.tsx';
+export { default } from '@/features/home/pages/home/HomePage.tsx';
