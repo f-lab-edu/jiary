@@ -6,8 +6,6 @@ const useGetFile = (id: string, accessToken?: string) =>
   useQuery<string>({
     queryKey: [DIARY_KEY, id],
     queryFn: () => getFile(id, accessToken),
-    staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
 export default useGetFile;
