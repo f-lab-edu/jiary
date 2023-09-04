@@ -18,14 +18,14 @@ export async function POST(
   switch (body.type) {
     case 'GET_TOKEN': {
       const { tokens } = await oauth2Client.getToken(body.code);
-
+      console.log('access_token@@@@', tokens.access_token);
       oauth2Client.setCredentials(tokens);
       writeFile(checkSameToken(tokens));
 
       setCookie(res, 'Authorization', tokens.access_token, {
         httpOnly: true,
         // sameSite: process.env.NEXT_PUBLIC_MODE !== 'development',
-        domain: process.env.NEXT_PUBLIC_DOMAIN_URI,
+        // domain: process.env.NEXT_PUBLIC_DOMAIN_URI,
         path: '/',
         maxAge: 60 * 60 * 24 * 20, // 20일
       });
