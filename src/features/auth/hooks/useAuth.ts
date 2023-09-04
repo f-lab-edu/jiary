@@ -44,13 +44,14 @@ export const useAuth = () => {
     console.log('popWindowRef', popWindowRef.current);
 
     popWindowRef.current?.close();
+    console.log('route@');
+    router.push('/diary');
     window.removeEventListener(
       'message',
       e => messageCallback(e, popWindowRef.current),
       false,
     );
     console.log('!! test!');
-    router.push('/diary');
   }, [accessToken, userInfo, dispatch]);
 
   return { messageCallback };
