@@ -3,7 +3,7 @@ import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
 import useGetAccessToken from '@/features/auth/apis/queries/useGetAccessToken.ts';
 import useGetUserInfo from '@/features/auth/apis/queries/useGetUserInfo.ts';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { JIARY_DOMAIN } from '@/constants/domain.ts';
 import { useEffect, useRef, useState } from 'react';
 
@@ -14,7 +14,7 @@ export const useAuth = () => {
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
 
   const dispatch = useDispatch();
-  const router = useRouter();
+  // const router = useRouter();
 
   const messageCallback = (event: MessageEvent, popupWindow: Window | null) => {
     if (event.origin !== JIARY_DOMAIN) {
@@ -44,14 +44,15 @@ export const useAuth = () => {
     console.log('popWindowRef', popWindowRef.current);
 
     popWindowRef.current?.close();
-    console.log('route@');
-    router.push('/diary');
     window.removeEventListener(
       'message',
       e => messageCallback(e, popWindowRef.current),
       false,
     );
     console.log('!! test!');
+    // router.push('/diary');
+    window.location.href = `${JIARY_DOMAIN}/diary`;
+    console.log('route@');
   }, [accessToken, userInfo, dispatch]);
 
   return { messageCallback };
