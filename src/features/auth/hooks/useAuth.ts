@@ -45,6 +45,7 @@ export const useAuth = () => {
       e => messageCallback(e, popWindowRef.current),
       false,
     );
+    console.log('!! test!');
     router.push('/diary');
   }, [accessToken, userInfo, dispatch, router]);
 
