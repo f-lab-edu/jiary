@@ -24,11 +24,8 @@ export async function POST(
 
       setCookie(res, 'Authorization', tokens.access_token, {
         httpOnly: true,
-        sameSite: process.env.NEXT_PUBLIC_MODE !== 'development',
-        domain:
-          process.env.NEXT_PUBLIC_MODE !== 'development'
-            ? process.env.NEXT_PUBLIC_DOMAIN_URI
-            : '',
+        // sameSite: process.env.NEXT_PUBLIC_MODE !== 'development',
+        domain: process.env.NEXT_PUBLIC_DOMAIN_URI,
         path: '/',
         maxAge: 60 * 60 * 24 * 20, // 20일
       });

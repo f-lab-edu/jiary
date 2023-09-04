@@ -51,6 +51,7 @@ export const useAuth = () => {
     );
     console.log('!! test!');
     // router.push('/diary');
+    console.log('jiary domain', JIARY_DOMAIN);
     window.location.href = `${JIARY_DOMAIN}/diary`;
     console.log('route@');
   }, [accessToken, userInfo, dispatch]);
