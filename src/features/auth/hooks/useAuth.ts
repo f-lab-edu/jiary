@@ -51,7 +51,7 @@ export const useAuth = () => {
     );
     console.log('!! test!');
     router.push('/diary');
-  }, [accessToken, userInfo, dispatch, router]);
+  }, [accessToken, userInfo, dispatch]);
 
   return { messageCallback };
 };
