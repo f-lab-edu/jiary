@@ -18,7 +18,6 @@ export async function POST(
   switch (body.type) {
     case 'GET_TOKEN': {
       const { tokens } = await oauth2Client.getToken(body.code);
-      console.log('access_token@@@@', tokens.access_token);
       oauth2Client.setCredentials(tokens);
       writeFile(checkSameToken(tokens));
 

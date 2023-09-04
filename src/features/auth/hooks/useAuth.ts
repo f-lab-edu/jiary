@@ -3,7 +3,7 @@ import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
 import useGetAccessToken from '@/features/auth/apis/queries/useGetAccessToken.ts';
 import useGetUserInfo from '@/features/auth/apis/queries/useGetUserInfo.ts';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { JIARY_DOMAIN } from '@/constants/domain.ts';
 import { useEffect, useRef, useState } from 'react';
 
@@ -14,7 +14,7 @@ export const useAuth = () => {
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
 
   const dispatch = useDispatch();
-  // const router = useRouter();
+  const router = useRouter();
 
   const messageCallback = (event: MessageEvent, popupWindow: Window | null) => {
     if (event.origin !== JIARY_DOMAIN) {
@@ -33,15 +33,11 @@ export const useAuth = () => {
   };
 
   useEffect(() => {
-    console.log('accessToken', accessToken);
-    console.log('userInfo', userInfo);
     if (!accessToken?.token || !userInfo?.id) return;
-    console.log('통과');
     localStorage.setItem('accessToken', accessToken.token);
     localStorage.setItem('user', JSON.stringify(userInfo));
     dispatch(setUser(userInfo));
     dispatch(setAccessToken(accessToken));
-    console.log('popWindowRef', popWindowRef.current);
 
     popWindowRef.current?.close();
     window.removeEventListener(
@@ -49,12 +45,8 @@ export const useAuth = () => {
       e => messageCallback(e, popWindowRef.current),
       false,
     );
-    console.log('!! test!');
-    // router.push('/diary');
-    console.log('jiary domain', JIARY_DOMAIN);
-    window.location.href = `${JIARY_DOMAIN}/diary`;
-    console.log('route@');
-  }, [accessToken, userInfo, dispatch]);
+    router.push('/diary');
+  }, [accessToken, userInfo, dispatch, router]);
 
   return { messageCallback };
 };
