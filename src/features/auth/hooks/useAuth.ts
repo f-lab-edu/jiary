@@ -33,11 +33,15 @@ export const useAuth = () => {
   };
 
   useEffect(() => {
+    console.log('accessToken', accessToken);
+    console.log('userInfo', userInfo);
     if (!accessToken?.token || !userInfo?.id) return;
+    console.log('통과');
     localStorage.setItem('accessToken', accessToken.token);
     localStorage.setItem('user', JSON.stringify(userInfo));
     dispatch(setUser(userInfo));
     dispatch(setAccessToken(accessToken));
+    console.log('popWindowRef', popWindowRef.current);
 
     popWindowRef.current?.close();
     window.removeEventListener(
