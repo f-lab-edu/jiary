@@ -1,5 +1,5 @@
-import store from '@/store/store.ts';
 import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
+import store from '@/store/store.ts';
 
 export default function bootApp() {
   const accessToken = localStorage.getItem('accessToken');

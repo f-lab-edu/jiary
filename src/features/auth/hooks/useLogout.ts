@@ -1,8 +1,10 @@
-import { useDispatch } from 'react-redux';
-import { removeAccessToken, removeUser } from '@/store/slices/authSlice.ts';
-import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+
 import useLogoutMutation from '@/features/auth/apis/mutations/useLogoutMutation.ts';
+
+import { removeAccessToken, removeUser } from '@/store/slices/authSlice.ts';
 
 export const useLogout = () => {
   const logoutMutation = useLogoutMutation();

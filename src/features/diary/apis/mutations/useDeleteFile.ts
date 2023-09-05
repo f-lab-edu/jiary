@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+
+import { DIARY_KEY } from '@/constants/queryKey.ts';
 import { deleteFile } from '@/features/diary/apis/index.ts';
 import { DriveFile, File } from '@/features/diary/apis/interfaces.ts';
-import { AxiosError } from 'axios';
-import { DIARY_KEY } from '@/constants/queryKey.ts';
 
 const useDeleteFile = () => {
   const queryClient = useQueryClient();

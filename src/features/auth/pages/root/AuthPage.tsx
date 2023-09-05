@@ -1,7 +1,9 @@
-import Image from 'next/image';
-import LoginSection from '@/features/auth/components/LoginSection/LoginSection.tsx';
-import * as style from '@/features/auth/pages/root/AuthPage.css.ts';
 import Head from 'next/head';
+import Image from 'next/image';
+
+import LoginSection from '@/features/auth/components/LoginSection/LoginSection.tsx';
+
+import * as style from '@/features/auth/pages/root/AuthPage.css.ts';
 
 export default function AuthPage() {
   return (

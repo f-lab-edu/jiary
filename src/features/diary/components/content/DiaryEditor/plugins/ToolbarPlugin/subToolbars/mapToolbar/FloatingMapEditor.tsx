@@ -1,7 +1,5 @@
-import { mergeRegister } from '@lexical/utils';
-import { attachPositionElement } from '@/core/utils/uiUtils.ts';
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { mergeRegister } from '@lexical/utils';
 import {
   $getSelection,
   $isRangeSelection,
@@ -10,7 +8,12 @@ import {
   SELECTION_CHANGE_COMMAND,
   TextNode,
 } from 'lexical';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+
 import FloatInput from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/FloatInput.tsx';
+
+import { attachPositionElement } from '@/core/utils/uiUtils.ts';
+
 import * as style from '@/features/diary/components/content/DiaryEditor/DiaryEditor.css.ts';
 
 type Props = {

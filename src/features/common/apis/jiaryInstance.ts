@@ -1,10 +1,11 @@
 import axios from 'axios';
+
+import { JIARY_DOMAIN } from '@/constants/domain.ts';
 import {
   onErrorResponse,
   onRequest,
   onResponse,
 } from '@/features/common/apis/config/interceptors.ts';
-import { JIARY_DOMAIN } from '@/constants/domain.ts';
 
 const jiaryApi = axios.create({
   baseURL: `${JIARY_DOMAIN}/api/auth`,

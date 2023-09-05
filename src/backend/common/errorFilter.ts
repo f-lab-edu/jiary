@@ -1,6 +1,7 @@
-import { Hanlder } from '@/backend/common/interfaces.ts';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { HTTP_METHODS } from 'next/dist/server/web/http';
+
+import { Hanlder } from '@/backend/common/interfaces.ts';
 
 export default function errorFilter(handler: Hanlder) {
   return async (req: NextApiRequest, res: NextApiResponse) => {

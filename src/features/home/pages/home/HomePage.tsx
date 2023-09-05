@@ -1,10 +1,11 @@
-import * as style from '@/features/home/pages/home/HomePage.css.ts';
 import Head from 'next/head';
 import Image from 'next/image';
-import MapIcon from 'public/icons/map.svg';
+import Link from 'next/link';
 import CloudIcon from 'public/icons/cloud.svg';
 import LockIcon from 'public/icons/lock2.svg';
-import Link from 'next/link';
+import MapIcon from 'public/icons/map.svg';
+
+import * as style from '@/features/home/pages/home/HomePage.css.ts';
 
 export default function Home() {
   return (

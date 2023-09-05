@@ -1,11 +1,13 @@
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
+
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
+import { JIARY_DOMAIN } from '@/constants/domain.ts';
 import useGetAccessToken from '@/features/auth/apis/queries/useGetAccessToken.ts';
 import useGetUserInfo from '@/features/auth/apis/queries/useGetUserInfo.ts';
-import { useRouter } from 'next/router';
-import { JIARY_DOMAIN } from '@/constants/domain.ts';
-import { useEffect, useRef, useState } from 'react';
+
+import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
 
 export const useAuth = () => {
   const [code, setCode] = useState('');

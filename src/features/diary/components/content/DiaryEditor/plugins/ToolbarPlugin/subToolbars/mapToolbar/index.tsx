@@ -1,7 +1,8 @@
+import { ElementNode, RangeSelection, TextNode } from 'lexical';
 import { useRef } from 'react';
 import { createPortal } from 'react-dom';
+
 import FloatingMapEditor from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/mapToolbar/FloatingMapEditor.tsx';
-import { ElementNode, RangeSelection, TextNode } from 'lexical';
 
 type Props = {
   isMap: boolean;

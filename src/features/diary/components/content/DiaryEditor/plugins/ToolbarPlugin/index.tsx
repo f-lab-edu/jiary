@@ -1,29 +1,30 @@
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  CAN_REDO_COMMAND,
-  CAN_UNDO_COMMAND,
-  SELECTION_CHANGE_COMMAND,
-  $getSelection,
-  $isRangeSelection,
-  RangeSelection,
-} from 'lexical';
 import { $isCodeNode } from '@lexical/code';
 import { $isLinkNode } from '@lexical/link';
+import { $isListNode, ListNode } from '@lexical/list';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $isHeadingNode } from '@lexical/rich-text';
 import { $isAtNodeEnd } from '@lexical/selection';
 import { $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
-import { $isListNode, ListNode } from '@lexical/list';
-import { $isHeadingNode } from '@lexical/rich-text';
+import {
+  $getSelection,
+  $isRangeSelection,
+  CAN_REDO_COMMAND,
+  CAN_UNDO_COMMAND,
+  RangeSelection,
+  SELECTION_CHANGE_COMMAND,
+} from 'lexical';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 import {
   BlockToolbar,
   BoldToolbar,
   DirectionToolbar,
   ItalicToolbar,
   LinkToolbar,
+  MapToolbar,
   StrikethroughToolbar,
   UnderlineToolbar,
   UndoToolbar,
-  MapToolbar,
 } from '@/features/diary/components/content/DiaryEditor/plugins/ToolbarPlugin/subToolbars/index.ts';
 
 const LOW_PRIORITY = 1;

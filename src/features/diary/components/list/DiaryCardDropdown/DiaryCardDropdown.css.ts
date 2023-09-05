@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+
 import { COLORS } from '@/constants/colors.ts';
 
 export const deleteButton = style({

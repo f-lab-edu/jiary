@@ -1,9 +1,12 @@
-import { useSelector } from 'react-redux';
-import * as style from '@/features/common/components/profile/UserProfile.css.ts';
 import Image from 'next/image';
-import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
+import { useSelector } from 'react-redux';
+
 import { useLogout } from '@/features/auth/hooks/useLogout.ts';
+import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
+
 import { RootState } from '@/store/store.ts';
+
+import * as style from '@/features/common/components/profile/UserProfile.css.ts';
 
 export default function UserProfile() {
   const user = useSelector((state: RootState) => state.auth.user);

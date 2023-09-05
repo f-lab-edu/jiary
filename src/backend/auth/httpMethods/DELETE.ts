@@ -1,7 +1,8 @@
-import { setCookie } from '@/backend/utils/cookieUtils.ts';
-import { readJSONFile, writeFile } from '@/backend/utils/fileUtils.ts';
 import { AxiosError } from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import { setCookie } from '@/backend/utils/cookieUtils.ts';
+import { readJSONFile, writeFile } from '@/backend/utils/fileUtils.ts';
 
 export function DELETE(
   req: NextApiRequest,

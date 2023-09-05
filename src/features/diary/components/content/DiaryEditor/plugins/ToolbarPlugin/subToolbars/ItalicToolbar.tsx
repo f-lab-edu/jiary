@@ -1,5 +1,5 @@
-import { FORMAT_TEXT_COMMAND } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { FORMAT_TEXT_COMMAND } from 'lexical';
 
 type Props = {
   isItalic: boolean;

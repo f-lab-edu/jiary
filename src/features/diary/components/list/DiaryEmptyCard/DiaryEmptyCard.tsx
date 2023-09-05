@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import * as style from '@/features/diary/components/list/DiaryEmptyCard/DiaryEmptyCard.css.ts';
 
 export default function DiaryEmptyCard() {

@@ -1,5 +1,6 @@
-import { COLORS } from '@/constants/colors.ts';
 import { globalStyle, style } from '@vanilla-extract/css';
+
+import { COLORS } from '@/constants/colors.ts';
 
 export const container = style({
   display: 'flex',

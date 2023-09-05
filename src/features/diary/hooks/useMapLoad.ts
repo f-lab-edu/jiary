@@ -1,3 +1,4 @@
+import { Loader } from '@googlemaps/js-api-loader';
 import {
   MutableRefObject,
   RefObject,
@@ -6,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Loader } from '@googlemaps/js-api-loader';
+
 import { DEFAULT_POTISION, ZOOM } from '@/constants/map.ts';
 
 type HookType = (mapRef: RefObject<HTMLDivElement>) => {

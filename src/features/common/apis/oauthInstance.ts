@@ -1,9 +1,10 @@
 import axios from 'axios';
+
+import { OAUTH_DOMAIN } from '@/constants/domain.ts';
 import {
   onErrorResponse,
   onResponse,
 } from '@/features/common/apis/config/interceptors.ts';
-import { OAUTH_DOMAIN } from '@/constants/domain.ts';
 
 const oauthApi = axios.create({
   baseURL: OAUTH_DOMAIN,

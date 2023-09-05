@@ -1,10 +1,11 @@
 import axios from 'axios';
+
+import { DRIVE_DOMAIN } from '@/constants/domain.ts';
 import {
   onErrorResponse,
   onRequest,
   onResponse,
 } from '@/features/common/apis/config/interceptors.ts';
-import { DRIVE_DOMAIN } from '@/constants/domain.ts';
 
 export const driveApi = axios.create({
   baseURL: DRIVE_DOMAIN,

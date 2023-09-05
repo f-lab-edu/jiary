@@ -1,16 +1,16 @@
 import {
-  $getSelection,
-  $isRangeSelection,
-  $createParagraphNode,
-} from 'lexical';
-import { $wrapNodes } from '@lexical/selection';
-import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
-import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
 } from '@lexical/list';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
+import { $wrapNodes } from '@lexical/selection';
+import {
+  $createParagraphNode,
+  $getSelection,
+  $isRangeSelection,
+} from 'lexical';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 

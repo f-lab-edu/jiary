@@ -1,10 +1,11 @@
 import axios from 'axios';
+
+import { DRIVE_UPLOAD_DOMAIN } from '@/constants/domain.ts';
 import {
   onErrorResponse,
   onRequest,
   onResponse,
 } from '@/features/common/apis/config/interceptors.ts';
-import { DRIVE_UPLOAD_DOMAIN } from '@/constants/domain.ts';
 
 export const driveUploadApi = axios.create({
   baseURL: DRIVE_UPLOAD_DOMAIN,
