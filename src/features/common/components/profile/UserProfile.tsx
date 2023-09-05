@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../store/store.ts';
 import * as style from '@/features/common/components/profile/UserProfile.css.ts';
 import Image from 'next/image';
 import Dropdown from '@/features/common/components/dropdown/Dropdown.tsx';
 import { useLogout } from '@/features/auth/hooks/useLogout.ts';
+import { RootState } from '@/store/store.ts';
 
 export default function UserProfile() {
   const user = useSelector((state: RootState) => state.auth.user);
