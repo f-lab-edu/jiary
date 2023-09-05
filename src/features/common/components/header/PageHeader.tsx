@@ -33,7 +33,7 @@ export default function PageHeader() {
           <div className={style.sideDiv}>
             <li className={style.li}>
               <Link
-                href="https://github.com/f-lab-edu/jiary"
+                href="https://github.com/pozafly/jiary"
                 target="_blank"
                 className={style.a}
               >

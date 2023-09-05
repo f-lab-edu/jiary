@@ -1,12 +1,13 @@
+import { COLORS } from '@/constants/colors.ts';
 import { style } from '@vanilla-extract/css';
 
 export const container = style({
   position: 'relative',
-  width: 400,
-  height: 540,
+  width: 420,
+  height: 600,
   backgroundColor: 'rgba(255, 255, 255, 0.97)',
-  boxShadow: '18px 40px 30px hsl(218deg 53% 10% / 73%)',
-  borderRadius: 15,
+  boxShadow: '18px 40px 30px rgba(0, 0, 0, 0.3)',
+  borderRadius: 20,
   marginBottom: 20,
   padding: '30px 50px',
   lineHeight: 1.5,
@@ -20,8 +21,8 @@ export const logo = style({
 });
 
 export const ul = style({
-  fontSize: '18px',
-  marginBottom: 20,
+  fontSize: 18,
+  marginBottom: 44,
 });
 
 export const li = style({
@@ -29,8 +30,23 @@ export const li = style({
   marginLeft: 10,
 });
 
+export const subText = style({
+  marginBottom: 10,
+  wordBreak: 'keep-all',
+});
+
+export const description = style({
+  color: COLORS.THIRD_TEXT_COLOR,
+  fontSize: 14,
+});
+
 export const emphasis = style({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
   fontWeight: 700,
+  marginBottom: 40,
 });
 
 export const buttonWrapper = style({

@@ -44,8 +44,7 @@ export const a = style({
   color: '#fff',
   transition: '0.15s ease',
   opacity: 1,
-  height: 22,
-  lineHeight: '24px',
+  height: 24,
   selectors: {
     [`${li}:hover &`]: {
       opacity: 0.5,
