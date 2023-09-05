@@ -20,8 +20,8 @@ export default function LoginSection() {
 
       <ul className={style.ul}>
         <p className={style.emphasis}>
-          Jiary 서비스를 사용하기 위해서 Google Login이 <br />
-          필요합니다.
+          <span>Jiary 서비스를 사용하기 위해서</span>
+          <span>Google Login이 필요합니다.</span>
         </p>
         <br />
         <p>아래와 같은 권한이 필요합니다.</p>
@@ -34,9 +34,13 @@ export default function LoginSection() {
         </li>
       </ul>
 
-      <p className={style.ul}>
-        동의하시면 아래의 Google Login 버튼을
-        <br /> 클릭해서 로그인 해주세요.
+      <p className={`${style.subText} ${style.description}`}>
+        Jiary 서비스는 사용자의 정보를 수집하지 않습니다. 모든 정보는 로그인한
+        계정의 Google Drive 저장소를 사용합니다.
+      </p>
+
+      <p className={`${style.ul} ${style.description}`}>
+        동의하시면 아래의 Google Login 버튼을 클릭해서 로그인 해주세요.
       </p>
 
       <div className={style.buttonWrapper}>
