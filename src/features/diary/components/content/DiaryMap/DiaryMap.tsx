@@ -1,4 +1,4 @@
-import * as style from '@/features/diary/components/content/DiaryMap/DiaryMap.css';
+import * as style from '@/features/diary/components/content/DiaryMap/DiaryMap.css.ts';
 import { MutableRefObject } from 'react';
 
 type Props = {

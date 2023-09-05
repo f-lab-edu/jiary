@@ -6,7 +6,9 @@
     "plugin:@typescript-eslint/recommended",
     "eslint-config-prettier"
   ],
+  "plugins": ["import"],
   "rules": {
+    "import/extensions": ["error", "ignorePackages"],
     "no-else-return": "error",
     "no-console": "warn",
     "@typescript-eslint/no-empty-function": "off",
