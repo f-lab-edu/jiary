@@ -5,7 +5,7 @@ import { COLORS } from '@/constants/colors.ts';
 export const container = style({
   position: 'relative',
   width: 420,
-  height: 600,
+  height: 660,
   backgroundColor: 'rgba(255, 255, 255, 0.97)',
   boxShadow: '18px 40px 30px rgba(0, 0, 0, 0.3)',
   borderRadius: 20,
@@ -82,4 +82,19 @@ export const googleLogo = style({
   backgroundSize: 'contain',
   marginRight: 10,
   verticalAlign: 'middle',
+});
+
+export const links = style({
+  display: 'flex',
+  justifyContent: 'center',
+  gap: 12,
+});
+
+export const subLink = style({
+  color: COLORS.BLUE_COLOR,
+  fontSize: 14,
+  padding: 10,
+  ':hover': {
+    textDecoration: 'underline',
+  },
 });
