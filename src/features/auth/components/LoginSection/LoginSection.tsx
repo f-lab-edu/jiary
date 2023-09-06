@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import useGetAuthCode from '@/features/auth/apis/queries/useGetAuthCode.ts';
 import { useLoginPopup } from '@/features/auth/hooks/useLoginPopup.ts';
@@ -44,6 +45,15 @@ export default function LoginSection() {
       <p className={`${style.ul} ${style.description}`}>
         동의하시면 아래의 Google Login 버튼을 클릭해서 로그인 해주세요.
       </p>
+
+      <div className={style.links}>
+        <Link href="/auth/privacy" className={style.subLink}>
+          privacy
+        </Link>
+        <Link href="/auth/agreement" className={style.subLink}>
+          agreement
+        </Link>
+      </div>
 
       <div className={style.buttonWrapper}>
         <button
