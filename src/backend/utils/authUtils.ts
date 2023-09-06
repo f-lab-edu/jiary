@@ -1,4 +1,5 @@
 import { google } from 'googleapis';
+
 import { GOOGLE_INFO } from '@/backend/constants/google.ts';
 
 export const oauth2Client = new google.auth.OAuth2(

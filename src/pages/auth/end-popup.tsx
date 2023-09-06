@@ -1,4 +1,5 @@
 import { ReactElement, useEffect } from 'react';
+
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
 import { JIARY_DOMAIN } from '@/constants/domain.ts';
 

@@ -1,7 +1,8 @@
 import localFont from 'next/font/local';
-import * as style from '@/features/home/pages/404/404Page.css.ts';
-import { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useCallback, useEffect } from 'react';
+
+import * as style from '@/features/home/pages/404/404Page.css.ts';
 
 const DOS_VGA = localFont({
   src: '../../../../../public/fonts/DOS-VGA-437-Win.ttf',

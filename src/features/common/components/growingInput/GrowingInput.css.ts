@@ -1,4 +1,5 @@
 import { createVar, style } from '@vanilla-extract/css';
+
 import { COLORS } from '@/constants/colors.ts';
 
 export const fontWeight = createVar();

@@ -1,5 +1,6 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useEffect, useState } from 'react';
+
 import * as style from '@/features/diary/components/content/DiaryEditor/plugins/EditablePlugin.css.ts';
 
 type Props = {

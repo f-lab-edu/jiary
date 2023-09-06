@@ -1,6 +1,8 @@
-import * as style from '@/features/common/components/dropdown/Dropdown.css.ts';
 import { MouseEvent, MouseEventHandler, ReactNode, useContext } from 'react';
+
 import DropdownContext from '@/features/common/components/dropdown/contexts/DropdownContext.ts';
+
+import * as style from '@/features/common/components/dropdown/Dropdown.css.ts';
 
 type Props = {
   children?: ReactNode;

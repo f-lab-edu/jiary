@@ -1,8 +1,8 @@
 import {
+  BodyScrollOptions,
+  clearAllBodyScrollLocks,
   disableBodyScroll,
   enableBodyScroll,
-  clearAllBodyScrollLocks,
-  BodyScrollOptions,
 } from 'body-scroll-lock';
 
 export const disableScroll = (

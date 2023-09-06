@@ -4,11 +4,13 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-import { getAccessTokenByRefreshToken } from '@/features/auth/apis/index.ts';
-import store from '@/store/store.ts';
-import { setAccessToken } from '@/store/slices/authSlice.ts';
-import { isSSR } from '@/core/utils/objectUtils.ts';
+
 import { JIARY_DOMAIN } from '@/constants/domain.ts';
+import { getAccessTokenByRefreshToken } from '@/features/auth/apis/index.ts';
+
+import { isSSR } from '@/core/utils/objectUtils.ts';
+import { setAccessToken } from '@/store/slices/authSlice.ts';
+import store from '@/store/store.ts';
 
 type ChangeConfigNewToken = (
   config: AxiosRequestConfig,

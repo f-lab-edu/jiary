@@ -1,10 +1,13 @@
-import { KeyboardEvent, useRef, useState } from 'react';
-import * as style from '@/features/common/components/growingInput/GrowingInput.css.ts';
-import { useClickOutSide } from '@/features/common/hooks/useClickOutSide.ts';
-import Image from 'next/image';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
+import Image from 'next/image';
+import { KeyboardEvent, useRef, useState } from 'react';
+
 import { COLORS } from '@/constants/colors.ts';
+import { useClickOutSide } from '@/features/common/hooks/useClickOutSide.ts';
+
 import { focusContentEditableTextToEnd } from '@/core/utils/uiUtils.ts';
+
+import * as style from '@/features/common/components/growingInput/GrowingInput.css.ts';
 
 type Props = {
   title: string | undefined;

@@ -1,19 +1,19 @@
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { mergeRegister } from '@lexical/utils';
+import {
+  $getSelection,
+  $isRangeSelection,
+  ElementNode,
+  GridSelection,
+  NodeSelection,
+  RangeSelection,
+  SELECTION_CHANGE_COMMAND,
+  TextNode,
+} from 'lexical';
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
-import {
-  SELECTION_CHANGE_COMMAND,
-  $getSelection,
-  $isRangeSelection,
-  RangeSelection,
-  NodeSelection,
-  GridSelection,
-  TextNode,
-  ElementNode,
-} from 'lexical';
-import { mergeRegister } from '@lexical/utils';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { attachPositionElement } from '@/core/utils/uiUtils.ts';
 
 type FloatingLinkProps = {

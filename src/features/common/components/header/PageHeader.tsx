@@ -1,9 +1,12 @@
 import Image from 'next/image';
-import UserProfile from '@/features/common/components/profile/UserProfile.tsx';
-import * as style from '@/features/common/components/header/PageHeader.css.ts';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
+
+import UserProfile from '@/features/common/components/profile/UserProfile.tsx';
+
 import { isLoggedInSelector } from '@/store/slices/authSlice.ts';
+
+import * as style from '@/features/common/components/header/PageHeader.css.ts';
 
 export default function PageHeader() {
   const isLoggedIn = useSelector(isLoggedInSelector);

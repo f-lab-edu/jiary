@@ -1,9 +1,10 @@
-import MapContext from '@/features/diary/contexts/MapContext.ts';
-import { useMapAutocomplete } from '@/features/diary/hooks/useMapAutocomplete.ts';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createParagraphNode, $getRoot, ElementNode, TextNode } from 'lexical';
 import { useContext, useEffect, useState } from 'react';
+
 import { $createMapInfoNode } from '@/features/diary/components/content/DiaryEditor/customNodes/MapInfoNode.ts';
+import MapContext from '@/features/diary/contexts/MapContext.ts';
+import { useMapAutocomplete } from '@/features/diary/hooks/useMapAutocomplete.ts';
 
 type FlotInputProps = {
   isEditMode: boolean;

@@ -1,5 +1,7 @@
 import fs from 'fs';
+
 import jwtDecode from 'jwt-decode';
+
 import { Credentials, JSONFile } from '@/backend/auth/interfaces.ts';
 
 const tokenFilePath = process.env.JSON_TOKEN_FILE_NAME as string;

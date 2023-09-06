@@ -1,5 +1,6 @@
-import { COLORS } from '@/constants/colors.ts';
 import { style } from '@vanilla-extract/css';
+
+import { COLORS } from '@/constants/colors.ts';
 
 export const userImage = style({
   borderRadius: '50%',

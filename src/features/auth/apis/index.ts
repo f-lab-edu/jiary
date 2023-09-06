@@ -1,10 +1,10 @@
+import { REQUEST_BODY_TYPE } from '@/constants/auth.ts';
 import {
   AuthToken,
+  GoogleLoginUrl,
   LogoutResponse,
   UserInfo,
-  GoogleLoginUrl,
 } from '@/features/auth/apis/interfaces.ts';
-import { REQUEST_BODY_TYPE } from '@/constants/auth.ts';
 import jiaryApi from '@/features/common/apis/jiaryInstance.ts';
 import oauthApi from '@/features/common/apis/oauthInstance.ts';
 

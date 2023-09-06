@@ -1,10 +1,12 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { File } from '@/features/diary/apis/interfaces.ts';
-import * as style from '@/features/diary/components/list/DiaryCard/DiaryCard.css.ts';
-import DiaryCardDropdown from '@/features/diary/components/list/DiaryCardDropdown/DiaryCardDropdown.tsx';
-import { MouseEvent } from 'react';
 import { format } from 'date-fns';
+import Image from 'next/image';
+import Link from 'next/link';
+import { MouseEvent } from 'react';
+
+import { File } from '@/features/diary/apis/interfaces.ts';
+import DiaryCardDropdown from '@/features/diary/components/list/DiaryCardDropdown/DiaryCardDropdown.tsx';
+
+import * as style from '@/features/diary/components/list/DiaryCard/DiaryCard.css.ts';
 
 export default function DiaryCard({ file }: { file: File }) {
   const title = file.name.includes('jiary-') ? file.name.slice(6) : file.name;

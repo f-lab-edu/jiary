@@ -1,3 +1,6 @@
+import { AxiosError } from 'axios';
+import { NextApiRequest, NextApiResponse } from 'next';
+
 import { GoogleUrl, JSONFile, Login } from '@/backend/auth/interfaces.ts';
 import { oauth2Client } from '@/backend/utils/authUtils.ts';
 import { setCookie } from '@/backend/utils/cookieUtils.ts';
@@ -6,8 +9,6 @@ import {
   readJSONFile,
   writeFile,
 } from '@/backend/utils/fileUtils.ts';
-import { AxiosError } from 'axios';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 export async function POST(
   req: NextApiRequest,

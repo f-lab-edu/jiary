@@ -1,7 +1,9 @@
 import Image from 'next/image';
-import * as style from '@/features/auth/components/LoginSection/LoginSection.css.ts';
+
 import useGetAuthCode from '@/features/auth/apis/queries/useGetAuthCode.ts';
 import { useLoginPopup } from '@/features/auth/hooks/useLoginPopup.ts';
+
+import * as style from '@/features/auth/components/LoginSection/LoginSection.css.ts';
 
 export default function LoginSection() {
   const { data } = useGetAuthCode();
