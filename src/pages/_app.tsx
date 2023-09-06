@@ -5,13 +5,12 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { NextPage } from 'next';
+import type { AppProps } from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
 import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import PageLayout from '@/features/common/components/PageLayout.tsx';
-
-import type { AppProps } from 'next/app';
 
 import bootApp from '@/core/config/boostApp.ts';
 import { isSSR } from '@/core/utils/objectUtils.ts';
