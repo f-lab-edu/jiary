@@ -28,7 +28,7 @@ export default function SubmitButton({
     <button
       onClick={handleClick}
       disabled={disabled}
-      className={className ? className : style.submitButton}
+      className={`${className ? className : style.submitButton} dropdown-item`}
     >
       {children}
     </button>

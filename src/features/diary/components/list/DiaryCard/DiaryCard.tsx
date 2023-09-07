@@ -14,7 +14,7 @@ export default function DiaryCard({ file }: { file: File }) {
 
   const handleLinkClick = (e: MouseEvent) => {
     const { className } = e.target as HTMLElement;
-    if (className.toLowerCase().includes('dropdown')) {
+    if (className.toLowerCase().includes('dropdown-item')) {
       e.preventDefault();
     }
   };
