@@ -1,5 +1,5 @@
 <div align=center>
-<img width="200" alt="logo" src="https://github.com/pozafly/jiary/assets/59427983/f0f3c404-f85b-416e-8134-1953054d3cda">
+<img width="200" alt="logo" src="https://raw.githubusercontent.com/pozafly/jiary/docs/readme/public/readme/jiary-logo.png">
 <br />
 <br />
 <br />
@@ -12,35 +12,45 @@ https://jiary.vercel.app
 <br />
 <br />
 
-## 디렉토리 구조
-```
-src
- ┣ backend // API Routes 모듈화
- ┃ ┣ auth
- ┃ ┃ ┗ httpMethods // http 메서드 별 함수
- ┃ ┃   ┣ GET.ts
- ┃ ┃   ┣ POST.ts
- ┃ ┃   ┗ DELETE.ts
- ┃ ┣ common
- ┃ ┣ constants
- ┃ ┗ utils
- ┣ constants // 상수 관리
- ┣ core
- ┃ ┣ config // 앱 부팅시 세팅
- ┃ ┗ utils
- ┣ feature // 도메인 별
- ┃ ┗ [도메인]
- ┃   ┣ apis
- ┃   ┃ ┣ mutations
- ┃   ┃ ┣ queries
- ┃   ┃ ┣ index.ts // axios instance
- ┃   ┃ ┗ interaces.ts
- ┃   ┣ components
- ┃   ┣ contexts
- ┃   ┣ hooks
- ┃   ┗ pages // Next.js의 pages 폴더 내부 파일의 re-export 대상
- ┣ lib
- ┗ pages
-   ┣ api
-   ┗ [도메인] // feature/[도메인]/pages에서 관리
-```
+## Tech Stack
+
+<img alt="logo" src="https://raw.githubusercontent.com/pozafly/jiary/docs/readme/public/readme/teck-tack.png">
+
+## 프로젝트 이야기
+
+https://github.com/pozafly/jiary/wiki
+
+## 어플리케이션 소개
+
+### 📍 로그인
+
+Google OAuth APIs를 이용해 로그인할 수 있습니다. Google Map API를 사용하기 위해 인증을 위함입니다.
+
+<details>
+<summary>이미지</summary>
+ <div align=center>
+  <img alt="logo" width="600" src="https://raw.githubusercontent.com/pozafly/jiary/docs/readme/public/readme/login.gif">
+ </div>
+</details>
+
+### 📍 카드 만들기
+
+New 버튼을 클릭해 제목을 입력하면 다이어리를 생성할 수 있습니다.
+
+<details>
+<summary>이미지</summary>
+ <div align=center>
+  <img alt="logo" width="600" src="https://raw.githubusercontent.com/pozafly/jiary/docs/readme/public/readme/create-card.gif">
+ </div>
+</details>
+
+### 📍 다이어리 작성하기
+
+모든 문구는 자동으로 저장되며, 장소를 입력하면 Google Map에 마커가 표시됩니다.
+
+<details>
+<summary>이미지</summary>
+ <div align=center>
+  <img alt="logo" width="800" src="https://raw.githubusercontent.com/pozafly/jiary/docs/readme/public/readme/main.gif">
+ </div>
+</details>
