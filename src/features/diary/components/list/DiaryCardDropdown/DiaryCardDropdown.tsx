@@ -16,7 +16,7 @@ export default function DiaryCardDropdown({ id }: { id: string }) {
           width={30}
           height={30}
           alt="menu"
-          className={style.menuIcon}
+          className={`${style.menuIcon} dropdown-item`}
         />
       </Dropdown.Trigger>
       <Dropdown.List width="100px">
