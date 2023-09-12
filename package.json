@@ -9,6 +9,7 @@
     "bs": "next build && next start",
     "lint": "next lint --fix",
     "format": "prettier --write --cache .",
+    "lint-staged": "lint-staged",
     "prepare": "husky install"
   },
   "dependencies": {
