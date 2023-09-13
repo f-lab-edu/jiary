@@ -18,7 +18,12 @@ https://jiary.vercel.app
 
 ## 프로젝트 이야기
 
-https://github.com/pozafly/jiary/wiki
+- [1. 디렉토리 구조](https://github.com/pozafly/jiary/wiki/01.-%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
+- [2. 프로젝트 컨벤션 및 환경설정](https://github.com/pozafly/jiary/wiki/02.-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%BB%A8%EB%B2%A4%EC%85%98-%EB%B0%8F-%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95)
+- [3. CI·CD 환경 구성](https://github.com/pozafly/jiary/wiki/03.-CI%C2%B7CD-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%84%B1)
+- [4. OAuth](https://github.com/pozafly/jiary/wiki/04.-OAuth)
+- [5. Compound Component Pattern](https://github.com/pozafly/jiary/wiki/05.-Compound-Component-Pattern)
+- [6. Lexical Editor](https://github.com/pozafly/jiary/wiki/06.-Lexical-Editor)
 
 ## 어플리케이션 소개
 
