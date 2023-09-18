@@ -47,7 +47,7 @@ export default function DiaryContentPage({ diaryId }: Props) {
   return (
     <>
       <Head>
-        <title>{`${metaData?.name || ''} 다이어리 📔`}</title>
+        <title>{`${metaData?.name || ''} 다이어리 📔 - Jiary`}</title>
       </Head>
 
       <MapContext.Provider value={{ map, addMarker, removeMarker, saveDiary }}>

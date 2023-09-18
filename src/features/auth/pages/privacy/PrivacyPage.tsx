@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import * as style from '@/features/auth/pages/privacy/PrivacyPage.css.ts';
@@ -7,6 +8,10 @@ export default function PrivacyPage() {
 
   return (
     <>
+      <Head>
+        <title>개인 정보보호 방침</title>
+      </Head>
+
       <main className={`${style.container} privacy-container`}>
         <article className={style.article}>
           <header>

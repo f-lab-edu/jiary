@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>홈 입니다</title>
+        <title>Jiary</title>
       </Head>
       <div className={style.container}>
         <section className={style.titleSection}>

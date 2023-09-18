@@ -9,7 +9,7 @@ export default function AuthPage() {
   return (
     <>
       <Head>
-        <title>Jiary 로그인 페이지</title>
+        <title>로그인 페이지 - Jiary</title>
       </Head>
 
       <Image
