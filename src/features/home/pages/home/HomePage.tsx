@@ -12,7 +12,17 @@ export default function Home() {
     <>
       <Head>
         <title>Jiary</title>
+        <meta
+          name="description"
+          content="Jiary는 Journey와 Diary를 합쳐 만든 단어로, 여행용 다이어리라는 뜻을 가지고 있습니다."
+        />
+        <meta property="og:title" content="Jiary" />
+        <meta
+          property="og:description"
+          content="Jiary - 여행용 다이어리 웹 어플리케이션"
+        />
       </Head>
+
       <div className={style.container}>
         <section className={style.titleSection}>
           <h1 className={style.title}>

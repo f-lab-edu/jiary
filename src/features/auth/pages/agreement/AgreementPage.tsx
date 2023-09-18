@@ -10,6 +10,9 @@ export default function AgreementPage() {
     <>
       <Head>
         <title>이용약관 - Jiary</title>
+        <meta name="description" content="이용약관" />
+        <meta property="og:title" content="이용약관" />
+        <meta property="og:description" content="이용약관" />
       </Head>
       <main className={`${style.container} privacy-container`}>
         <article className={style.article}>

@@ -9,7 +9,10 @@ export default function PrivacyPage() {
   return (
     <>
       <Head>
-        <title>개인 정보보호 방침</title>
+        <title>개인 정보보호 방침 - Jiary</title>
+        <meta name="description" content="개인 정보보호 방침" />
+        <meta property="og:title" content="개인 정보보호 방침" />
+        <meta property="og:description" content="개인 정보보호 방침" />
       </Head>
 
       <main className={`${style.container} privacy-container`}>

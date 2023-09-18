@@ -15,6 +15,9 @@ export default function DiaryPage() {
     <>
       <Head>
         <title>다이어리 리스트 - Jiary</title>
+        <meta name="description" content="당신이 기록한 다이어리 목록" />
+        <meta property="og:title" content="다이어리 리스트 - Jiary" />
+        <meta property="og:description" content="당신의 여행 다이어리 리스트" />
       </Head>
 
       <div className={style.container}>

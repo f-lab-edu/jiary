@@ -22,6 +22,9 @@ export default function Page404() {
     <>
       <Head>
         <title>Not Found - Jiary</title>
+        <meta name="description" content="알 수 없는 페이지" />
+        <meta property="og:title" content="Not Found - Jiary" />
+        <meta property="og:description" content="Not Found Page" />
       </Head>
 
       <div className={DOS_VGA.className}>
