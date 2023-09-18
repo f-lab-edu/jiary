@@ -13,9 +13,9 @@ export default function PageHeader() {
 
   return (
     <header className={style.header}>
-      <nav className={style.nav}>
-        <ul className={style.ul}>
-          <div className={style.sideDiv}>
+      <div className={style.navContainer}>
+        <nav className={style.nav}>
+          <ul className={style.ul}>
             <li className="jiary-logo">
               <Link href="/" className={style.imageLogoWrapper}>
                 <Image
@@ -31,9 +31,9 @@ export default function PageHeader() {
                 Diary
               </Link>
             </li>
-          </div>
+          </ul>
 
-          <div className={style.sideDiv}>
+          <ul className={style.ul}>
             <li className={style.li}>
               <Link
                 href="https://github.com/pozafly/jiary"
@@ -60,9 +60,9 @@ export default function PageHeader() {
                 </Link>
               </li>
             )}
-          </div>
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 }

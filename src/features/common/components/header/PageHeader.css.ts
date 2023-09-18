@@ -12,11 +12,11 @@ export const header = style({
   background: '#1a1b1e',
 });
 
-export const nav = style({
+export const navContainer = style({
   height: '100%',
 });
 
-export const ul = style({
+export const nav = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -25,7 +25,7 @@ export const ul = style({
   margin: '0 auto',
 });
 
-export const sideDiv = style({
+export const ul = style({
   display: 'flex',
   alignItems: 'center',
   height: 35,
