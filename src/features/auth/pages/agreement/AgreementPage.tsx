@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import * as style from '@/features/auth/pages/agreement/AgreementPage.css.ts';
@@ -7,6 +8,12 @@ export default function AgreementPage() {
 
   return (
     <>
+      <Head>
+        <title>이용약관 - Jiary</title>
+        <meta name="description" content="이용약관" />
+        <meta property="og:title" content="이용약관" />
+        <meta property="og:description" content="이용약관" />
+      </Head>
       <main className={`${style.container} privacy-container`}>
         <article className={style.article}>
           <header>

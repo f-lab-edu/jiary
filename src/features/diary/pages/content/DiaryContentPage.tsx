@@ -47,7 +47,13 @@ export default function DiaryContentPage({ diaryId }: Props) {
   return (
     <>
       <Head>
-        <title>{`${metaData?.name || ''} 다이어리 📔`}</title>
+        <title>{`${metaData?.name || ''} 다이어리 📔 - Jiary`}</title>
+        <meta name="description" content="당신이 기록한 다이어리" />
+        <meta
+          property="og:title"
+          content={`${metaData?.name || ''} 다이어리 📔 - Jiary`}
+        />
+        <meta property="og:description" content="당신이 기록한 다이어리" />
       </Head>
 
       <MapContext.Provider value={{ map, addMarker, removeMarker, saveDiary }}>

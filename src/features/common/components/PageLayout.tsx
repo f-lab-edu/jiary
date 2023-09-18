@@ -1,4 +1,5 @@
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
+import Head from 'next/head';
 import { ReactNode } from 'react';
 
 import PageHeader from '@/features/common/components/header/PageHeader.tsx';
@@ -12,6 +13,19 @@ export default function PageLayout(props: { children: ReactNode }) {
 
   return (
     <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" type="image/png" />
+        <meta name="author" content="pozafly" />
+        <meta
+          name="keywords"
+          content="Jiary, diary, google map, web application"
+        />
+        <meta property="og:image" content="/home/main.png" />
+        <meta property="og:site_name" content="Jiary" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="ko_KR" />
+      </Head>
+
       <PageHeader />
       <div className={style.main}>{props.children}</div>
       {Boolean(isFetching || isMuatating) && <PageLoadingSpinner />}
