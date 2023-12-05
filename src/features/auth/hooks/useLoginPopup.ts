@@ -6,6 +6,7 @@ import { useAuth } from '@/features/auth/hooks/useAuth.ts';
 
 let popupWindow: Window | null = null;
 const openPopup = (url: string | undefined) => {
+  console.log(3);
   popupWindow = window.open(
     url,
     MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE,
@@ -16,6 +17,7 @@ const openPopup = (url: string | undefined) => {
 export const useLoginPopup = () => {
   const { messageCallback } = useAuth();
   const openLoginPopup = (url: string | undefined) => {
+    console.log(2);
     if (popupWindow === null || popupWindow.closed) {
       openPopup(url);
     } else if (window.location.href !== `${JIARY_DOMAIN}/auth`) {
@@ -28,6 +30,7 @@ export const useLoginPopup = () => {
   };
 
   useEffect(() => {
+    console.log(1);
     window.addEventListener('message', messageCallback);
     return () => window.removeEventListener('message', messageCallback);
   }, [messageCallback]);

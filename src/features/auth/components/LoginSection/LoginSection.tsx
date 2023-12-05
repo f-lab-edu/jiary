@@ -17,13 +17,14 @@ export default function LoginSection() {
   const isLoggedIn = useSelector(isLoggedInSelector);
   const router = useRouter();
 
+  console.log('LoginSection');
   useEffect(() => {
     console.log('isLoggedIn', isLoggedIn);
     if (isLoggedIn) {
       console.log('push!');
       router.push('/diary');
     }
-  }, [router, isLoggedIn]);
+  }, [isLoggedIn]);
 
   return (
     <div className={style.container}>

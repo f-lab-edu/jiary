@@ -9,13 +9,14 @@ import useGetUserInfo from '@/features/auth/apis/queries/useGetUserInfo.ts';
 import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
 
 export const useAuth = () => {
+  console.log(4);
   const [code, setCode] = useState('');
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
 
   const dispatch = useDispatch();
-
   const messageCallback = useCallback((event: MessageEvent) => {
+    console.log(6);
     if (event.origin !== JIARY_DOMAIN) {
       alert('로그인 오류입니다. 다시 로그인 해주세요.');
       // eslint-disable-next-line no-console
@@ -43,6 +44,7 @@ export const useAuth = () => {
   }, []);
 
   useEffect(() => {
+    console.log(7);
     if (!accessToken?.token || !userInfo?.id) return;
     localStorage.setItem('accessToken', accessToken.token);
     localStorage.setItem('user', JSON.stringify(userInfo));
