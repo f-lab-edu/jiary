@@ -55,7 +55,6 @@ export const useAuth = () => {
     dispatch(setAccessToken(accessToken));
 
     if (isLoggedIn) {
-      console.log('push!@!@!@!');
       router.push('/diary');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
