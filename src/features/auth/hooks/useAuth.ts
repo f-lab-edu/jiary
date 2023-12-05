@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
@@ -13,6 +13,7 @@ export const useAuth = () => {
   const [code, setCode] = useState('');
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
+  const doRoutePush = useRef(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -48,6 +49,7 @@ export const useAuth = () => {
     console.log('accessToken', accessToken);
     console.log('userInfo', userInfo);
     if (!accessToken?.token || !userInfo?.id) return;
+    if (doRoutePush.current) return;
     localStorage.setItem('accessToken', accessToken.token);
     localStorage.setItem('user', JSON.stringify(userInfo));
     dispatch(setUser(userInfo));
@@ -55,6 +57,7 @@ export const useAuth = () => {
 
     console.log('push 일어남!!');
     router.push('/diary');
+    doRoutePush.current = true;
   }, [accessToken, userInfo, dispatch, router]);
 
   return { messageCallback };
