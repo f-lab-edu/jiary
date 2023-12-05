@@ -59,7 +59,7 @@ export const useAuth = () => {
       console.log('push!@!@!@!');
       router.replace('/diary');
     }
-  }, [accessToken, userInfo, isLoggedIn]);
+  }, [accessToken, userInfo, isLoggedIn, router, dispatch]);
 
   useEffect(() => {
     if (accessToken?.token && userInfo?.id) {
