@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -15,12 +14,6 @@ export const useAuth = () => {
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
 
   const dispatch = useDispatch();
-  const router = useRouter();
-
-  if (accessToken?.token && userInfo?.id) {
-    console.log('push 일어남!!');
-    router.push('/diary');
-  }
 
   const messageCallback = useCallback((event: MessageEvent) => {
     if (event.origin !== JIARY_DOMAIN) {
@@ -59,4 +52,3 @@ export const useAuth = () => {
 
   return { messageCallback, accessToken, userInfo };
 };
-// eslint-disable-next-line react-hooks/exhaustive-deps
