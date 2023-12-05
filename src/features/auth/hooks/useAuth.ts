@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -12,6 +13,8 @@ export const useAuth = () => {
   const [code, setCode] = useState('');
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
+
+  const router = useRouter();
 
   const dispatch = useDispatch();
   const messageCallback = useCallback((event: MessageEvent) => {
@@ -47,6 +50,9 @@ export const useAuth = () => {
       localStorage.setItem('user', JSON.stringify(userInfo));
       dispatch(setUser(userInfo));
       dispatch(setAccessToken(accessToken));
+
+      console.log('push@');
+      router.push('/diary');
     }
   }, [accessToken, userInfo, dispatch]);
 

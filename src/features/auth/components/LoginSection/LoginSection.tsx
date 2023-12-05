@@ -1,25 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 
 import useGetAuthCode from '@/features/auth/apis/queries/useGetAuthCode.ts';
 import { useLoginPopup } from '@/features/auth/hooks/useLoginPopup.ts';
-
-import { isLoggedInSelector } from '@/store/slices/authSlice.ts';
 
 import * as style from '@/features/auth/components/LoginSection/LoginSection.css.ts';
 
 export default function LoginSection() {
   const { data } = useGetAuthCode();
   const { openLoginPopup } = useLoginPopup();
-
-  const router = useRouter();
-  const isLoggedIn = useSelector(isLoggedInSelector);
-  if (isLoggedIn) {
-    console.log('push!');
-    router.push('/diary');
-  }
 
   return (
     <div className={style.container}>
