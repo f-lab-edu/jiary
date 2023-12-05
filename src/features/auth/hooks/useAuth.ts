@@ -1,24 +1,17 @@
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
 import { JIARY_DOMAIN } from '@/constants/domain.ts';
 import useGetAccessToken from '@/features/auth/apis/queries/useGetAccessToken.ts';
 import useGetUserInfo from '@/features/auth/apis/queries/useGetUserInfo.ts';
 
-import {
-  isLoggedInSelector,
-  setAccessToken,
-  setUser,
-} from '@/store/slices/authSlice.ts';
+import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
 
 export const useAuth = () => {
   const [code, setCode] = useState('');
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
-  const router = useRouter();
-  const isLoggedIn = useSelector(isLoggedInSelector);
 
   const dispatch = useDispatch();
   const messageCallback = useCallback((event: MessageEvent) => {
@@ -48,23 +41,14 @@ export const useAuth = () => {
     setCode(code);
   }, []);
 
-  const saveLoginInfo = useCallback(() => {
-    localStorage.setItem('accessToken', accessToken?.token || '');
-    localStorage.setItem('user', JSON.stringify(userInfo));
-    dispatch(setUser(userInfo));
-    dispatch(setAccessToken(accessToken));
-
-    if (isLoggedIn) {
-      router.push('/diary');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, userInfo, isLoggedIn]);
-
   useEffect(() => {
     if (accessToken?.token && userInfo?.id) {
-      saveLoginInfo();
+      localStorage.setItem('accessToken', accessToken?.token || '');
+      localStorage.setItem('user', JSON.stringify(userInfo));
+      dispatch(setUser(userInfo));
+      dispatch(setAccessToken(accessToken));
     }
-  }, [saveLoginInfo, accessToken?.token, userInfo?.id]);
+  }, [accessToken, userInfo, dispatch]);
 
   return { messageCallback, accessToken, userInfo };
 };
