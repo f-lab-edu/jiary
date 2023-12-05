@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import useGetAuthCode from '@/features/auth/apis/queries/useGetAuthCode.ts';
@@ -17,15 +16,10 @@ export default function LoginSection() {
 
   const router = useRouter();
   const isLoggedIn = useSelector(isLoggedInSelector);
-
-  useEffect(() => {
-    console.log('isLoggedIn', isLoggedIn);
-    if (isLoggedIn) {
-      console.log('push!');
-      router.push('/diary');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
+  if (isLoggedIn) {
+    console.log('push!');
+    router.push('/diary');
+  }
 
   return (
     <div className={style.container}>
