@@ -57,7 +57,7 @@ export const useAuth = () => {
     console.log('isLoggedIn,', isLoggedIn);
     if (isLoggedIn) {
       console.log('push!@!@!@!');
-      router.replace('/diary');
+      router.push('/diary');
     }
   }, [accessToken, userInfo, isLoggedIn, router, dispatch]);
 
