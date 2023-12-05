@@ -12,6 +12,8 @@ export default function EndPopup() {
       },
       JIARY_DOMAIN,
     );
+
+    window.close();
   }, []);
 }
 

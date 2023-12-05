@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
@@ -11,28 +11,38 @@ import { setAccessToken, setUser } from '@/store/slices/authSlice.ts';
 
 export const useAuth = () => {
   const [code, setCode] = useState('');
-  const popWindowRef = useRef<Window | null>(null);
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
 
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const messageCallback = (event: MessageEvent, popupWindow: Window | null) => {
+  const messageCallback = useCallback((event: MessageEvent) => {
     if (event.origin !== JIARY_DOMAIN) {
+      alert('로그인 오류입니다. 다시 로그인 해주세요.');
       // eslint-disable-next-line no-console
       console.error('Cross-Origin Error');
       return;
     }
-    popWindowRef.current = popupWindow;
 
     const receiveData = event.data;
     if (receiveData.type !== MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE) {
+      alert('로그인 오류입니다. 다시 로그인 해주세요.');
+      // eslint-disable-next-line no-console
+      console.error('Post-Message Error');
       return;
     }
+
     const code = new URL(receiveData.params).searchParams.get('code');
-    setCode(code || '');
-  };
+    if (!code) {
+      alert('로그인 오류입니다. 다시 로그인 해주세요.');
+      // eslint-disable-next-line no-console
+      console.error('Post-Message Error');
+      return;
+    }
+
+    setCode(code);
+  }, []);
 
   useEffect(() => {
     if (!accessToken?.token || !userInfo?.id) return;
@@ -41,12 +51,6 @@ export const useAuth = () => {
     dispatch(setUser(userInfo));
     dispatch(setAccessToken(accessToken));
 
-    popWindowRef.current?.close();
-    window.removeEventListener(
-      'message',
-      e => messageCallback(e, popWindowRef.current),
-      false,
-    );
     router.push('/diary');
   }, [accessToken, userInfo, dispatch, router]);
 
