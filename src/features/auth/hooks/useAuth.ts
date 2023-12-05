@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { MESSAGE_TYPE } from '@/constants/auth.ts';
@@ -13,10 +13,14 @@ export const useAuth = () => {
   const [code, setCode] = useState('');
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
-  const doRoutePush = useRef(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
+
+  if (accessToken?.token && userInfo?.id) {
+    console.log('push 일어남!!');
+    router.push('/diary');
+  }
 
   const messageCallback = useCallback((event: MessageEvent) => {
     if (event.origin !== JIARY_DOMAIN) {
@@ -46,19 +50,13 @@ export const useAuth = () => {
   }, []);
 
   useEffect(() => {
-    console.log('accessToken', accessToken);
-    console.log('userInfo', userInfo);
     if (!accessToken?.token || !userInfo?.id) return;
-    if (doRoutePush.current) return;
     localStorage.setItem('accessToken', accessToken.token);
     localStorage.setItem('user', JSON.stringify(userInfo));
     dispatch(setUser(userInfo));
     dispatch(setAccessToken(accessToken));
+  }, [accessToken, userInfo, dispatch]);
 
-    console.log('push 일어남!!');
-    router.push('/diary');
-    doRoutePush.current = true;
-  }, [accessToken, userInfo, dispatch, router]);
-
-  return { messageCallback };
+  return { messageCallback, accessToken, userInfo };
 };
+// eslint-disable-next-line react-hooks/exhaustive-deps
