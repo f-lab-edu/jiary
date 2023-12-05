@@ -45,6 +45,8 @@ export const useAuth = () => {
   }, []);
 
   useEffect(() => {
+    console.log('accessToken', accessToken);
+    console.log('userInfo', userInfo);
     if (!accessToken?.token || !userInfo?.id) return;
     localStorage.setItem('accessToken', accessToken.token);
     localStorage.setItem('user', JSON.stringify(userInfo));
