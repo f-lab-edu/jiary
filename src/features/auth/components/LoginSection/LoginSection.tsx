@@ -24,7 +24,8 @@ export default function LoginSection() {
       console.log('push!');
       router.push('/diary');
     }
-  }, [isLoggedIn, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
 
   return (
     <div className={style.container}>
