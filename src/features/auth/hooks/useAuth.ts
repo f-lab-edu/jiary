@@ -54,12 +54,12 @@ export const useAuth = () => {
     dispatch(setUser(userInfo));
     dispatch(setAccessToken(accessToken));
 
-    console.log('isLoggedIn,', isLoggedIn);
     if (isLoggedIn) {
       console.log('push!@!@!@!');
       router.push('/diary');
     }
-  }, [accessToken, userInfo, isLoggedIn, router, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessToken, userInfo, isLoggedIn]);
 
   useEffect(() => {
     if (accessToken?.token && userInfo?.id) {
