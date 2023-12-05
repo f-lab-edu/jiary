@@ -51,9 +51,7 @@ export const useAuth = () => {
       dispatch(setUser(userInfo));
       dispatch(setAccessToken(accessToken));
 
-      setTimeout(() => {
-        router.push('/diary');
-      }, 1000);
+      router.push('/diary');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, userInfo, dispatch]);
