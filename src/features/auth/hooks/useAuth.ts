@@ -44,15 +44,26 @@ export const useAuth = () => {
     setCode(code);
   }, []);
 
+  // NOTE: set accessToken
   useEffect(() => {
-    if (!accessToken?.token || !userInfo?.id) return;
+    if (!accessToken?.token) return;
     localStorage.setItem('accessToken', accessToken.token);
+    dispatch(setAccessToken(accessToken));
+  }, [accessToken, dispatch]);
+
+  // NOTE: set userInfo
+  useEffect(() => {
+    if (!userInfo?.id) return;
     localStorage.setItem('user', JSON.stringify(userInfo));
     dispatch(setUser(userInfo));
-    dispatch(setAccessToken(accessToken));
+  }, [userInfo, dispatch]);
 
-    router.push('/diary');
-  }, [accessToken, userInfo, dispatch, router]);
+  // NOTE: route
+  useEffect(() => {
+    if (accessToken?.token && userInfo?.id) {
+      router.push('/diary');
+    }
+  }, [accessToken, userInfo, router]);
 
   return { messageCallback };
 };
