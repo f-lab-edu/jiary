@@ -59,6 +59,7 @@ export default function LoginSection() {
         <button
           onClick={() => openLoginPopup(data?.location)}
           className={style.loginButton}
+          disabled={!data}
         >
           <Image
             src="/logo/google_signin.png"
