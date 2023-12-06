@@ -1,4 +1,5 @@
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
+import { Analytics } from '@vercel/analytics/react';
 import Head from 'next/head';
 import { ReactNode } from 'react';
 
@@ -27,6 +28,7 @@ export default function PageLayout(props: { children: ReactNode }) {
       </Head>
 
       <PageHeader />
+      <Analytics />
       <div className={style.main}>{props.children}</div>
       {Boolean(isFetching || isMuatating) && <PageLoadingSpinner />}
     </>

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -14,12 +13,9 @@ export const useAuth = () => {
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
 
-  const router = useRouter();
-
   const dispatch = useDispatch();
   const messageCallback = useCallback((event: MessageEvent) => {
     if (event.origin !== JIARY_DOMAIN) {
-      alert('로그인 오류입니다. 다시 로그인 해주세요.');
       // eslint-disable-next-line no-console
       console.error('Cross-Origin Error');
       return;
@@ -27,9 +23,6 @@ export const useAuth = () => {
 
     const receiveData = event.data;
     if (receiveData.type !== MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE) {
-      alert('로그인 오류입니다. 다시 로그인 해주세요.');
-      // eslint-disable-next-line no-console
-      console.error('Post-Message Error');
       return;
     }
 
@@ -51,7 +44,7 @@ export const useAuth = () => {
       dispatch(setUser(userInfo));
       dispatch(setAccessToken(accessToken));
 
-      router.push('/diary');
+      window.location.href = `${JIARY_DOMAIN}/diary`;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, userInfo, dispatch]);

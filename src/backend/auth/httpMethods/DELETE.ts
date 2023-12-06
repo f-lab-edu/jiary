@@ -16,7 +16,13 @@ export function DELETE(
     jsonTokens.splice(index, 1);
   }
   writeFile(jsonTokens);
-  setCookie(res, 'Authorization', 'deleted', { maxAge: -1, path: '/' });
+  setCookie(res, 'Authorization', 'deleted', {
+    httpOnly: true,
+    sameSite: true,
+    domain: process.env.NEXT_PUBLIC_DOMAIN,
+    path: '/',
+    maxAge: 0,
+  });
 
   res.status(200).json({ message: 'success' });
 }
