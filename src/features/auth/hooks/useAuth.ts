@@ -26,8 +26,6 @@ export const useAuth = () => {
 
     const receiveData = event.data;
     if (receiveData.type !== MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE) {
-      // eslint-disable-next-line no-console
-      console.error('Post-Message Error');
       return;
     }
 
