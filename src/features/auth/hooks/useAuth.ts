@@ -19,7 +19,6 @@ export const useAuth = () => {
   const dispatch = useDispatch();
   const messageCallback = useCallback((event: MessageEvent) => {
     if (event.origin !== JIARY_DOMAIN) {
-      alert('로그인 오류입니다. 다시 로그인 해주세요.');
       // eslint-disable-next-line no-console
       console.error('Cross-Origin Error');
       return;
@@ -27,7 +26,6 @@ export const useAuth = () => {
 
     const receiveData = event.data;
     if (receiveData.type !== MESSAGE_TYPE.JIARY_SIGNIN_MESSAGE) {
-      alert('로그인 오류입니다. 다시 로그인 해주세요.');
       // eslint-disable-next-line no-console
       console.error('Post-Message Error');
       return;
