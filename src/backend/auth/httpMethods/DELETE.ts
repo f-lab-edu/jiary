@@ -17,9 +17,11 @@ export function DELETE(
   }
   writeFile(jsonTokens);
   setCookie(res, 'Authorization', 'deleted', {
-    maxAge: 0,
+    httpOnly: true,
+    sameSite: true,
+    domain: process.env.NEXT_PUBLIC_DOMAIN,
     path: '/',
-    expires: new Date(),
+    maxAge: 0,
   });
 
   res.status(200).json({ message: 'success' });
