@@ -60,4 +60,14 @@ export const date = style({
   gap: 13,
 });
 
-export const memu = style({});
+export const disabled = style({
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  background: '#000',
+  opacity: 0.2,
+  cursor: 'not-allowed',
+  borderRadius: 8,
+});
