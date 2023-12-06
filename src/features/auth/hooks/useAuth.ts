@@ -14,9 +14,9 @@ export const useAuth = () => {
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
 
-  const dispatch = useDispatch();
   const router = useRouter();
 
+  const dispatch = useDispatch();
   const messageCallback = useCallback((event: MessageEvent) => {
     if (event.origin !== JIARY_DOMAIN) {
       alert('로그인 오류입니다. 다시 로그인 해주세요.');
@@ -44,26 +44,17 @@ export const useAuth = () => {
     setCode(code);
   }, []);
 
-  // NOTE: set accessToken
-  useEffect(() => {
-    if (!accessToken?.token) return;
-    localStorage.setItem('accessToken', accessToken.token);
-    dispatch(setAccessToken(accessToken));
-  }, [accessToken, dispatch]);
-
-  // NOTE: set userInfo
-  useEffect(() => {
-    if (!userInfo?.id) return;
-    localStorage.setItem('user', JSON.stringify(userInfo));
-    dispatch(setUser(userInfo));
-  }, [userInfo, dispatch]);
-
-  // NOTE: route
   useEffect(() => {
     if (accessToken?.token && userInfo?.id) {
+      localStorage.setItem('accessToken', accessToken?.token || '');
+      localStorage.setItem('user', JSON.stringify(userInfo));
+      dispatch(setUser(userInfo));
+      dispatch(setAccessToken(accessToken));
+
       router.push('/diary');
     }
-  }, [accessToken, userInfo, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessToken, userInfo, dispatch]);
 
-  return { messageCallback };
+  return { messageCallback, accessToken, userInfo };
 };

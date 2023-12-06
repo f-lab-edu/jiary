@@ -1,13 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import useGetAuthCode from '@/features/auth/apis/queries/useGetAuthCode.ts';
+import { GOOGLE_POPUP_URL } from '@/constants/domain.ts';
 import { useLoginPopup } from '@/features/auth/hooks/useLoginPopup.ts';
 
 import * as style from '@/features/auth/components/LoginSection/LoginSection.css.ts';
 
 export default function LoginSection() {
-  const { data } = useGetAuthCode();
   const { openLoginPopup } = useLoginPopup();
 
   return (
@@ -57,9 +56,8 @@ export default function LoginSection() {
 
       <div className={style.buttonWrapper}>
         <button
-          onClick={() => openLoginPopup(data?.location)}
+          onClick={() => openLoginPopup(GOOGLE_POPUP_URL)}
           className={style.loginButton}
-          disabled={!data}
         >
           <Image
             src="/logo/google_signin.png"

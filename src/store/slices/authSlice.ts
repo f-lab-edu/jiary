@@ -14,7 +14,7 @@ export const authSlice = createSlice({
       picture: '',
       verified_email: false,
     },
-    accessToken: undefined,
+    accessToken: '',
   },
   reducers: {
     setUser: (state, action) => {
@@ -35,15 +35,16 @@ export const authSlice = createSlice({
       };
     },
     removeAccessToken: state => {
-      state.accessToken = undefined;
+      state.accessToken = '';
     },
   },
 });
 
-const tokenSelector = (state: RootState) => state.auth.accessToken;
+const tokenSelector = (state: RootState): string => state.auth.accessToken;
+const userIdSelector = (state: RootState): string => state.auth.user.id;
 export const isLoggedInSelector = createSelector(
-  tokenSelector,
-  token => !!token,
+  [tokenSelector, userIdSelector],
+  (token, userId) => Boolean(token) && Boolean(userId),
 );
 
 export const { setUser, setAccessToken, removeUser, removeAccessToken } =
