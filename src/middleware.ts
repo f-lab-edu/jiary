@@ -7,9 +7,7 @@ export const config = {
 };
 
 export function middleware(request: NextRequest) {
-  // const authCookie = request.cookies.get('Authorization');
   if (!request.cookies.has('Authorization')) {
-    console.log('리다이렉트!');
     return NextResponse.redirect(new URL('/auth', request.url));
   }
 

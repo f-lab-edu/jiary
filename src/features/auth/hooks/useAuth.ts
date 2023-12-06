@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -13,8 +12,6 @@ export const useAuth = () => {
   const [code, setCode] = useState('');
   const { data: accessToken } = useGetAccessToken(code);
   const { data: userInfo } = useGetUserInfo(accessToken?.token || '');
-
-  const router = useRouter();
 
   const dispatch = useDispatch();
   const messageCallback = useCallback((event: MessageEvent) => {
@@ -47,7 +44,7 @@ export const useAuth = () => {
       dispatch(setUser(userInfo));
       dispatch(setAccessToken(accessToken));
 
-      router.push('/diary');
+      window.location.href = `${JIARY_DOMAIN}/diary`;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, userInfo, dispatch]);
