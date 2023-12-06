@@ -8,6 +8,7 @@ const useGetFileList = (accessToken?: string) =>
   useQuery<DriveFile>({
     queryKey: [DIARY_KEY, 'docList'],
     queryFn: () => getFileList(accessToken),
+    suspense: true,
   });
 
 export default useGetFileList;

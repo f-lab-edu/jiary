@@ -1,16 +1,33 @@
 import Head from 'next/head';
 
+import SSRSafeSuspense from '@/features/common/components/SSRSafeSuspense.tsx';
 import useGetFileList from '@/features/diary/apis/queries/useGetFileList.ts';
 import DiaryCard from '@/features/diary/components/list/DiaryCard/DiaryCard.tsx';
 import DiaryEmptyCard from '@/features/diary/components/list/DiaryEmptyCard/DiaryEmptyCard.tsx';
 import DiaryListHeader from '@/features/diary/components/list/DiaryListHeader/DiaryListHeader.tsx';
+import DiaryCardSkeleton from '@/features/diary/components/list/DiarySkeleton/DiarySkeleton.tsx';
 
 import * as style from '@/features/diary/pages/root/DiaryPage.css.ts';
 
-export default function DiaryPage() {
+function Container() {
   const { data } = useGetFileList();
   const files = data?.files;
 
+  return (
+    <>
+      <DiaryListHeader count={files?.length || 0} />
+      {files && files.length > 0 ? (
+        <ul className={style.ul}>
+          {files?.map(file => <DiaryCard key={file.id} file={file} />)}
+        </ul>
+      ) : (
+        <DiaryEmptyCard />
+      )}
+    </>
+  );
+}
+
+export default function DiaryPage() {
   return (
     <>
       <Head>
@@ -21,14 +38,9 @@ export default function DiaryPage() {
       </Head>
 
       <div className={style.container}>
-        <DiaryListHeader count={files?.length || 0} />
-        {files && files.length > 0 ? (
-          <ul className={style.ul}>
-            {files?.map(file => <DiaryCard key={file.id} file={file} />)}
-          </ul>
-        ) : (
-          <DiaryEmptyCard />
-        )}
+        <SSRSafeSuspense fallback={<DiaryCardSkeleton />}>
+          <Container />
+        </SSRSafeSuspense>
       </div>
     </>
   );
